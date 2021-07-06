@@ -37,12 +37,13 @@ class GetReponse:
     allResponse["really"] = ["Indeed,s.","Oh sure.","Yes!"]
     allResponse["fuck"] = ["No F word ,please.","You should said Firetruck instead.","Please be polite!"]
     allResponse["joke"] = ["I would tell you a chemistry joke but I know I wouldnt get a reaction.","Why dont some couples go to the gym? Because some relationships dont work out.","I wondered why the baseball was getting bigger. Then it hit me.","Have you ever tried to eat a clock? It is very time consuming.","The experienced carpenter really nailed it,but the new guy screwed everything up.","Did you hear about the guy whose whole left side was cut off? He is all right now.","Yesterday I accidentally swallowed some food coloring. The doctor says I am OK,but I feel like I have dyed a little inside.","I wasnt originally going to get a brain transplant,but then I changed my mind.","A guy was admitted to hospital with 8 plastic horses in his stomach. His condition is now stable.."," If a wild pig kills you,does it mean you’ve been boared to death?","You cry,I cry,…you laugh,I laugh…you jump off a cliff I laugh even harder!!","Never steal. The government hates competition.","Doesn’t expecting the unexpected make the unexpected expected?","Practice makes perfect but then nobody is perfect so what’s the point of practicing?","Everybody wishes they could go to heaven but no one wants to die.","Why are they called apartments if they are all stuck together?","DON’T HIT KIDS!!! No,seriously,they have guns now.","Save paper,don’t do home work.","Do not drink and drive or you might spill the drink.","Life is Short – Talk Fast!","Why do stores that are open 24/7 have locks on their doors?","When nothing goes right,Go left.","Save water ,do not shower.","A Lion would never cheat on his wife but a Tiger Wood.","Why do they put pizza in a square box?"]
-    @classmethod
+    
+    @staticmethod
     def GetRandomResponseFromKeys(key):
         i = random.randint(0, len(GetReponse.allResponse[key])-1 )
         return GetReponse.allResponse[key][i]
 
-    @classmethod
+    @staticmethod
     def GenerateHelp():
         message = TemplateSendMessage(
             alt_text='Buttons template',
@@ -64,7 +65,7 @@ class GetReponse:
         )
         return message
 
-    @classmethod
+    @staticmethod
     def Response(line_bot_api: LineBotApi,token, input):
         lowerInput = input.lower()
         trimmedInput = lowerInput.strip()
