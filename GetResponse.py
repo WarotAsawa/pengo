@@ -90,8 +90,9 @@ class GetResponse:
             actions = []
             for j in range(i*3,(i*3)+3):
                 if j >= len(productList):
-                    break
-                actions.append(MessageAction(label=productList[j],text='spec ' + productList[j]))
+                    actions.append(MessageAction(label=" ",text='spec'))
+                else:
+                    actions.append(MessageAction(label=productList[j],text='spec ' + productList[j]))
             columnList.append(CarouselColumn(text='Page '+str(i+1), title='Choose Your Product', actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
 
