@@ -66,7 +66,7 @@ class GetReponse:
         return message
 
     @staticmethod
-    def Response(line_bot_api: LineBotApi,token, input):
+    def SendByInput(line_bot_api: LineBotApi,token, input):
         lowerInput = input.lower()
         trimmedInput = lowerInput.strip()
         words = trimmedInput.split(' ')
@@ -100,4 +100,4 @@ class GetReponse:
             response = GetReponse.GetRandomResponseFromKeys('joke') + "\n\n" + GetReponse.allResponse["helptips"]
 
         line_bot_api.reply_message(token,TextSendMessage(text=response))
-            
+        return   

@@ -10,8 +10,8 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
-import GetResponse
-from GetResponse import *;
+
+from GetResponse import GetResponse;
 
 app = Flask(__name__)
 
@@ -42,7 +42,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    GetResponse.Response(line_bot_api, event.reply_token, event.message.text)
+    GetResponse.SendByInput(line_bot_api, event.reply_token, event.message.text)
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
 
 
