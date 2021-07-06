@@ -81,8 +81,7 @@ class GetResponse:
                 response = GetResponse.allResponse["helplookup"]
             else:
                 response = GetResponse.allResponse["help"]
-                line_bot_api.reply_message(token,TextSendMessage(text=response))
-                line_bot_api.reply_message(token,GetResponse.GenerateHelp())
+                line_bot_api.reply_message(token,[TextSendMessage(text=response),GetResponse.GenerateHelp()])
                 return
         elif "hello" in words or "hi" in words or "greet" in words:
             response = GetResponse.GetRandomResponseFromKeys('hello')
