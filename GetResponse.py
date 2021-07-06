@@ -46,25 +46,27 @@ class GetResponse:
 
     @staticmethod
     def GenerateHelp():
-        message = TemplateSendMessage(
-            alt_text='Buttons template',
-            template=ButtonsTemplate(
-                thumbnail_image_url='https://warotasawa.files.wordpress.com/2020/07/how2.png',
-                title='Help Me!',
-                text=GetResponse.allResponse["help"],
-                actions=[
-                    MessageAction(
-                        label='spec',
-                        text='spec'
-                    ),
-                    MessageAction(
-                        label='lookup',
-                        text='lookup'
-                    )
-                ]
-            )
+        buttonTemplate = ButtonsTemplate(
+            thumbnail_image_url='https://warotasawa.files.wordpress.com/2020/07/how2.png',
+            title='Help Me!',
+            image_aspect_ratio = 'square',
+            text="Tab each feature to guide you",
+            actions=[
+                MessageAction(
+                    label='spec',
+                    text='spec'
+                ),
+                MessageAction(
+                    label='lookup',
+                    text='lookup'
+                )
+            ]
         )
-        return message
+        buttonMessage = TemplateSendMessage(
+            alt_text='Buttons template',
+            template=buttonTemplate
+        )
+        return buttonMessage
 
     @staticmethod
     def SendByInput(line_bot_api: LineBotApi,token, input):
@@ -76,8 +78,10 @@ class GetResponse:
             if "spec" in words:
                 response = GetResponse.allResponse["helpspec"]
             elif "lookup" in words:
-                response = GetResponse.allResponse["lookup"]
+                response = GetResponse.allResponse["helplookup"]
             else:
+                response = GetResponse.allResponse["help"]
+                line_bot_api.reply_message(token,TextSendMessage(text=response))
                 line_bot_api.reply_message(token,GetResponse.GenerateHelp())
                 return
         elif "hello" in words or "hi" in words or "greet" in words:
