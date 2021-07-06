@@ -73,7 +73,7 @@ class GetResponse:
             ]
         )
         buttonMessage = TemplateSendMessage(
-            alt_text='Help Message Here',
+            alt_text='Help Wizard support only on Mobile',
             template=buttonTemplate
         )
         return buttonMessage
@@ -89,15 +89,17 @@ class GetResponse:
         for i in range(int(math.ceil(len(productList)/3))):
             actions = []
             for j in range(i*3,(i*3)+3):
+                if j >= 30:
+                    break
                 if j >= len(productList):
                     actions.append(MessageAction(label=" ",text='spec'))
                 else:
-                    actions.append(MessageAction(label=productList[j],text='spec ' + productList[j]))
+                    actions.append(MessageAction(label=productList[j][0:12],text='spec ' + productList[j]))
             columnList.append(CarouselColumn(text='Page '+str(i+1), title='Choose Your Product', actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
 
         specMessage = TemplateSendMessage(
-            alt_text='Spec Message Here',
+            alt_text='Spec Wizard support only on Mobile',
             template=carousel_template
         )
         return specMessage
