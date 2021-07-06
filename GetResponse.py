@@ -1,13 +1,14 @@
-import sys;
+import random;
 
 from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
+    LineBotApi
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    TextSendMessage
+)
+from linebot.models.actions import MessageAction;
+from linebot.models.Template import (
+    TemplateSendMessage, ButtonsTemplate
 )
 class GetReponse:
     allResponse = {};
@@ -18,7 +19,7 @@ class GetReponse:
     allResponse["hello"] = ["Hello there , ","Hello, ", "What's up, ", "Good day, ", "Hi, ","May I help you, ","Greetings, ","How can I help you, "]
     allResponse["thank"] = ["You are always welcome.","With pleasure.","I am glad to be your service.","My pleasure.","You can ask me for help anytime."]
     allResponse["bye"] = ["I'll be back, ", "Bye bye, ", "So longgg, ", "Hasta la vista, ", "Sayonara, ", "Life is too short to say goodbye, "]
-    allResponse["whatyourname"] = ["Don'you see my name above?","My name is Uvuvwevwevwe Onyetenyevwe Ugwemubwem Ossas","My name is Bruce Man!" . "\n" . "No,an Bat Wayne!" . "\n" . "Orz, it!","I am the one called YOU KNOW WHO.","I am the Dark Lord.","Kimino na wa!"]
+    allResponse["whatyourname"] = ["Don'you see my name above?","My name is Uvuvwevwevwe Onyetenyevwe Ugwemubwem Ossas","I am the one called YOU KNOW WHO.","I am the Dark Lord.","Kimino na wa!"]
     allResponse["whatyoudo"] = ["I am chatting with you,seriously.","Texting texting texting texting texting texting texting","Chit chat! I am Chit-chatting.","I am talking with an idiot.","I have no idea what I am doing right now."]
     allResponse["whatareyou"] = ["I am your worst nightmare.","I am a human being","I am Batman!","I am your shadow.","I am you."]
     allResponse["what"] = ["What !??","Wattttt?","What is what ?","What is a pronoun to ask for information specifying something.","Duhhhh","What are you talking about?"]
@@ -38,64 +39,64 @@ class GetReponse:
     allResponse["joke"] = ["I would tell you a chemistry joke but I know I wouldnt get a reaction.","Why dont some couples go to the gym? Because some relationships dont work out.","I wondered why the baseball was getting bigger. Then it hit me.","Have you ever tried to eat a clock? It is very time consuming.","The experienced carpenter really nailed it,but the new guy screwed everything up.","Did you hear about the guy whose whole left side was cut off? He is all right now.","Yesterday I accidentally swallowed some food coloring. The doctor says I am OK,but I feel like I have dyed a little inside.","I wasnt originally going to get a brain transplant,but then I changed my mind.","A guy was admitted to hospital with 8 plastic horses in his stomach. His condition is now stable.."," If a wild pig kills you,does it mean you’ve been boared to death?","You cry,I cry,…you laugh,I laugh…you jump off a cliff I laugh even harder!!","Never steal. The government hates competition.","Doesn’t expecting the unexpected make the unexpected expected?","Practice makes perfect but then nobody is perfect so what’s the point of practicing?","Everybody wishes they could go to heaven but no one wants to die.","Why are they called apartments if they are all stuck together?","DON’T HIT KIDS!!! No,seriously,they have guns now.","Save paper,don’t do home work.","Do not drink and drive or you might spill the drink.","Life is Short – Talk Fast!","Why do stores that are open 24/7 have locks on their doors?","When nothing goes right,Go left.","Save water ,do not shower.","A Lion would never cheat on his wife but a Tiger Wood.","Why do they put pizza in a square box?"]
     @classmethod
     def GetRandomResponseFromKeys(key):
-        i = random.randint(0, len(allResponse[key])-1 )
-        return allResponse[key][i]
+        i = random.randint(0, len(GetReponse.allResponse[key])-1 )
+        return GetReponse.allResponse[key][i]
 
     @classmethod
     def GenerateHelp():
-        buttons_template_message = TemplateSendMessage(
-        alt_text='Buttons template',
-        template=ButtonsTemplate(
-            thumbnail_image_url='https://warotasawa.files.wordpress.com/2020/07/how2.png',
-            title='Help Me!',
-            text=allResponse["help"],
-            actions=[
-                MessageAction(
-                    label='spec',
-                    text='spec'
-                ),
-                MessageAction(
-                    label='lookup',
-                    text='lookup'
-                )
-            ]
+        message = TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                thumbnail_image_url='https://warotasawa.files.wordpress.com/2020/07/how2.png',
+                title='Help Me!',
+                text=GetReponse.allResponse["help"],
+                actions=[
+                    MessageAction(
+                        label='spec',
+                        text='spec'
+                    ),
+                    MessageAction(
+                        label='lookup',
+                        text='lookup'
+                    )
+                ]
+            )
         )
-        return buttons_template_message
-    )
+        return message
 
     @classmethod
-    def Response(line_bot_api: LineBotApi,token, input: string):
+    def Response(line_bot_api: LineBotApi,token, input):
         lowerInput = input.lower()
         trimmedInput = lowerInput.strip()
         words = trimmedInput.split(' ')
         response = ""
         if "help" in words:
             if "spec" in words:
-                response = allResponse["helpspec"]
+                response = GetReponse.allResponse["helpspec"]
             elif "lookup" in words:
-                response = allResponse["lookup"]
+                response = GetReponse.allResponse["lookup"]
             else:
-                line_bot_api.reply_message(token,GenerateHelp())
+                line_bot_api.reply_message(token,GetReponse.GenerateHelp())
                 return
         elif "hello" in words or "hi" in words or "greet" in words:
-            response = GetRandomResponseFromKeys('hello')
+            response = GetReponse.GetRandomResponseFromKeys('hello')
         elif "thank" in words:
-            response = GetRandomResponseFromKeys('thank')
+            response = GetReponse.GetRandomResponseFromKeys('thank')
         elif "bye" in words:
-            response = GetRandomResponseFromKeys('bye')
+            response = GetReponse.GetRandomResponseFromKeys('bye')
         elif "why" in words:
-            response = GetRandomResponseFromKeys('why')
+            response = GetReponse.GetRandomResponseFromKeys('why')
         elif "when" in words:
-            response = GetRandomResponseFromKeys('when')
+            response = GetReponse.GetRandomResponseFromKeys('when')
         elif "where" in words:
-            response = GetRandomResponseFromKeys('where')
+            response = GetReponse.GetRandomResponseFromKeys('where')
         elif "how" in words:
             if "are" in words and "you" in words:
-                response = allResponse["howareyou"]
+                response = GetReponse.allResponse["howareyou"]
             else:
-                response = GetRandomResponseFromKeys('how')
+                response = GetReponse.GetRandomResponseFromKeys('how')
         else:
-            response = GetRandomResponseFromKeys('joke') + "\n\n" + allResponse["helptips"]
-            
+            response = GetReponse.GetRandomResponseFromKeys('joke') + "\n\n" + GetReponse.allResponse["helptips"]
+
         line_bot_api.reply_message(token,TextSendMessage(text=response))
             
