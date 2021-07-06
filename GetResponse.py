@@ -10,7 +10,8 @@ from linebot.models.actions import MessageAction;
 from linebot.models.template import (
     TemplateSendMessage, ButtonsTemplate
 )
-class GetReponse:
+
+class GetResponse:
     allResponse = {};
     allResponse["help"] = "Ask for help in each feature for more details for each feature ex: help spec, help lookup.\nYou can type full command spec or lookup or select one of each command to begin the wizard"
     allResponse["helpspec"] = "Type \"spec\" for wizard or use or use \nspec [productname] [model] \n ex: \n - spec 3par 8200\n - spec nimble af20"
