@@ -41,8 +41,8 @@ class GetResponse:
     
     @staticmethod
     def GetRandomResponseFromKeys(key):
-        i = random.randint(0, len(GetReponse.allResponse[key])-1 )
-        return GetReponse.allResponse[key][i]
+        i = random.randint(0, len(GetResponse.allResponse[key])-1 )
+        return GetResponse.allResponse[key][i]
 
     @staticmethod
     def GenerateHelp():
@@ -51,7 +51,7 @@ class GetResponse:
             template=ButtonsTemplate(
                 thumbnail_image_url='https://warotasawa.files.wordpress.com/2020/07/how2.png',
                 title='Help Me!',
-                text=GetReponse.allResponse["help"],
+                text=GetResponse.allResponse["help"],
                 actions=[
                     MessageAction(
                         label='spec',
@@ -74,31 +74,31 @@ class GetResponse:
         response = ""
         if "help" in words:
             if "spec" in words:
-                response = GetReponse.allResponse["helpspec"]
+                response = GetResponse.allResponse["helpspec"]
             elif "lookup" in words:
-                response = GetReponse.allResponse["lookup"]
+                response = GetResponse.allResponse["lookup"]
             else:
-                line_bot_api.reply_message(token,GetReponse.GenerateHelp())
+                line_bot_api.reply_message(token,GetResponse.GenerateHelp())
                 return
         elif "hello" in words or "hi" in words or "greet" in words:
-            response = GetReponse.GetRandomResponseFromKeys('hello')
+            response = GetResponse.GetRandomResponseFromKeys('hello')
         elif "thank" in words:
-            response = GetReponse.GetRandomResponseFromKeys('thank')
+            response = GetResponse.GetRandomResponseFromKeys('thank')
         elif "bye" in words:
-            response = GetReponse.GetRandomResponseFromKeys('bye')
+            response = GetResponse.GetRandomResponseFromKeys('bye')
         elif "why" in words:
-            response = GetReponse.GetRandomResponseFromKeys('why')
+            response = GetResponse.GetRandomResponseFromKeys('why')
         elif "when" in words:
-            response = GetReponse.GetRandomResponseFromKeys('when')
+            response = GetResponse.GetRandomResponseFromKeys('when')
         elif "where" in words:
-            response = GetReponse.GetRandomResponseFromKeys('where')
+            response = GetResponse.GetRandomResponseFromKeys('where')
         elif "how" in words:
             if "are" in words and "you" in words:
-                response = GetReponse.allResponse["howareyou"]
+                response = GetResponse.allResponse["howareyou"]
             else:
-                response = GetReponse.GetRandomResponseFromKeys('how')
+                response = GetResponse.GetRandomResponseFromKeys('how')
         else:
-            response = GetReponse.GetRandomResponseFromKeys('joke') + "\n\n" + GetReponse.allResponse["helptips"]
+            response = GetResponse.GetRandomResponseFromKeys('joke') + "\n\n" + GetResponse.allResponse["helptips"]
 
         line_bot_api.reply_message(token,TextSendMessage(text=response))
         return   
