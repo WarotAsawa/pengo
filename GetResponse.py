@@ -7,7 +7,7 @@ from linebot.models import (
     TextSendMessage
 )
 from linebot.models.actions import MessageAction;
-from linebot.models.Template import (
+from linebot.models.template import (
     TemplateSendMessage, ButtonsTemplate
 )
 class GetReponse:
