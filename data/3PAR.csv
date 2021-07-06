@@ -1,0 +1,10 @@
+model,Nodes,CPU,Total Cache,Max Flash Cache,Max On Node Cache,16Gbps FC Ports,10Gbps iSCSI Ports,1GbE ports,10GbE ports,Number of HDD,Number of SSD,Max Raw Capacity,Max SSD Raw Capacity,Max Usable File Capacity
+8200,2,6 core 2.2 GHz,832 GiB,768 GiB,64 GiB,4 to 12 ports,0 to 4 ports,0 to 8 ports,0 to 4 ports,240,120,1000 TiB,838 TiB,128TiB
+8400,2 or 4, 6 core 2.2 GHz,1664 GiB,1536 GiB,128 GiB,4 to 24 ports,0 to 8 ports,0 to 16 ports,0 to 8 ports,576,240,2400 TiB,1676 TiB,256TiB
+8440,2 or 4, 10 core 2.4 GHz,8384 GiB,8000 GiB,384 GiB,4 to 24 ports,0 to 8 ports,0 to 16 ports,0 to 8 ports,960,480,4000 TiB,3351 TiB,256TiB
+8450,2 or 4, 10 core 2.4 GHz,384 GiB,NA,384 GiB,4 to 24 ports,0 to 8 ports,0 to 16 ports,0 to 8 ports,NA,480,3351 TiB,3351 TiB, 256TiB
+9450,2 or 4, 10 core 2.4 GHz,896 GiB,NA,448 GiB,0 to 80 ports,0 to 40 ports,0 ports,0 to 24 ports,576,576,6000 TiB,6000 TiB, 512 TiB
+20450,2 to 4, 8 Core 2.5 GHz,1.8 TiB,NA,1792 GiB,0 to 80 ports,0 to 40 ports,0 ports,0 to 24 ports,NA,576,4021 TiB,4021 TiB, 512 TiB
+20800,2 to 8, 8 Core 2.5 GHz,34.5 TiB,32 TiB,2560 GiB,0 to 160 ports,0 to 80 ports,0 ports,0 to 48 ports,2304,1152,9600 TiB,8043 TiB,512 TiB
+20850,2 to 8, 10 Core 2.5 GHz,3.6 TiB,NA,3584 GiB,0 to 160 ports,0 to 80 ports,0 ports,0 to 48 ports,NA,1152,9600 TiB,8043 TiB, 512 TiB
+20840,2 to 8, 10 Core 2.5 GHz,51.6 TiB,48 TiB,3584 GiB,0 to 160 ports,0 to 80 ports,0 ports,0 to 48 ports,2304,1152,9600 TiB,8043 TiB,512 TiB
