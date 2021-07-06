@@ -1,2 +1,4 @@
 requests >= 3.4
+line-bot-sdk
+flask
 future
