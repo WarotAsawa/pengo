@@ -73,7 +73,7 @@ class GetResponse:
             ]
         )
         buttonMessage = TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text='Help Message Here',
             template=buttonTemplate
         )
         return buttonMessage
@@ -94,7 +94,12 @@ class GetResponse:
                 actions.append(MessageAction(label=productList[j],text='spec ' + productList[j]))
             columnList.append(CarouselColumn(text='Page '+str(i+1), title='Choose Your Product', actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
-        return carousel_template
+
+        specMessage = TemplateSendMessage(
+            alt_text='Spec Message Here',
+            template=carousel_template
+        )
+        return specMessage
 
     @staticmethod
     def SendByInput(line_bot_api: LineBotApi,token, input):
