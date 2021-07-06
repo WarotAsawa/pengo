@@ -1,4 +1,4 @@
-requests >= 3.4
+requests
 line-bot-sdk
 flask
 future
