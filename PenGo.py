@@ -11,6 +11,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 import GetResponse
+from GetResponse import *;
 
 app = Flask(__name__)
 
