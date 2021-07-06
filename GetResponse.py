@@ -16,7 +16,7 @@ class GetResponse:
     allResponse["help"] = "Ask for help in each feature for more details for each feature ex: help spec, help lookup.\nYou can type full command spec or lookup or select one of each command to begin the wizard"
     allResponse["helpspec"] = "Type \"spec\" for wizard or use or use \nspec [productname] [model] \n ex: \n - spec 3par 8200\n - spec nimble af20"
     allResponse["helplookup"] =  "Type \"lookup\" for wizard or use or use \nlookup [productname] [attribute] [value] \n ex: \n - lookup intel core 20\n - lookup amd clock 3.3"
-    allResponse["helptips"] = "Ask me for 'help' to see what I can do for you","Want to learn how to talk to me? Ask me for 'help'.","Ask for 'help' to see how smart I am."
+    allResponse["helptips"] = ["Ask me for 'help' to see what I can do for you","Want to learn how to talk to me? Ask me for 'help'.","Ask for 'help' to see how smart I am."]
     allResponse["hello"] = ["Hello there , ","Hello, ", "What's up, ", "Good day, ", "Hi, ","May I help you, ","Greetings, ","How can I help you, "]
     allResponse["thank"] = ["You are always welcome.","With pleasure.","I am glad to be your service.","My pleasure.","You can ask me for help anytime."]
     allResponse["bye"] = ["I'll be back, ", "Bye bye, ", "So longgg, ", "Hasta la vista, ", "Sayonara, ", "Life is too short to say goodbye, "]
@@ -98,7 +98,7 @@ class GetResponse:
             else:
                 response = GetResponse.GetRandomResponseFromKeys('how')
         else:
-            response = GetResponse.GetRandomResponseFromKeys('joke') + "\n\n" + GetResponse.allResponse["helptips"]
+            response = GetResponse.GetRandomResponseFromKeys('joke') + "\n\n" + GetResponse.GetRandomResponseFromKeys('helptips')
 
         line_bot_api.reply_message(token,TextSendMessage(text=response))
         return   
