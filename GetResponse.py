@@ -145,8 +145,8 @@ class GetResponse:
         title = ""
         #Check if command is completed
         if selectedProduct != "" and selectedModel != "":
-            GetResponse.GenerateSpecAnswers(specList, selectedProduct, selectedModel)
-            return TextSendMessage(text=errorMessage)
+            specResponse = GetResponse.GenerateSpecAnswers(specList, selectedProduct, selectedModel)
+            return TextSendMessage(text=specResponse)
         #check command's len to prepare return message
         if (len(words) == 2):
             loopList = modelList
