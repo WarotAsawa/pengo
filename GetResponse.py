@@ -190,7 +190,7 @@ class GetResponse:
                 line_bot_api.reply_message(token,GetResponse.GenerateHelp())
                 return
         elif "spec" in words:
-            line_bot_api.reply_message(token,GetResponse.GenerateSpec(), words)
+            line_bot_api.reply_message(token,GetResponse.GenerateSpec(words))
         elif "hello" in words or "hi" in words or "greet" in words:
             response = GetResponse.GetRandomResponseFromKeys('hello')
         elif "thank" in words:
