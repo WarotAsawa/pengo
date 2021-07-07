@@ -1,15 +1,15 @@
-model,Form-Factor,Max-Raw-Capacity,Max-Usable-after-raid,Write-Performance-(VTL),Read-Performance-(VTL),StoreOnce-Catalyst-Transfer-rate,I/O-standard,Disk-drives,No-of-Disk-Drives,RAID-Support,Max-target,Max-Stream,No-of-Cartridges,Cartridges-per-Library,FAN-in-limit
-unit,,TB,TB,TB/hr,TB/hr,TB/hr,,,,,,,,,
-vsa,Virtual appliance,50,50,3,1.8,12,2 x vNICs and 8 Gb FC1,NA,NA,NA,NA,NA,8192,NA,NA
-vsa4,Virtual appliance,500,500,13,9,36,2 x vNICs and 8 Gb FC1,NA,NA,NA,32,256,"131,072","4,096",8
-3100,1U,8,5.5,1.6,1.4,6.4,4 x 1 GbE,2 TB,4,Hardware RAID 5,8,49,768,96,8
-3520,2U,24,15.5,4.6,4.1,12.7,4 x 1 GbE,2 TB,12,Hardware RAID 6,24,96,24576,"1,024",24
-3540,2U,48,31.5,4.6,4.1,12.7,4 x 1 GbE,4 TB,12,Hardware RAID 6,32,96,24576,"4,096",24
-5100,2 to 12U scalable rack,288,216,13.8,14.2,26.7,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,32,128,32768,"4,096",24
-5500,7 to 22U scalable rack,1120,864,20.4,14.8,37.7,4 x 1 GbE,4 TB,15 (min) 280 (max),Hardware RAID 6,50,192,819200,"4,096",50
-6600,Provided in 42U 1075mm rack,2240,1728,151.2,128.8,184,4 x 1 GbE,4 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,NA,NA,6553600,NA,NA
-3620,2U,48,31.5,6,5,14,4 x 1 GbE,4 TB,12,Hardware RAID 6,24,128,"24,576","1,024",24
-3640,2U to 6U,144,108,7,6,18,4 x 1 GbE,4 TB,12,Hardware RAID 6,36,192,"147,456","4,096",24
-5200,2 to 12U scalable rack,288,216,17,17,31,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,64,512,"1,048,576","16,384",32
-5250,7 to 22U scalable rack,1120,1120,22,18,41,4 x 1 GbE,4 TB / 8 TB,15 (min) 280 (max),Hardware RAID 6,64,512,"1,048,576","16,384",32
-5650,Provided in 42U 1075mm rack,2240,2240,27,18,47,4 x 1 GbE,4 TB / 8 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,128,1024,"3,145,728","16,384",50
+model,Form-Factor,Max-Raw-Capacity,Max-Usable-after-raid,Write-Performance-(VTL),Read-Performance-(VTL),Catalyst-Transfer-rate,CPU,Memory,I/O-standard,Disk-drives,No-of-Disk-Drives,RAID-Support,Max-target,Max-Stream,Drive-Per-VTL,No-of-Cartridges,Cartridges-per-Library,File-Per-Share,FAN-in-limit
+unit,,TB,TB,TB/hr,TB/hr,TB/hr,,GB,,,,,,,,,,Files,
+vsa,Virtual appliance,50,50,3,1.8,12,Up to VM,Up to VM,2 x vNICs and 8 Gb FC1,Up to VM,Up to VM,Up to VM,NA,NA,NA,8192,NA,NA,NA
+vsa4,Virtual appliance,500,500,13,9,36,Up to VM,Up to VM,2 x vNICs and 8 Gb FC1,Up to VM,Up to VM,Up to VM,32,256,256,"131,072","4,096",1M,8
+3100,1U,8,5.5,1.6,1.4,6.4,NA,NA,4 x 1 GbE,2 TB,4,Hardware RAID 5,8,49,32,768,96,,8
+3520,2U,24,15.5,4.6,4.1,12.7,NA,NA,4 x 1 GbE,2 TB,12,Hardware RAID 6,24,96,128,24576,"1,024",,24
+3540,2U,48,31.5,4.6,4.1,12.7,NA,NA,4 x 1 GbE,4 TB,12,Hardware RAID 6,32,96,128,24576,"4,096",,24
+5100,2 to 12U scalable rack,288,216,13.8,14.2,26.7,NA,NA,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,32,128,128,32768,"4,096",,24
+5500,7 to 22U scalable rack,1120,864,20.4,14.8,37.7,NA,NA,4 x 1 GbE,4 TB,15 (min) 280 (max),Hardware RAID 6,50,192,500,819200,"4,096",,50
+6600,Provided in 42U 1075mm rack,2240,1728,151.2,128.8,184,NA,NA,4 x 1 GbE,4 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,48,192,500,786432,16384,1M,48
+3620,2U,48,31.5,6,5,14,2 x Intel Xeon 4110 2.1GHz (8 cores)  ,96,4 x 1 GbE,4 TB,12,Hardware RAID 6,24,128,128,"24,576","1,024",1M,24
+3640,2U to 6U,144,108,7,6,18,2 x Intel Xeon 4110 2.1GHz (8 cores)  ,128,4 x 1 GbE,4 TB,12,Hardware RAID 6,36,192,192,"147,456","4,096",1M,24
+5200,2 to 12U scalable rack,288,216,17,17,31,2 x Intel Xeon 5118 2.3GHz (12 cores),384,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,64,512,512,"1,048,576","16,384",1M,32
+5250,7 to 22U scalable rack,1120,1120,22,18,41,2 x Intel Xeon 5118 2.3GHz (12 cores),512,4 x 1 GbE,4 TB / 8 TB,15 (min) 280 (max),Hardware RAID 6,64,512,512,"1,048,576","16,384",1M,32
+5650,Provided in 42U 1075mm rack,2240,2240,27,18,47,2 x Intel Xeon 6130 2.1GHz (16 cores),1024,4 x 1 GbE,4 TB / 8 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,128,1024,1024,"3,145,728","16,384",1M,50

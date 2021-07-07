@@ -11,7 +11,7 @@ from linebot.models import (
 )
 from linebot.models.actions import MessageAction;
 from linebot.models.template import (
-    TemplateSendMessage, ButtonsTemplate, CarouselTemplate, CarouselColumn
+    TemplateSendMessage, QuickReplyButton, CarouselTemplate, CarouselColumn, QuickReply
 )
 
 class GetResponse:
@@ -90,25 +90,37 @@ class GetResponse:
         specAction = []
         specAction.append(MessageAction(label="spec",text='spec'))
         specAction.append(MessageAction(label="spec nimble",text='spec nimble'))
-        specAction.append(MessageAction(label="spec 3par 8200",text='spec 3par 8200'))
+        specAction.append(MessageAction(label="spec rome 7262",text='spec rome 7262'))
         #Lookup Help Menu
         lookUpTitle = 'lookup :Search product\'s model by spec'
         lookUpText = 'Tip: lookup [product] [spec] [value]\nOr tab below to start'
         lookUpAction = []
         lookUpAction.append(MessageAction(label="lookup",text='lookup'))
         lookUpAction.append(MessageAction(label="lookup milan",text='lookup milan'))
-        lookUpAction.append(MessageAction(label="lookup msa",text='lookup msa'))
+        lookUpAction.append(MessageAction(label="lookup rome core 64",text='lookup msa'))
         # Create Column List for Carosel
         columnList = []
         columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=specTitle, text=specText, actions=specAction))
         columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
         carousel_template = CarouselTemplate(columns=columnList)
-
-        helpMessage = TemplateSendMessage(
+        #Create QuickReply ButtonList
+        specIcon = 'https://github.com/WarotAsawa/pengo/blob/master/public/img/spec_icon.png'
+        lookupIcon = 'https://github.com/WarotAsawa/pengo/blob/master/public/img/lookup_icon.png'
+        buttonList = [];
+        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec", text="spec")))
+        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec nimble", text="spec nimble")))
+        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec primera A630", text="spec primera A630")))
+        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec rome 7262 ", text="spec rome 7262")))
+        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup", text="lookup")))
+        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup cooperlake", text="lookup cooperlake")))
+        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup milan clock", text="lookup milan clock")))
+        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
+        quickReply=QuickReply(items=buttonList)
+        helpCarousel = TemplateSendMessage(
             alt_text='Help Wizard support only on Mobile',
             template=carousel_template
         )
-        return [TextSendMessage(text=GetResponse.allResponse["help"]),helpMessage]
+        return [TextSendMessage(text=GetResponse.allResponse["help"]),helpCarousel,quickReply]
 
     #Generate spec output
     @staticmethod
