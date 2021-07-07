@@ -248,7 +248,7 @@ class GetResponse:
 
             #Get Product's Field List
             specList = GetResponse.GetArrayFromCSV('./data/'+selectedProduct+".csv")
-            for i in range(0,len(specList[0])):
+            for i in range(1,len(specList[0])):
                 field = str(specList[0][i])
                 fieldList.append(field)
                 
@@ -256,11 +256,11 @@ class GetResponse:
         if (len(words) > 2):
             errorMessage = GetResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"lookUp " + selectedProduct + "\" or Select one of these field:\n"
             for i in range(len(fieldList)):
-                field = fileList[i]
+                field = fieldList[i]
                 errorMessage = errorMessage + field + " "
                 if words[2] == field.strip().lower():
                     selectedField = field
-                    fieldIndex = i
+                    fieldIndex = i+1
 
             #If No matched Field, return Error Message Else got Field List
             if selectedField == "":
