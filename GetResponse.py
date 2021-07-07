@@ -99,8 +99,8 @@ class GetResponse:
         columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
         carousel_template = CarouselTemplate(columns=columnList)
         #Create QuickReply ButtonList
-        specIcon = 'https://github.com/WarotAsawa/pengo/blob/master/public/img/spec_icon.png'
-        lookupIcon = 'https://github.com/WarotAsawa/pengo/blob/master/public/img/lookup_icon.png'
+        specIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_icon.png'
+        lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
         buttonList = [];
         buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec", text="spec")))
         buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec nimble", text="spec nimble")))
