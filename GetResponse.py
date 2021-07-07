@@ -95,8 +95,8 @@ class GetResponse:
         lookUpAction.append(MessageAction(label="lookup rome core 64",text='lookup msa'))
         # Create Column List for Carosel
         columnList = []
-        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=specTitle, text=specText, actions=specAction))
-        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
+        columnList.append(CarouselColumn(thumbnail_image_url =imgURL, title=specTitle, text=specText, actions=specAction))
+        columnList.append(CarouselColumn(thumbnail_image_url =imgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
         carousel_template = CarouselTemplate(columns=columnList)
         helpCarousel = TemplateSendMessage(
             alt_text='Help Wizard support only on Mobile',
@@ -106,14 +106,14 @@ class GetResponse:
         specIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_icon.png'
         lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
         buttonList = [];
-        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec", text="spec")))
-        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec nimble", text="spec nimble")))
-        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec primera A630", text="spec primera A630")))
-        buttonList.append(QuickReplyButton(imageUrl=specIcon, action=MessageAction(label="spec rome 7262 ", text="spec rome 7262")))
-        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup", text="lookup")))
-        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup cooperlake", text="lookup cooperlake")))
-        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup milan clock", text="lookup milan clock")))
-        buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
+        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec", text="spec")))
+        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec nimble", text="spec nimble")))
+        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec primera A630", text="spec primera A630")))
+        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec rome 7262 ", text="spec rome 7262")))
+        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup", text="lookup")))
+        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup cooperlake", text="lookup cooperlake")))
+        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup milan clock", text="lookup milan clock")))
+        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
         quickReply=QuickReply(items=buttonList)
         
         return [
