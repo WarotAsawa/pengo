@@ -1,7 +1,8 @@
-model,Nodes,CPU per node,Max On Node Cache,16Gbps FC Ports,10Gbps iSCSI Ports,Number of HDD,Number of SSD,Max Raw Capacity,Max SSD Raw Capacity
-A630,2,1 x 10 Core CPU,256 GiB,0 to 16 ports,0 to 16 ports,0,144,250 TiB,250 TiB
-A650,2 or 4,2 x 10 Core CPU,1 TiB,0 to 48 ports,0 to 48 ports,0,384,1600 TiB,1600 TiB
-A670,2 or 4,2 x 20 Core CPU,2 or 4 TiB,0 to 48 ports,0 to 48 ports,0,576,3200 TiB,3200 TiB
-C630,2,1 x 10 Core CPU,256 GiB,0 to 16 ports,0 to 16 ports,240,144,750 TiB,250 TiB
-C650,2 or 4,2 x 10 Core CPU,1 TiB,0 to 48 ports,0 to 48 ports,576,384,2000 TiB,1600 TiB
-C670,2 to 4,2 x 20 Core CPU,2 or 4 TiB,0 to 48 ports,0 to 48 ports,960,576,4000 TiB,3200 TiB
+model,Nodes,CPU-per-node,Cache-per-Node,16Gb-FC,32Gb-FC,10Gb-iSCSI,Max-HDD,Max-SSD,Max-Raw,Max-SSD-Raw
+unit,Nodes,,GiB,Ports,Ports,Ports,HDD,SSD,TiB,TiB
+A630,2,1 x 10 Core CPU,128,16,16,16,0,144,250,250
+A650,4,2 x 10 Core CPU,256,48,48,48,0,384,1600,1600
+A670,4,2 x 20 Core CPU,1024,48,48,48,0,576,3200,3200
+C630,2,1 x 10 Core CPU,128,16,16,16,240,144,750,250
+C650,4,2 x 10 Core CPU,256,48,48,48,576,384,2000,1600
+C670,4,2 x 20 Core CPU,1024,48,48,48,960,576,4000,3200

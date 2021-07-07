@@ -1,14 +1,15 @@
-model,Form Factor,Max Total Capacity(RAW),Max Total Capacity (Usable after raid),Write Performance (VTL),Read Performance (VTL),StoreOnce Catalyst Transfer rate,I/O standard,Disk drives,Number of Disk Drives,RAID Support,Max target,Max Drives/Stream,Max Number of Cartridges Emulated,Max VTL cartridges per Library,FAN-in limit
-vsa,Virtual appliance,4 or 10 or 20 or 32 or 50 TB,4 or 10 or 20 or 32 or 50 TBB,3.0 TB/hr,Up to 1.8 TB/hr,Up to 12 TB/hr,2 x vNICs and 8 Gb FC1,NA,NA,NA,NA,NA,8192,NA,NA
-vsa4,Virtual appliance,500 TB,500 TB,13.0 TB/hr,9.0 TB/hr,36 TB/hr,2 x vNICs and 8 Gb FC1,NA,NA,NA,32,256,"131,072","4,096",8
-3100,1U,8 TB,5.5 TB,1.6 TB/hr,1.4 TB/hr,6.4 TB/hr,4 x 1 GbE,2 TB,4,Hardware RAID 5,8,49,768,96,8
-3520,2U,24 TB,15.5 TB,4.6 TB/hr,4.1 TB/hr,12.7 TB/hr,4 x 1 GbE,2 TB,12,Hardware RAID 6,24,96,24576,"1,024",24
-3540,2U,48 TB,31.5 TB,4.6 TB/hr,4.1 TB/hr,12.7 TB/hr,4 x 1 GbE,4 TB,12,Hardware RAID 6,32,96,24576,"4,096",24
-5100,2 to 12U scalable rack,288 TB,216 TB,13.8 TB/hr,14.2 TB/hr,26.7 TB/hr,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,32,128,32768,"4,096",24
-5500,7 to 22U scalable rack,1120 TB,864 TB,20.4 TB/hr,14.8 TB/hr,37.7 TB/hr,4 x 1 GbE,4 TB,15 (min) 280 (max),Hardware RAID 6,50,192,819200,"4,096",50
-6600,Provided in 42U 1075mm rack,2240 TB,1728 TB,151.2 TB/hr,128.8 TB/hr,184 TB/hr,4 x 1 GbE,4 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,NA,NA,6553600,NA,NA
-3620,2U,48 TB,31.5 TB,6 TB/hr,5 TB/hr,14 TB/hr,4 x 1 GbE,4 TB,12,Hardware RAID 6,24,128,"24,576","1,024",24
-3640,2U to 6U,144 TB,108 TB,7 TB/hr,6 TB/hr,18 TB/hr,4 x 1 GbE,4 TB,12,Hardware RAID 6,36,192,"147,456","4,096",24
-5200,2 to 12U scalable rack,288 TB,216 TB,17 TB/hr,17 TB/hr,31 TB/hr,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,64,512,"1,048,576","16,384",32
-5250,7 to 22U scalable rack,1120 TB,1120 TB,22 TB/hr,18 TB/hr,41 TB/hr,4 x 1 GbE,4 TB / 8 TB,15 (min) 280 (max),Hardware RAID 6,64,512,"1,048,576","16,384",32
-5650,Provided in 42U 1075mm rack,2240 TB,2240 TB,27 TB/hr,18 TB/hr,47 TB/hr,4 x 1 GbE,4 TB / 8 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,128,1024,"3,145,728","16,384",50
+model,Form-Factor,Max-Raw-Capacity,Max-Usable-after-raid,Write-Performance-(VTL),Read-Performance-(VTL),StoreOnce-Catalyst-Transfer-rate,I/O-standard,Disk-drives,No-of-Disk-Drives,RAID-Support,Max-target,Max-Stream,No-of-Cartridges,Cartridges-per-Library,FAN-in-limit
+unit,,TB,TB,TB/hr,TB/hr,TB/hr,,,,,,,,,
+vsa,Virtual appliance,50,50,3,1.8,12,2 x vNICs and 8 Gb FC1,NA,NA,NA,NA,NA,8192,NA,NA
+vsa4,Virtual appliance,500,500,13,9,36,2 x vNICs and 8 Gb FC1,NA,NA,NA,32,256,"131,072","4,096",8
+3100,1U,8,5.5,1.6,1.4,6.4,4 x 1 GbE,2 TB,4,Hardware RAID 5,8,49,768,96,8
+3520,2U,24,15.5,4.6,4.1,12.7,4 x 1 GbE,2 TB,12,Hardware RAID 6,24,96,24576,"1,024",24
+3540,2U,48,31.5,4.6,4.1,12.7,4 x 1 GbE,4 TB,12,Hardware RAID 6,32,96,24576,"4,096",24
+5100,2 to 12U scalable rack,288,216,13.8,14.2,26.7,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,32,128,32768,"4,096",24
+5500,7 to 22U scalable rack,1120,864,20.4,14.8,37.7,4 x 1 GbE,4 TB,15 (min) 280 (max),Hardware RAID 6,50,192,819200,"4,096",50
+6600,Provided in 42U 1075mm rack,2240,1728,151.2,128.8,184,4 x 1 GbE,4 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,NA,NA,6553600,NA,NA
+3620,2U,48,31.5,6,5,14,4 x 1 GbE,4 TB,12,Hardware RAID 6,24,128,"24,576","1,024",24
+3640,2U to 6U,144,108,7,6,18,4 x 1 GbE,4 TB,12,Hardware RAID 6,36,192,"147,456","4,096",24
+5200,2 to 12U scalable rack,288,216,17,17,31,4 x 1 GbE,4 TB,12 to 72 (max),Hardware RAID 6,64,512,"1,048,576","16,384",32
+5250,7 to 22U scalable rack,1120,1120,22,18,41,4 x 1 GbE,4 TB / 8 TB,15 (min) 280 (max),Hardware RAID 6,64,512,"1,048,576","16,384",32
+5650,Provided in 42U 1075mm rack,2240,2240,27,18,47,4 x 1 GbE,4 TB / 8 TB,30 (min) 140 (max) Per Couplet,Hardware RAID 6,128,1024,"3,145,728","16,384",50

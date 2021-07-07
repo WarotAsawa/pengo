@@ -1,9 +1,11 @@
-model,Access Type,Form Factor,Controllers Per Array,FC Host Connectively,iSCSI Host Connectively,SAS Host Connectivity,Data cache + system memory,RAID Levels supported Virtual,Raid Levels supported Linear,NEBS,Max expansion drive enclosures,SFF/LFF array/enclosure mixing,Drive enclosure interface type,Max HDDs/SSDs per array,SSDs integration
-1040,Block,SFF and LFF,2,8Gb,1/10Gb,6/12Gb,6GB,1 5 6 10,0 1 3 5 6 10 50,Yes,3,Supported,6Gb SAS,99SFF / 48LFF,NA
-2040,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,6GB,1 5 6 10,0 1 3 5 6 10 50,Yes,7,Supported,6Gb SAS,199SFF / 96LFF,NA
-2042,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,6GB,1 5 6 10,0 1 3 5 6 10 50,Yes,7,Supported,6Gb SAS,199SFF / 96LFF,2 x 400GB MU
-2050,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,8GB,1 5 6 10,Not Supported,Yes,7,Supported,6Gb SAS,192SFF/96LFF,NA
-2052,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,8GB,1 5 6 10,Not Supported,Yes,7,Supported,6Gb SAS,192SFF/96LFF,2 x 800GB MU
-1060,Block,SFF and LFF,2,16Gb,1/10Gb,12Gb,24GB,1 5 6 10 DP+,Not Supported,Yes,3,Supported,12Gb SAS,96SFF/36LFF,NA
-2060,Block,SFF and LFF,2,16Gb,10Gb,12Gb,24GB,1 5 6 10 DP+,Not Supported,Yes,9,Supported,12Gb SAS,240SFF / 120LFF,NA
-2062,Block,SFF and LFF,2,16Gb,10Gb,12Gb,24GB,1 5 6 10 DP+,Not Supported,Yes,9,Supported,12Gb SAS,240SFF / 120LFF,2 x 1.92TB RI
+model,Access-Type,Form-Factor,Controller,FC-Ports,iSCSI-Host-Connectively,SAS-Host-Connectivity,Memory,Virtual-RAID,Linear-RAID,NEBS,Max-Shelf,Mix-SFF-LFF,SAS-Backend,Max-Drives,Installed-SSDs
+unit,,,,,,,GB,,,,,,,,
+1040,Block,SFF and LFF,2,8Gb,1/10Gb,6/12Gb,6,1 5 6 10,0 1 3 5 6 10 50,Yes,3,Supported,6Gb SAS,99SFF / 48LFF,NA
+2040,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,6,1 5 6 10,0 1 3 5 6 10 50,Yes,7,Supported,6Gb SAS,199SFF / 96LFF,NA
+2042,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,6,1 5 6 10,0 1 3 5 6 10 50,Yes,7,Supported,6Gb SAS,199SFF / 96LFF,2 x 400GB MU
+2050,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,8,1 5 6 10,Not Supported,Yes,7,Supported,6Gb SAS,192SFF/96LFF,NA
+2052,Block,SFF and LFF,2,8/16Gb,1/10Gb,6/12Gb,8,1 5 6 10,Not Supported,Yes,7,Supported,6Gb SAS,192SFF/96LFF,2 x 800GB MU
+1060,Block,SFF and LFF,2,16Gb,1/10Gb,12Gb,24,1 5 6 10 DP+,Not Supported,Yes,3,Supported,12Gb SAS,96SFF/36LFF,NA
+2060,Block,SFF and LFF,2,16Gb,10Gb,12Gb,24,1 5 6 10 DP+,Not Supported,Yes,9,Supported,12Gb SAS,240SFF / 120LFF,NA
+2062,Block,SFF and LFF,2,16Gb,10Gb,12Gb,24,1 5 6 10 DP+,Not Supported,Yes,9,Supported,12Gb SAS,240SFF / 120LFF,2 x 1.92TB RI
+,,,,,,,,,,,,,,,

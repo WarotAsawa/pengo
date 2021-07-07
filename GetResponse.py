@@ -41,7 +41,9 @@ class GetResponse:
     allResponse["really"] = ["Indeed,s.","Oh sure.","Yes!"]
     allResponse["fuck"] = ["No F word ,please.","You should said Firetruck instead.","Please be polite!"]
     allResponse["joke"] = ["I would tell you a chemistry joke but I know I wouldnt get a reaction.","Why dont some couples go to the gym? Because some relationships dont work out.","I wondered why the baseball was getting bigger. Then it hit me.","Have you ever tried to eat a clock? It is very time consuming.","The experienced carpenter really nailed it,but the new guy screwed everything up.","Did you hear about the guy whose whole left side was cut off? He is all right now.","Yesterday I accidentally swallowed some food coloring. The doctor says I am OK,but I feel like I have dyed a little inside.","I wasnt originally going to get a brain transplant,but then I changed my mind.","A guy was admitted to hospital with 8 plastic horses in his stomach. His condition is now stable.."," If a wild pig kills you,does it mean you’ve been boared to death?","You cry,I cry,…you laugh,I laugh…you jump off a cliff I laugh even harder!!","Never steal. The government hates competition.","Doesn’t expecting the unexpected make the unexpected expected?","Practice makes perfect but then nobody is perfect so what’s the point of practicing?","Everybody wishes they could go to heaven but no one wants to die.","Why are they called apartments if they are all stuck together?","DON’T HIT KIDS!!! No,seriously,they have guns now.","Save paper,don’t do home work.","Do not drink and drive or you might spill the drink.","Life is Short – Talk Fast!","Why do stores that are open 24/7 have locks on their doors?","When nothing goes right,Go left.","Save water ,do not shower.","A Lion would never cheat on his wife but a Tiger Wood.","Why do they put pizza in a square box?"]
-    
+    allResponse["errorWord"] =["Please give me a valid input.","No, I am too dumb to do that.","Please try again.","I do not get that.","You mad? ","You have to ask me again."]
+    allResponse["preAnswer"] = ["Ok Ok Ok.","This looks hardish, but I am smart enought to do this.","Piece of cake!.","Oh too easy.","You will thank me for this later.","Here you go.","There you go.","Here is you answers."]
+    #Create 2D Array from CSV File
     @staticmethod
     def GetArrayFromCSV(fileName):
         with open('file.csv', newline='') as f:
@@ -49,11 +51,36 @@ class GetResponse:
             data = list(reader)
             return data
 
+    #Get Random string from allResponse via key
     @staticmethod
     def GetRandomResponseFromKeys(key):
         i = random.randint(0, len(GetResponse.allResponse[key])-1 )
         return GetResponse.allResponse[key][i]
 
+    #Generate Spec Reply String
+    @staticmethod
+    def GenerateSpecAnswers(specList, selectedProduct, selectedModel):
+        fieldList = specList[0];
+        unitList = specList[1];
+        index = 0;
+        #Prepare string response
+        response = GetResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
+        response = response + "Here is the Spec of : " + selectedProduct + " " + selectedModel + "\n"
+
+        for i in range(2,len(specList)):
+            model = specList[i][0]
+            if selectedModel == model:
+                index = i
+                break
+        if i==0: return "ERROR Occur: Something is wrong"
+        for i in range(1,len(fieldList)):
+            response = response + fieldList[i].replace("-", " ")
+            response = response + " : "
+            response = response + unitList[i] + " " + str(specList[index][i]) + "\n"
+        return response;
+    
+
+    #Generate help output
     @staticmethod
     def GenerateHelp():
         buttonTemplate = ButtonsTemplate(
@@ -76,26 +103,69 @@ class GetResponse:
             alt_text='Help Wizard support only on Mobile',
             template=buttonTemplate
         )
-        return buttonMessage
+        return [TextSendMessage(text=GetResponse.allResponse["help"]),buttonMessage]
 
+    #Generate spec output
     @staticmethod
-    def GenerateSpec():
+    def GenerateSpec(words):
         fileList = os.listdir('./data')
         productList = [];
+        modelList = [];
+        specList = [];
+        selectedProduct = ""
+        selectedModel = ""
+        #Get All Product Name from Directory
         for file in fileList:
             name = file.split('.')
             productList.append(name[0])
+        #Check if Product name is valide and output error
+        if (len(words) > 1):
+            errorMessage = GetResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec\" or Select one of these product:\n"
+            for product in productList:
+                errorMessage = errorMessage + "\n - " + product;
+                if words[1] == product.strip().lower():
+                    selectedProduct = product
+            return [TextSendMessage(text=errorMessage)]
+        #Check if Model name is valide and output error
+        if (len(words) > 2):
+            specList = GetResponse.GetArrayFromCSV('./data/'+selectedProduct+".pv")
+            errorMessage = GetResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec " + selectedProduct + "\" or Select one of these model:\n"
+            for i in range(2,len(specList)):
+                model = str(specList[i][0])
+                modelList.append(model)
+                errorMessage = errorMessage + model + " "
+                if words[2] == model.strip().lower():
+                    selectedModel = model
+            return [TextSendMessage(text=errorMessage)]
+        
+        #Create Carosel Colume base on product or Model
         columnList = []
-        for i in range(int(math.ceil(len(productList)/3))):
+        loopList = []
+        textPreFix = ""
+        title = ""
+        #Check if command is completed
+        if selectedProduct != "" and selectedModel != "":
+            GetResponse.GenerateSpecAnswers(specList, selectedProduct, selectedModel)
+            return TextSendMessage(text=errorMessage)
+        #check command's len to prepare return message
+        if (len(words) == 2):
+            loopList = modelList
+            textPreFix = "spec " + selectedProduct
+            title = "Choose Your Model"
+        elif (len(words) == 1):
+            loopList = productList
+            textPreFix = "spec"
+            title = "Choose Your Product"
+        for i in range(int(math.ceil(len(loopList)/3))):
             actions = []
             for j in range(i*3,(i*3)+3):
                 if j >= 30:
                     break
-                if j >= len(productList):
-                    actions.append(MessageAction(label=" ",text='spec'))
+                if j >= len(loopList):
+                    actions.append(MessageAction(label=" ",text=textPreFix))
                 else:
-                    actions.append(MessageAction(label=productList[j][0:12],text='spec ' + productList[j]))
-            columnList.append(CarouselColumn(text='Page '+str(i+1), title='Choose Your Product', actions=actions))
+                    actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
+            columnList.append(CarouselColumn(text='Page '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
 
         specMessage = TemplateSendMessage(
@@ -104,11 +174,12 @@ class GetResponse:
         )
         return specMessage
 
+    #Everything Start Here . Except Main
     @staticmethod
     def SendByInput(line_bot_api: LineBotApi,token, input):
         lowerInput = input.lower()
         trimmedInput = lowerInput.strip()
-        words = trimmedInput.split(' ')
+        words = str.split(trimmedInput)
         response = ""
         if "help" in words:
             if "spec" in words:
@@ -116,12 +187,10 @@ class GetResponse:
             elif "lookup" in words:
                 response = GetResponse.allResponse["helplookup"]
             else:
-                response = GetResponse.allResponse["help"]
-                line_bot_api.reply_message(token,[TextSendMessage(text=response),GetResponse.GenerateHelp()])
+                line_bot_api.reply_message(token,GetResponse.GenerateHelp())
                 return
         elif "spec" in words:
-            if len(words) == 1:
-                line_bot_api.reply_message(token,GetResponse.GenerateSpec())
+            line_bot_api.reply_message(token,GetResponse.GenerateSpec(), words)
         elif "hello" in words or "hi" in words or "greet" in words:
             response = GetResponse.GetRandomResponseFromKeys('hello')
         elif "thank" in words:
