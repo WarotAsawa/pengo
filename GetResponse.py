@@ -83,27 +83,32 @@ class GetResponse:
     #Generate help output
     @staticmethod
     def GenerateHelp():
-        buttonTemplate = ButtonsTemplate(
-            thumbnail_image_url='https://warotasawa.files.wordpress.com/2020/07/how2.png',
-            title='Help Me!',
-            image_aspect_ratio = 'square',
-            text="Tab each feature to guide you",
-            actions=[
-                MessageAction(
-                    label='spec',
-                    text='spec'
-                ),
-                MessageAction(
-                    label='lookup',
-                    text='lookup'
-                )
-            ]
-        )
-        buttonMessage = TemplateSendMessage(
+        imgURL = 'https://warotasawa.files.wordpress.com/2020/07/how2.png'
+        #Spec Help Menu
+        specTitle = 'spec (Show detail of product\'s model)'
+        specText = 'Tip: spec [product] [model]\nOr tab below to start'
+        specAction = []
+        specAction.append(MessageAction(label="spec",text='spec'))
+        specAction.append(MessageAction(label="spec nimble",text='spec nimble'))
+        specAction.append(MessageAction(label="spec 3par 8200",text='spec 3par 8200'))
+        #Lookup Help Menu
+        lookUpTitle = 'lookup (Search product\'s model that match)'
+        lookUpText = 'Tip: lookup [product] [spec] [value]\nOr tab below to start'
+        lookUpAction = []
+        lookUpAction.append(MessageAction(label="lookup",text='lookup'))
+        lookUpAction.append(MessageAction(label="lookup milan",text='lookup milan'))
+        lookUpAction.append(MessageAction(label="lookup msa",text='lookup msa'))
+        # Create Column List for Carosel
+        columnList = []
+        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=specTitle, text=specText, actions=specActions))
+        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=lookUpTitle, text=lookUpText, actions=specActions))
+        carousel_template = CarouselTemplate(columns=columnList)
+
+        helpMessage = TemplateSendMessage(
             alt_text='Help Wizard support only on Mobile',
-            template=buttonTemplate
+            template=carousel_template
         )
-        return [TextSendMessage(text=GetResponse.allResponse["help"]),buttonMessage]
+        return [TextSendMessage(text=GetResponse.allResponse["help"]),helpMessage]
 
     #Generate spec output
     @staticmethod
@@ -158,7 +163,7 @@ class GetResponse:
         #check command's len to prepare return message
         if (len(words) == 2):
             loopList = modelList
-            textPreFix = "spec " + selectedProduct
+            textPreFix = "spec " + selectedProduct + " "
             title = "Choose Your Model"
         elif (len(words) == 1):
             loopList = productList
