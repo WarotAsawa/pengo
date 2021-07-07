@@ -151,6 +151,10 @@ class GetResponse:
             if selectedModel == "":
                 return [TextSendMessage(text=errorMessage)]
         
+        #Set Column and Item Limit
+        maxColumn = 10
+        ActionPerColumn = 3
+        maxAction = maxColumn * ActionPerColumn
         #Create Carosel Colume base on product or Model
         columnList = []
         loopList = []
@@ -169,11 +173,11 @@ class GetResponse:
             loopList = productList
             textPreFix = "spec "
             title = "Choose Your Product"
-        for i in range(int(math.ceil(len(loopList)/3))):
+        for i in range(int(math.ceil(len(loopList)/ActionPerColumn))):
+            if i >= maxColumn: break
             actions = []
-            for j in range(i*3,(i*3)+3):
-                if j >= 30:
-                    break
+            for j in range(i*ActionPerColumn,(i*ActionPerColumn)+ActionPerColumn):
+                if j >= maxAction: break
                 if j >= len(loopList):
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
