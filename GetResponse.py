@@ -76,7 +76,7 @@ class GetResponse:
         for i in range(1,len(fieldList)):
             response = response + fieldList[i].replace("-", " ")
             response = response + " : "
-            response = response + unitList[i] + " " + str(specList[index][i]) + "\n"
+            response = response + str(specList[index][i]) + " " + unitList[i] + "\n"
         return response;
     
 
