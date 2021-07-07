@@ -12,6 +12,8 @@ from linebot.models import (
 class GetResponse:
     #LINE Limitation
     maxQuickReply = 13
+    maxCarouselColumn = 10
+    maxActionPerColumn = 3
     #Icons Image URL
     specIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_icon.png'
     lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
@@ -76,7 +78,7 @@ class GetResponse:
                 break
         if i==0: return TextSendMessage(text=GetResponse.GetRandomResponseFromKeys('errorWord'))
         for i in range(1,len(fieldList)):
-            response = response + fieldList[i].replace("\n -", " ")
+            response = response + "\n" + fieldList[i].replace("-", " ")
             response = response + " : "
             response = response + str(specList[index][i]) + " " + unitList[i]
         return TextSendMessage(text=response);
@@ -101,14 +103,16 @@ class GetResponse:
                 count = count + 1
             if value not in uniqueValue:
                 uniqueValue.append(value)
+        #Add quickreply for spec for match model
         for i in range(len(allMatchModel)):
             if i >= GetResponse.maxQuickReply: break
             specText = "spec " + selectedProduct + " " + allMatchModel[i]
-            buttonList.append(QuickReplyButton(image_url=GetResponse.lookupIcon, action=MessageAction(label=allMatchModel[i], text=specText)))
+            buttonList.append(QuickReplyButton(image_url=GetResponse.specIcon, action=MessageAction(label=allMatchModel[i], text=specText)))
 
         if count == 0:
             response = GetResponse.GetRandomResponseFromKeys('errorWord') + "\n"
             response = response + "Cannot find any model of : " + selectedProduct + ", which " + fieldList[fieldIndex] + " is " + selectedValue + " " + unitList[fieldIndex];
+            #Add quickreply for lookup for other value
             buttonList = []
             for i in range(len(uniqueValue)):
                 if i >= GetResponse.maxQuickReply: break
@@ -117,7 +121,7 @@ class GetResponse:
         
         quickReply=QuickReply(items=buttonList)
         #Print Carousel follow with Tips and Quick Reply
-        return [TextSendMessage(text=response, quick_reply=quickReply)]
+        return TextSendMessage(text=response, quick_reply=quickReply)
 
     #Generate help output
     @staticmethod
@@ -203,9 +207,7 @@ class GetResponse:
                 return [TextSendMessage(text=errorMessage)]
         
         #Set Column and Item Limit
-        maxColumn = 10
-        ActionPerColumn = 3
-        maxAction = maxColumn * ActionPerColumn
+        maxAction = GetResponse.maxCarouselColumn * GetResponse.maxActionPerColumn
         #Create Carosel Colume base on product or Model
         columnList = []
         loopList = []
@@ -224,10 +226,10 @@ class GetResponse:
             loopList = productList
             textPreFix = "spec "
             title = "Choose Your Product"
-        for i in range(int(math.ceil(len(loopList)/ActionPerColumn))):
-            if i >= maxColumn: break
+        for i in range(int(math.ceil(len(loopList)/GetResponse.maxActionPerColumn))):
+            if i >= GetResponse.maxCarouselColumn: break
             actions = []
-            for j in range(i*ActionPerColumn,(i*ActionPerColumn)+ActionPerColumn):
+            for j in range(i*GetResponse.maxActionPerColumn,(i*GetResponse.maxActionPerColumn)+GetResponse.maxActionPerColumn):
                 if j >= maxAction: break
                 if j >= len(loopList):
                     actions.append(MessageAction(label=". . .",text=textPreFix))
@@ -301,9 +303,7 @@ class GetResponse:
                 selectedValue = selectedValue + words[i] + " "
             selectedValue = selectedValue.strip().lower()
         #Set Column and Item Limit
-        maxColumn = 10
-        ActionPerColumn = 3
-        maxAction = maxColumn * ActionPerColumn
+        maxAction = GetResponse.maxCarouselColumn * GetResponse.maxActionPerColumn
         #Create Carosel Colume base on product or Model or Field
         columnList = []
         loopList = []
@@ -312,7 +312,7 @@ class GetResponse:
         #Check if command is completed
         if selectedProduct != "" and selectedField != "" and selectedValue != "":
             lookUpResponse = GetResponse.GenerateLookUpAnswers(specList, selectedProduct, fieldIndex, selectedValue)
-            return TextSendMessage(text=lookUpResponse)
+            return lookUpResponse
         #check command's len to prepare return message
         if (len(words) == 3):
             loopList = valueList
@@ -326,10 +326,10 @@ class GetResponse:
             loopList = productList
             textPreFix = "lookUp "
             title = "Choose Your Product"
-        for i in range(int(math.ceil(len(loopList)/ActionPerColumn))):
-            if i >= maxColumn: break
+        for i in range(int(math.ceil(len(loopList)/GetResponse.maxActionPerColumn))):
+            if i >= GetResponse.maxCarouselColumn: break
             actions = []
-            for j in range(i*ActionPerColumn,(i*ActionPerColumn)+ActionPerColumn):
+            for j in range(i*GetResponse.maxActionPerColumn,(i*GetResponse.maxActionPerColumn)+GetResponse.maxActionPerColumn):
                 if j >= maxAction: break
                 if j >= len(loopList):
                     actions.append(MessageAction(label=". . .",text=textPreFix))
