@@ -17,6 +17,8 @@ class GetResponse:
     #Icons Image URL
     specIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_icon.png'
     lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
+    specImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_image.png'
+    lookupImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_image.png'
     helpImgURL = 'https://warotasawa.files.wordpress.com/2020/07/how2.png'
     #Response String
     allResponse = {};
@@ -142,8 +144,8 @@ class GetResponse:
         lookUpAction.append(MessageAction(label="lookup rome core 64",text='lookup msa'))
         # Create Column List for Carosel
         columnList = []
-        columnList.append(CarouselColumn(thumbnail_image_url =GetResponse.helpImgURL, title=specTitle, text=specText, actions=specAction))
-        columnList.append(CarouselColumn(thumbnail_image_url =GetResponse.helpImgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
+        columnList.append(CarouselColumn(thumbnail_image_url =GetResponse.specImage, title=specTitle, text=specText, actions=specAction))
+        columnList.append(CarouselColumn(thumbnail_image_url =GetResponse.lookupImage, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
         carousel_template = CarouselTemplate(columns=columnList)
         helpCarousel = TemplateSendMessage(
             alt_text='Help Wizard support only on Mobile',
