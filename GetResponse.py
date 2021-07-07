@@ -98,6 +98,10 @@ class GetResponse:
         columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=specTitle, text=specText, actions=specAction))
         columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
         carousel_template = CarouselTemplate(columns=columnList)
+        helpCarousel = TemplateSendMessage(
+            alt_text='Help Wizard support only on Mobile',
+            template=carousel_template
+        )
         #Create QuickReply ButtonList
         specIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_icon.png'
         lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
@@ -111,11 +115,12 @@ class GetResponse:
         buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup milan clock", text="lookup milan clock")))
         buttonList.append(QuickReplyButton(imageUrl=lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
         quickReply=QuickReply(items=buttonList)
-        helpCarousel = TemplateSendMessage(
-            alt_text='Help Wizard support only on Mobile',
-            template=carousel_template
-        )
-        return [TextSendMessage(text=GetResponse.allResponse["help"]),helpCarousel,quickReply]
+        
+        return [
+            TextSendMessage(text=GetResponse.allResponse["help"]),
+            helpCarousel,
+            TextSendMessage(text='Quick Reply', quick_reply=quickReply)
+        ]
 
     #Generate spec output
     @staticmethod
