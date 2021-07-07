@@ -60,20 +60,39 @@ class GetResponse:
         index = 0;
         #Prepare string response
         response = GetResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
-        response = response + "Here is the Spec of : " + selectedProduct + " " + selectedModel + "\n"
+        response = response + "Here is the Spec of : " + selectedProduct + " " + selectedModel
 
         for i in range(2,len(specList)):
             model = specList[i][0]
             if selectedModel == model:
                 index = i
                 break
-        if i==0: return "ERROR Occur: Something is wrong"
+        if i==0: return GetResponse.GetRandomResponseFromKeys('errorWord')
         for i in range(1,len(fieldList)):
-            response = response + fieldList[i].replace("-", " ")
+            response = response + fieldList[i].replace("\n -", " ")
             response = response + " : "
-            response = response + str(specList[index][i]) + " " + unitList[i] + "\n"
+            response = response + str(specList[index][i]) + " " + unitList[i]
         return response;
     
+    #Generate Lookup Reply String
+    @staticmethod
+    def GenerateLookUpAnswers(specList, selectedProduct, fieldIndex, selectedValue):
+        fieldList = specList[0];
+        unitList = specList[1];
+        count = 0;
+        #Prepare string response
+        response = GetResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
+        response = response + "Here is the list of model of : " + selectedProduct + ", which " + fieldList[fieldIndex] + " is " + selectedValue + " " + unitList[fieldIndex];
+
+        for i in range(2,len(specList)):
+            if selectedValue == str(specList[i][fieldIndex]).lower().strip():
+                response = response + "\n - " + str(specList[i][0])
+                count = count + 1;
+
+        if count == 0:
+            response = GetResponse.GetRandomResponseFromKeys('errorWord') + "\n"
+            response = response + "Cannot find any model of : " + selectedProduct + ", which " + fieldList[fieldIndex] + " is " + selectedValue + " " + unitList[fieldIndex];
+        return response;
 
     #Generate help output
     @staticmethod
@@ -200,6 +219,108 @@ class GetResponse:
         )
         return specMessage
 
+    #Generate lookUp output
+    @staticmethod
+    def GenerateLookUp(words):
+        fileList = os.listdir('./data')
+        productList = [];
+        fieldList = [];
+        specList = [];
+        valueList = [];
+        selectedProduct = ""
+        selectedField = ""
+        selectedValue = ""
+        fieldIndex = 0
+        #Get All Product Name from Directory
+        for file in fileList:
+            name = file.split('.')
+            productList.append(name[0])
+        #Check if Product name is valide and output error
+        if (len(words) > 1):
+            errorMessage = GetResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"lookUp\" or Select one of these product:\n"
+            for product in productList:
+                errorMessage = errorMessage + "\n - " + product;
+                if words[1] == product.strip().lower():
+                    selectedProduct = product
+            #If No matched product, return Error Message Else got Model List
+            if selectedProduct == "":
+                return [TextSendMessage(text=errorMessage)]
+
+            #Get Product's Field List
+            specList = GetResponse.GetArrayFromCSV('./data/'+selectedProduct+".csv")
+            for i in range(0,len(specList[0])):
+                field = str(specList[0][i])
+                fieldList.append(field)
+                
+        #Check if Field name is valide and output error
+        if (len(words) > 2):
+            errorMessage = GetResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"lookUp " + selectedProduct + "\" or Select one of these field:\n"
+            for i in range(len(fieldList)):
+                field = fileList[i]
+                errorMessage = errorMessage + field + " "
+                if words[2] == field.strip().lower():
+                    selectedField = field
+                    fieldIndex = i
+
+            #If No matched Field, return Error Message Else got Field List
+            if selectedField == "":
+                return [TextSendMessage(text=errorMessage)]
+
+            #Get Field's Value List
+            for i in range(2,len(specList)):
+                value = str(specList[i][fieldIndex]).strip()
+                if value not in valueList:
+                    valueList.append(value)
+        
+        #Check if input already field's value
+        if (len(words) > 3):
+            for i in range(3,len(words)):
+                selectedValue = selectedValue + words[i] + " "
+            selectedValue = selectedValue.strip().lower()
+        #Set Column and Item Limit
+        maxColumn = 10
+        ActionPerColumn = 3
+        maxAction = maxColumn * ActionPerColumn
+        #Create Carosel Colume base on product or Model or Field
+        columnList = []
+        loopList = []
+        textPreFix = ""
+        title = ""
+        #Check if command is completed
+        if selectedProduct != "" and selectedField != "" and selectedValue != "":
+            lookUpResponse = GetResponse.GenerateLookUpAnswers(specList, selectedProduct, fieldIndex, selectedValue)
+            return TextSendMessage(text=lookUpResponse)
+        #check command's len to prepare return message
+        if (len(words) == 3):
+            loopList = valueList
+            textPreFix = "lookUp " + selectedProduct + " " + selectedField + " "
+            title = "Choose Your Value"
+        elif (len(words) == 2):
+            loopList = fieldList
+            textPreFix = "lookUp " + selectedProduct + " "
+            title = "Choose Your Field"
+        elif (len(words) == 1):
+            loopList = productList
+            textPreFix = "lookUp "
+            title = "Choose Your Product"
+        for i in range(int(math.ceil(len(loopList)/ActionPerColumn))):
+            if i >= maxColumn: break
+            actions = []
+            for j in range(i*ActionPerColumn,(i*ActionPerColumn)+ActionPerColumn):
+                if j >= maxAction: break
+                if j >= len(loopList):
+                    actions.append(MessageAction(label=". . .",text=textPreFix))
+                else:
+                    actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
+            columnList.append(CarouselColumn(text='Page '+str(i+1), title=title, actions=actions))
+        carousel_template = CarouselTemplate(columns=columnList)
+
+        lookUpMessage = TemplateSendMessage(
+            alt_text='LookUp Wizard support only on Mobile',
+            template=carousel_template
+        )
+        return lookUpMessage
+
     #Everything Start Here . Except Main
     @staticmethod
     def SendByInput(line_bot_api: LineBotApi,token, input):
@@ -217,6 +338,8 @@ class GetResponse:
                 return
         elif "spec" in words:
             line_bot_api.reply_message(token,GetResponse.GenerateSpec(words))
+        elif "lookup" in words:
+            line_bot_api.reply_message(token,GetResponse.GenerateLookUp(words))
         elif "hello" in words or "hi" in words or "greet" in words:
             response = GetResponse.GetRandomResponseFromKeys('hello')
         elif "thank" in words:
