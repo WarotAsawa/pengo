@@ -125,7 +125,8 @@ class GetResponse:
                 errorMessage = errorMessage + "\n - " + product;
                 if words[1] == product.strip().lower():
                     selectedProduct = product
-            return [TextSendMessage(text=errorMessage)]
+            if selectedProduct == "":
+                return [TextSendMessage(text=errorMessage)]
         #Check if Model name is valide and output error
         if (len(words) > 2):
             specList = GetResponse.GetArrayFromCSV('./data/'+selectedProduct+".pv")
@@ -136,7 +137,8 @@ class GetResponse:
                 errorMessage = errorMessage + model + " "
                 if words[2] == model.strip().lower():
                     selectedModel = model
-            return [TextSendMessage(text=errorMessage)]
+            if selectedModel == "":
+                return [TextSendMessage(text=errorMessage)]
         
         #Create Carosel Colume base on product or Model
         columnList = []
@@ -154,7 +156,7 @@ class GetResponse:
             title = "Choose Your Model"
         elif (len(words) == 1):
             loopList = productList
-            textPreFix = "spec"
+            textPreFix = "spec "
             title = "Choose Your Product"
         for i in range(int(math.ceil(len(loopList)/3))):
             actions = []
