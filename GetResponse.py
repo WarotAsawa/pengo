@@ -46,7 +46,7 @@ class GetResponse:
     #Create 2D Array from CSV File
     @staticmethod
     def GetArrayFromCSV(fileName):
-        with open('file.csv', newline='') as f:
+        with open(fileName+'.csv', newline='') as f:
             reader = csv.reader(f)
             data = list(reader)
             return data
@@ -125,18 +125,24 @@ class GetResponse:
                 errorMessage = errorMessage + "\n - " + product;
                 if words[1] == product.strip().lower():
                     selectedProduct = product
+            #If No matched product, return Error Message Else got Model List
             if selectedProduct == "":
                 return [TextSendMessage(text=errorMessage)]
-        #Check if Model name is valide and output error
-        if (len(words) > 2):
+
+            #Get Product's Model List
             specList = GetResponse.GetArrayFromCSV('./data/'+selectedProduct+".pv")
-            errorMessage = GetResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec " + selectedProduct + "\" or Select one of these model:\n"
             for i in range(2,len(specList)):
                 model = str(specList[i][0])
                 modelList.append(model)
+                
+        #Check if Model name is valide and output error
+        if (len(words) > 2):
+            errorMessage = GetResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec " + selectedProduct + "\" or Select one of these model:\n"
+            for model in modelList:
                 errorMessage = errorMessage + model + " "
                 if words[2] == model.strip().lower():
                     selectedModel = model
+            #If No matched model, return Error Message Else got Model List
             if selectedModel == "":
                 return [TextSendMessage(text=errorMessage)]
         
