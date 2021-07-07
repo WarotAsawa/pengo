@@ -46,7 +46,7 @@ class GetResponse:
     #Create 2D Array from CSV File
     @staticmethod
     def GetArrayFromCSV(fileName):
-        with open(fileName+'.csv', newline='') as f:
+        with open(fileName, newline='') as f:
             reader = csv.reader(f)
             data = list(reader)
             return data
@@ -130,7 +130,7 @@ class GetResponse:
                 return [TextSendMessage(text=errorMessage)]
 
             #Get Product's Model List
-            specList = GetResponse.GetArrayFromCSV('./data/'+selectedProduct+".pv")
+            specList = GetResponse.GetArrayFromCSV('./data/'+selectedProduct+".csv")
             for i in range(2,len(specList)):
                 model = str(specList[i][0])
                 modelList.append(model)
