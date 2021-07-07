@@ -85,14 +85,14 @@ class GetResponse:
     def GenerateHelp():
         imgURL = 'https://warotasawa.files.wordpress.com/2020/07/how2.png'
         #Spec Help Menu
-        specTitle = 'spec (Show detail of product\'s model)'
+        specTitle = 'spec :Show detail of product\'s model'
         specText = 'Tip: spec [product] [model]\nOr tab below to start'
         specAction = []
         specAction.append(MessageAction(label="spec",text='spec'))
         specAction.append(MessageAction(label="spec nimble",text='spec nimble'))
         specAction.append(MessageAction(label="spec 3par 8200",text='spec 3par 8200'))
         #Lookup Help Menu
-        lookUpTitle = 'lookup (Search product\'s model that match)'
+        lookUpTitle = 'lookup :Search product\'s model by spec'
         lookUpText = 'Tip: lookup [product] [spec] [value]\nOr tab below to start'
         lookUpAction = []
         lookUpAction.append(MessageAction(label="lookup",text='lookup'))
@@ -175,7 +175,7 @@ class GetResponse:
                 if j >= 30:
                     break
                 if j >= len(loopList):
-                    actions.append(MessageAction(label=" ",text=textPreFix))
+                    actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
                     actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
             columnList.append(CarouselColumn(text='Page '+str(i+1), title=title, actions=actions))
