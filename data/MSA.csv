@@ -8,4 +8,4 @@ unit,,,,,,,GB,,,,,,,,
 1060,Block,SFF and LFF,2,16Gb,1/10Gb,12Gb,24,1 5 6 10 DP+,Not Supported,Yes,3,Supported,12Gb SAS,96SFF/36LFF,NA
 2060,Block,SFF and LFF,2,16Gb,10Gb,12Gb,24,1 5 6 10 DP+,Not Supported,Yes,9,Supported,12Gb SAS,240SFF / 120LFF,NA
 2062,Block,SFF and LFF,2,16Gb,10Gb,12Gb,24,1 5 6 10 DP+,Not Supported,Yes,9,Supported,12Gb SAS,240SFF / 120LFF,2 x 1.92TB RI
-,,,,,,,,,,,,,,,
+\
