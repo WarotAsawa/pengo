@@ -100,8 +100,8 @@ class GetResponse:
         lookUpAction.append(MessageAction(label="lookup msa",text='lookup msa'))
         # Create Column List for Carosel
         columnList = []
-        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=specTitle, text=specText, actions=specActions))
-        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=lookUpTitle, text=lookUpText, actions=specActions))
+        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=specTitle, text=specText, actions=specAction))
+        columnList.append(CarouselColumn(thumbnailImageUrl=imgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
         carousel_template = CarouselTemplate(columns=columnList)
 
         helpMessage = TemplateSendMessage(
