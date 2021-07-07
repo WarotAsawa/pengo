@@ -10,6 +10,13 @@ from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
 class GetResponse:
+    #LINE Limitation
+    maxQuickReply = 13
+    #Icons Image URL
+    specIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_icon.png'
+    lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
+    helpImgURL = 'https://warotasawa.files.wordpress.com/2020/07/how2.png'
+    #Response String
     allResponse = {};
     allResponse["help"] = "You can see what I can do listed on the Carousel above. Tap on each item or you quick reply below for example"
     allResponse["helpspec"] = "Type \"spec\" for wizard or use or use \nspec [productname] [model] \n ex: \n - spec 3par 8200\n - spec nimble af20"
@@ -67,37 +74,54 @@ class GetResponse:
             if selectedModel == model:
                 index = i
                 break
-        if i==0: return GetResponse.GetRandomResponseFromKeys('errorWord')
+        if i==0: return TextSendMessage(text=GetResponse.GetRandomResponseFromKeys('errorWord'))
         for i in range(1,len(fieldList)):
             response = response + fieldList[i].replace("\n -", " ")
             response = response + " : "
             response = response + str(specList[index][i]) + " " + unitList[i]
-        return response;
+        return TextSendMessage(text=response);
     
     #Generate Lookup Reply String
     @staticmethod
     def GenerateLookUpAnswers(specList, selectedProduct, fieldIndex, selectedValue):
-        fieldList = specList[0];
-        unitList = specList[1];
-        count = 0;
+        fieldList = specList[0]
+        unitList = specList[1]
+        count = 0
         #Prepare string response
         response = GetResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
         response = response + "Here is the list of model of : " + selectedProduct + ", which " + fieldList[fieldIndex] + " is " + selectedValue + " " + unitList[fieldIndex];
-
+        uniqueValue = []
+        allMatchModel = []
+        buttonList = []
         for i in range(2,len(specList)):
-            if selectedValue == str(specList[i][fieldIndex]).lower().strip():
+            value = str(specList[i][fieldIndex]).lower().strip()
+            if selectedValue == value:
                 response = response + "\n - " + str(specList[i][0])
-                count = count + 1;
+                allMatchModel.append(str(specList[i][0]))
+                count = count + 1
+            if value not in uniqueValue:
+                uniqueValue.append(value)
+        for i in range(len(allMatchModel)):
+            if i >= GetResponse.maxQuickReply: break
+            specText = "spec " + selectedProduct + " " + allMatchModel[i]
+            buttonList.append(QuickReplyButton(image_url=GetResponse.lookupIcon, action=MessageAction(label=allMatchModel[i], text=specText)))
 
         if count == 0:
             response = GetResponse.GetRandomResponseFromKeys('errorWord') + "\n"
             response = response + "Cannot find any model of : " + selectedProduct + ", which " + fieldList[fieldIndex] + " is " + selectedValue + " " + unitList[fieldIndex];
-        return response;
+            buttonList = []
+            for i in range(len(uniqueValue)):
+                if i >= GetResponse.maxQuickReply: break
+                lookupText = "lookup " + selectedProduct + " " + fieldList[fieldIndex] + " " + uniqueValue[i]
+                buttonList.append(QuickReplyButton(image_url=GetResponse.lookupIcon, action=MessageAction(label=uniqueValue[i], text=lookupText)))
+        
+        quickReply=QuickReply(items=buttonList)
+        #Print Carousel follow with Tips and Quick Reply
+        return [TextSendMessage(text=response, quick_reply=quickReply)]
 
     #Generate help output
     @staticmethod
     def GenerateHelp():
-        imgURL = 'https://warotasawa.files.wordpress.com/2020/07/how2.png'
         #Spec Help Menu
         specTitle = 'spec :Show detail of product\'s model'
         specText = 'Tip: spec [product] [model]\nOr tab below to start'
@@ -114,25 +138,24 @@ class GetResponse:
         lookUpAction.append(MessageAction(label="lookup rome core 64",text='lookup msa'))
         # Create Column List for Carosel
         columnList = []
-        columnList.append(CarouselColumn(thumbnail_image_url =imgURL, title=specTitle, text=specText, actions=specAction))
-        columnList.append(CarouselColumn(thumbnail_image_url =imgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
+        columnList.append(CarouselColumn(thumbnail_image_url =GetResponse.helpImgURL, title=specTitle, text=specText, actions=specAction))
+        columnList.append(CarouselColumn(thumbnail_image_url =GetResponse.helpImgURL, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
         carousel_template = CarouselTemplate(columns=columnList)
         helpCarousel = TemplateSendMessage(
             alt_text='Help Wizard support only on Mobile',
             template=carousel_template
         )
         #Create QuickReply ButtonList
-        specIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_icon.png'
-        lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
+        
         buttonList = [];
-        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec", text="spec")))
-        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec nimble", text="spec nimble")))
-        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec primera A630", text="spec primera A630")))
-        buttonList.append(QuickReplyButton(image_url=specIcon, action=MessageAction(label="spec rome 7262 ", text="spec rome 7262")))
-        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup", text="lookup")))
-        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup cooperlake", text="lookup cooperlake")))
-        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup milan clock", text="lookup milan clock")))
-        buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.specIcon, action=MessageAction(label="spec", text="spec")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.specIcon, action=MessageAction(label="spec nimble", text="spec nimble")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.specIcon, action=MessageAction(label="spec primera A630", text="spec primera A630")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.specIcon, action=MessageAction(label="spec rome 7262 ", text="spec rome 7262")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.lookupIcon, action=MessageAction(label="lookup", text="lookup")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.lookupIcon, action=MessageAction(label="lookup cooperlake", text="lookup cooperlake")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.lookupIcon, action=MessageAction(label="lookup milan clock", text="lookup milan clock")))
+        buttonList.append(QuickReplyButton(image_url=GetResponse.lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
         quickReply=QuickReply(items=buttonList)
         
         #Print Carousel follow with Tips and Quick Reply
@@ -191,7 +214,7 @@ class GetResponse:
         #Check if command is completed
         if selectedProduct != "" and selectedModel != "":
             specResponse = GetResponse.GenerateSpecAnswers(specList, selectedProduct, selectedModel)
-            return TextSendMessage(text=specResponse)
+            return specResponse
         #check command's len to prepare return message
         if (len(words) == 2):
             loopList = modelList
