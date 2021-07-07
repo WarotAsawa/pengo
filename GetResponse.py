@@ -11,7 +11,7 @@ from linebot.models import (
 )
 class GetResponse:
     allResponse = {};
-    allResponse["help"] = "Ask for help in each feature for more details for each feature ex: help spec, help lookup.\nYou can type full command spec or lookup or select one of each command to begin the wizard"
+    allResponse["help"] = "You can see what I can do listed on the Carousel above. Tap on each item or you quick reply below for example"
     allResponse["helpspec"] = "Type \"spec\" for wizard or use or use \nspec [productname] [model] \n ex: \n - spec 3par 8200\n - spec nimble af20"
     allResponse["helplookup"] =  "Type \"lookup\" for wizard or use or use \nlookup [productname] [attribute] [value] \n ex: \n - lookup intel core 20\n - lookup amd clock 3.3"
     allResponse["helptips"] = ["Ask me for 'help' to see what I can do for you","Want to learn how to talk to me? Ask me for 'help'.","Ask for 'help' to see how smart I am."]
@@ -116,11 +116,8 @@ class GetResponse:
         buttonList.append(QuickReplyButton(image_url=lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
         quickReply=QuickReply(items=buttonList)
         
-        return [
-            TextSendMessage(text=GetResponse.allResponse["help"]),
-            helpCarousel,
-            TextSendMessage(text='Quick Reply', quick_reply=quickReply)
-        ]
+        #Print Carousel follow with Tips and Quick Reply
+        return [helpCarousel,TextSendMessage(text=GetResponse.allResponse["help"], quick_reply=quickReply)]
 
     #Generate spec output
     @staticmethod
