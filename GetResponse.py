@@ -7,13 +7,8 @@ from linebot import (
     LineBotApi
 )
 from linebot.models import (
-    TextSendMessage
+    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
-from linebot.models.actions import MessageAction;
-from linebot.models.template import (
-    TemplateSendMessage, QuickReplyButton, CarouselTemplate, CarouselColumn, QuickReply
-)
-
 class GetResponse:
     allResponse = {};
     allResponse["help"] = "Ask for help in each feature for more details for each feature ex: help spec, help lookup.\nYou can type full command spec or lookup or select one of each command to begin the wizard"
