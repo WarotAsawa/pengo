@@ -5,4 +5,5 @@ class ImageConst:
     lookupIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_icon.png'
     specImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/spec_image.png'
     lookupImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_image.png'
+    helpIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/help_icon.png'
     
