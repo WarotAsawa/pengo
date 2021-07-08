@@ -10,7 +10,8 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
-from lib.GetResponse import GetResponse;
+sys.path.insert(0, './pengo')
+from GetResponse import GetResponse;
 
 app = Flask(__name__)
 
