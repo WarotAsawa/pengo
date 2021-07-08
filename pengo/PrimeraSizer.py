@@ -32,7 +32,7 @@ class PrimeraSizer:
         raid6SetSize = 12
         spareTB = diskSize * 2
         rawTB = diskSize * diskCount
-
+        spareRatio = 0.07
         #Check drive input
         if diskCount < 8 or diskCount%2 == 1:
             print("Please input diskcount as even number > 8")
@@ -42,8 +42,9 @@ class PrimeraSizer:
         if diskCount < 12: raid6SetSize = diskCount
 
         #Config Spare
-        if (diskSize * diskCount * 0.1) > spareTB:
-            spareTB = diskSize * diskCount * 0.1;
+        if diskSize < 3.84: spareRatio = 0.1
+        if (diskSize * diskCount * spareRatio) > spareTB:
+            spareTB = diskSize * diskCount * spareRatio;
 
         usableTB = (rawTB - spareTB - PrimeraSizer.systemOverheadTB) * (raid6SetSize - 2) / raid6SetSize
 
@@ -60,7 +61,7 @@ class PrimeraSizer:
         while True:
             #If result is bigger that Primera supported return 0
             if driveResult * diskSize > 3200: return 0
-            if driveResult > 3200: return 0
+            if driveResult > 576: return 0
 
             #CHeck if usable is enough
             ans = PrimeraSizer.GetTBUsable(diskSize, driveResult)
@@ -150,18 +151,18 @@ class PrimeraSizer:
             try:
                 required = float(words[2])
             except ValueError:
-                return PrimeraSizer.GenerateExampleCarousel("Please input float value between 0 and 2721") 
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             if required <= 0 or required > 2721.29:  
-                return PrimeraSizer.GenerateExampleCarousel("Please input float value between 0 and 2721") 
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = "TB", required = required)
         elif len(words) > 3:
             required = 0.0
             try:
                 required = float(words[2])
             except ValueError:
-                return PrimeraSizer.GenerateExampleCarousel("Please input float value between 0 and 2721") 
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             if required <= 0 or required > 2721.29:  
-                return PrimeraSizer.GenerateExampleCarousel("Please input float value between 0 and 2721") 
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             #Check if unit is tb or tib
             unit = words[3].lower()
             unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
