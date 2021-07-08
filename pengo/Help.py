@@ -54,6 +54,6 @@ class Help:
         buttonList = [];
         buttonList.append(QuickReplyButton(image_url=ImageConst.helpIcon, action=MessageAction(label="help", text="help")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.specIcon, action=MessageAction(label="spec", text="spec")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.specIcon, action=MessageAction(label="lookup", text="lookup")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label="lookup", text="lookup")))
         quickReply=QuickReply(items=buttonList)
         return quickReply
