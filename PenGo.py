@@ -10,7 +10,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
-
+sys.path.insert(0, './lib')
 from GetResponse import GetResponse;
 
 app = Flask(__name__)
