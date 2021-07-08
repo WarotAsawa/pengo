@@ -161,7 +161,7 @@ class GetResponse:
                 return [TextSendMessage(text=errorMessage)]
         
         #Set Column and Item Limit
-        maxAction = CSVOpener.maxCarouselColumn * CSVOpener.maxActionPerColumn
+        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
         #Create Carosel Colume base on product or Model
         columnList = []
         loopList = []
@@ -180,10 +180,10 @@ class GetResponse:
             loopList = productList
             textPreFix = "spec "
             title = "Choose Your Product"
-        for i in range(int(math.ceil(len(loopList)/CSVOpener.maxActionPerColumn))):
-            if i >= CSVOpener.maxCarouselColumn: break
+        for i in range(int(math.ceil(len(loopList)/LineConst.maxActionPerColumn))):
+            if i >= LineConst.maxCarouselColumn: break
             actions = []
-            for j in range(i*CSVOpener.maxActionPerColumn,(i*CSVOpener.maxActionPerColumn)+CSVOpener.maxActionPerColumn):
+            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
                 if j >= maxAction: break
                 if j >= len(loopList):
                     actions.append(MessageAction(label=". . .",text=textPreFix))
@@ -257,7 +257,7 @@ class GetResponse:
                 selectedValue = selectedValue + words[i] + " "
             selectedValue = selectedValue.strip().lower()
         #Set Column and Item Limit
-        maxAction = CSVOpener.maxCarouselColumn * CSVOpener.maxActionPerColumn
+        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
         #Create Carosel Colume base on product or Model or Field
         columnList = []
         loopList = []
@@ -280,10 +280,10 @@ class GetResponse:
             loopList = productList
             textPreFix = "lookUp "
             title = "Choose Your Product"
-        for i in range(int(math.ceil(len(loopList)/CSVOpener.maxActionPerColumn))):
-            if i >= CSVOpener.maxCarouselColumn: break
+        for i in range(int(math.ceil(len(loopList)/LineConst.maxActionPerColumn))):
+            if i >= LineConst.maxCarouselColumn: break
             actions = []
-            for j in range(i*CSVOpener.maxActionPerColumn,(i*CSVOpener.maxActionPerColumn)+CSVOpener.maxActionPerColumn):
+            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
                 if j >= maxAction: break
                 if j >= len(loopList):
                     actions.append(MessageAction(label=". . .",text=textPreFix))
