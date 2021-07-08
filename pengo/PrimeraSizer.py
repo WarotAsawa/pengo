@@ -106,7 +106,7 @@ class PrimeraSizer:
             usableTB = PrimeraSizer.GetTBUsable(ssdSize, diskCount)
             result = result + "\n"
             result = result + "Config " + str(config) + ":\n"
-            result = result + diskCount + " x " + str(ssdSize) + "TB SSD\n"
+            result = result + str(diskCount) + " x " + str(ssdSize) + "TB SSD\n"
             result = result + "Raw : " + str(round(rawTB,2)) + " TB / " + + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + " TiB\n"
             result = result + "Usable : " + str(round(usableTB,2)) + " TB / " + + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + " TiB\n"
             result = result + PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
