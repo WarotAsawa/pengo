@@ -1,13 +1,8 @@
-import csv;
-import os;
-import math
-
-
 from linebot import (
     LineBotApi
 )
 from linebot.models import (
-    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
+    TextSendMessage
 )
 from AllResponse import AllResponse
 from CSVOpener import CSVOpener
@@ -16,6 +11,7 @@ from ImageConst import ImageConst
 from Help import Help
 from Spec import Spec
 from LookUp import LookUp
+from Sizer import Sizer
 
 class GetResponse:
     
@@ -38,6 +34,8 @@ class GetResponse:
             line_bot_api.reply_message(token,Spec.GenerateSpec(words))
         elif "lookup" in words:
             line_bot_api.reply_message(token,LookUp.GenerateLookUp(words))
+        elif "size" in words:
+            line_bot_api.reply_message(token,Sizer.GenerateSizerResponse(words))
         elif "hello" in words or "hi" in words or "greet" in words:
             response = AllResponse.GetRandomResponseFromKeys('hello')
         elif "thank" in words:
