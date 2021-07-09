@@ -67,13 +67,14 @@ class NimbleAFArray():
     def GetAllSupportedModel(self):
         self.ResetCapacity
         result = ""
-        if self.rawCapacity <= 46 and len(self.ssdSetList) <= 4:
+        floorRaw = math.floor(self.rawCapacity)
+        if floorRaw <= 46 and len(self.ssdSetList) <= 4:
             result = result + "AF20 "
-        if self.rawCapacity <= 184 and len(self.ssdSetList) <= 4:
+        if floorRaw <= 184 and len(self.ssdSetList) <= 4:
             result = result + "AF40 "
-        if self.rawCapacity <= 553 and len(self.ssdSetList) <= 6:
+        if floorRaw <= 553 and len(self.ssdSetList) <= 6:
             result = result + "AF60 "
-        if self.rawCapacity <= 1106 and len(self.ssdSetList) <= 6:
+        if floorRaw <= 1106 and len(self.ssdSetList) <= 6:
             result = result + "AF80 "
         return result
 
@@ -244,8 +245,8 @@ class NimbleSizer:
         newRand = random.randint(10, 1800)
         #Check if has no answers
         if model == 'AF':
-            if convertedRequired <= 0 or convertedRequired > 820:  
-                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 820TB", model) 
+            if convertedRequired <= 0 or convertedRequired > 818:  
+                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 818TB", model) 
 
             resultArray = NimbleSizer.AFSizer(convertedRequired)
 
