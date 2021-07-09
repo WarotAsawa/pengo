@@ -20,8 +20,13 @@ class GetResponse:
     #Everything Start Here . Except Main
     @staticmethod
     def ReplySticker(line_bot_api: LineBotApi,token, input, profile):
+        response = AllResponse.GetRandomResponseFromKeys('image')
+        line_bot_api.reply_message(token,TextSendMessage(text=response, quick_reply=Help.GeneralHelp()))
+
+    @staticmethod
+    def ReplyImage(line_bot_api: LineBotApi,token, input, profile):
         line_bot_api.reply_message(token,StickerSendMessage(package_id=789,sticker_id=random.randrange(10855,10894)))
-        
+
     @staticmethod
     def SendByInput(line_bot_api: LineBotApi,token, input, profile):
         userName = profile.display_name

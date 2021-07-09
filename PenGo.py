@@ -51,6 +51,13 @@ def handle_sticker_message(event):
     #StickerSendMessage(package_id=event.message.package_id,sticker_id=event.message.sticker_id)
 
 
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_sticker_message(event):
+    profile = line_bot_api.get_profile(event.source.user_id)
+    GetResponse.ReplyImage(line_bot_api, event.reply_token, event.message.text, profile)
+    #StickerSendMessage(package_id=event.message.package_id,sticker_id=event.message.sticker_id)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
