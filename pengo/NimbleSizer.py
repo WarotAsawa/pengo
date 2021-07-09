@@ -218,7 +218,7 @@ class NimbleSizer:
         model = ""
         if len(words) > 2:
             model = words[2].strip().upper()
-            if model != 'af' and model != 'hf':
+            if model != 'AF' and model != 'HF':
                 return NimbleSizer.GenerateModelSelection()
         
         if len(words) == 2:
