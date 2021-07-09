@@ -19,7 +19,7 @@ class NimbleES3Shelf():
     def SetHDDSize(self, hddSize):
         self.hddSize = hddSize
 
-    def AddSSDCache(self, ssdSize, amount = 1):
+    def AddSSDCache(self, ssdSize, amount):
         if len(self.ssdCache) + amount < 6:
             for i in range(0,amount):
                 self.ssdCache.append(ssdSize)
@@ -81,7 +81,7 @@ class NimbleHFArray():
         totalUsable = 0
         for shelf in self.shelfList:
             totalHDD += shelf.hddSize * 21
-            totalUsable = NimbleHFArray.GetUsableFromRaw(shelf.hddSize * 21)
+            totalUsable += NimbleHFArray.GetUsableFromRaw(shelf.hddSize * 21)
             for ssd in shelf.ssdCache:
                 totalSSD += ssd
         self.rawCapacity = totalHDD
@@ -106,15 +106,15 @@ class NimbleSizer:
         #set result
         resultArray = NimbleHFArray()
         diskSizeList = [14,10,6,4,2,1]
-        for i in range (0,7):
-            for diskSize in diskSizeList:
-                raw = diskSize * 21
+        for shelfNo in range (0,7):
+            for i in range(0,len(diskSizeList)):
+                raw = diskSizeList[i] * 21
                 addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
                 #Check if sizing too Big
                 if resultArray.usableCapacity + addedUsable - requiredTB > 16.31:
                     #Check if exceed capacity is worth a shelf. Except for last shelf
-                    if i < 6: continue
-                resultArray.AddShelf(diskSize)
+                    if shelfNo < 6: continue
+                resultArray.AddShelf(diskSizeList[i])
                 break
         return resultArray
 
@@ -122,7 +122,7 @@ class NimbleSizer:
     def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF"):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier
-        result = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
 
         #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
         buttonList = [];
@@ -141,9 +141,10 @@ class NimbleSizer:
             result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "Total Usable: "      + str(resultArray.usableCapacity) + "TB / " + str(round(resultArray.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "Total SSD Cache: "   + str(resultArray.cacheCapacity) + "TB / "  + str(round(resultArray.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
-            result = result + "FDR: " + str(round(resultArray.cacheCapacity/resultArray.usableCapacity*100,2)) + "%"
+            result = result + "FDR: " + str(round(resultArray.cacheCapacity/resultArray.usableCapacity*100,2)) + "%\n"
             count = 0
             for shelf in resultArray.shelfList:
+                count = count + 1
                 result = result + "\nShelf " + str(count) + " :\n"
                 result = result + "HDD: 21x" + str(shelf.hddSize) + "TB HDD\n"
                 result = result + "Cache: "
@@ -154,7 +155,7 @@ class NimbleSizer:
                 for ssd in allSSD.keys():
                     ssdSize = float(ssd)
                     if ssdSize < 1: result = result +  allSSD[ssd] + "x" + str(math.floor(ssdSize*1000)) + "GB"
-                    else: result = result +  str(allSSD[ssd]) + "x" + str(ssdSize) + "TB"
+                    else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB"
                 result = result +  "\n"
             if resultArray.GetAllSupportedModel == "":
                 result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
