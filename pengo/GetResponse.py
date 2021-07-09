@@ -2,8 +2,10 @@ from linebot import (
     LineBotApi
 )
 from linebot.models import (
-    TextSendMessage
+    TextSendMessage, StickerSendMessage
 )
+import random
+
 from AllResponse import AllResponse
 from CSVOpener import CSVOpener
 from LineConst import LineConst
@@ -16,6 +18,10 @@ from Sizer import Sizer
 class GetResponse:
     
     #Everything Start Here . Except Main
+    @staticmethod
+    def ReplySticker(line_bot_api: LineBotApi,token, input, profile):
+        line_bot_api.reply_message(token,StickerSendMessage(package_id=789,sticker_id=random.randrange(10855,10894)))
+        
     @staticmethod
     def SendByInput(line_bot_api: LineBotApi,token, input, profile):
         userName = profile.display_name
