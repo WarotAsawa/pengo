@@ -151,7 +151,7 @@ class NimbleSizer:
     def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF"):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier
-        if convertedRequired <= 0 or convertedRequired > 1180:  
+        if convertedRequired <= 0 or convertedRequired > 1012:  
                 return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 1180TB", model) 
         result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
 
@@ -169,10 +169,18 @@ class NimbleSizer:
             model = 'HF'
         elif model == 'HF':
             resultArray = NimbleSizer.HFSizer(convertedRequired)
+
             result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "Total Usable: "      + str(resultArray.usableCapacity) + "TB / " + str(round(resultArray.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "Total SSD Cache: "   + str(resultArray.cacheCapacity) + "TB / "  + str(round(resultArray.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "FDR: " + str(round(resultArray.cacheCapacity/resultArray.usableCapacity*100,2)) + "%\n"
+            allModel = resultArray.GetAllSupportedModel();
+            if  allModel == "":
+                result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+                strSizing = str(newRand)
+                required = newRand
+            else:
+                result += "\nSupported Model: " + allModel + "\n"
             count = 0
             for shelf in resultArray.shelfList:
                 count = count + 1
@@ -188,13 +196,7 @@ class NimbleSizer:
                     if ssdSize < 1: result = result +  str(allSSD[str(ssd)]) + "x" + str(math.floor(ssdSize*1000)) + "GB"
                     else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB"
                 result = result +  "\n"
-            allModel = resultArray.GetAllSupportedModel();
-            if  allModel == "":
-                result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
-                strSizing = str(newRand)
-                required = newRand
-            else:
-                result += "Supported Model: " + allModel + "\n"
+            
         #Clear Object
         del resultArray
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + " " + str(required)+" TB")))
