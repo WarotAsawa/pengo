@@ -154,7 +154,7 @@ class NimbleSizer:
                 for ssd in allSSD.keys():
                     ssdSize = float(ssd)
                     if ssdSize < 1: result = result +  allSSD[ssd] + "x" + str(math.floor(ssdSize*1000)) + "GB"
-                    else: result = result +  allSSD[ssd] + "x" + str(ssdSize) + "TB"
+                    else: result = result +  str(allSSD[ssd]) + "x" + str(ssdSize) + "TB"
                 result = result +  "\n"
             if resultArray.GetAllSupportedModel == "":
                 result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
