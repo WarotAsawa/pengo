@@ -16,13 +16,14 @@ class NimbleES3Shelf():
     ssdCache = []
     def __init__(self, hddSize):
         self.hddSize = hddSize
+        self.ssdCache = []
         print("New ES3 Shelf created with "+str(hddSize))
 
     def SetHDDSize(self, hddSize):
         self.hddSize = hddSize
 
     def AddSSDCache(self, ssdSize, amount):
-        if len(self.ssdCache) + amount < 6:
+        if len(self.ssdCache) + amount <= 6:
             for i in range(0,amount):
                 self.ssdCache.append(ssdSize)
         print(self.ssdCache)
@@ -33,7 +34,11 @@ class NimbleHFArray():
     cacheCapacity = 0.0
     usableCapacity = 0.0
     def __init__(self):
-        print("New Array Created") 
+        print("New Array Created")
+        self.shelfList = []
+        self.rawCapacity = 0.0
+        self.cacheCapacity = 0.0
+        self.usableCapacity = 0.0
     
     @staticmethod
     def GetUsableFromRaw(raw):
