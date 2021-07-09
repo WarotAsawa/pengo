@@ -76,13 +76,13 @@ class NimbleHFArray():
         self.shelfList.append(NewShelf)
         self.ResetCapacity()
 
-        fdr = self.cacheCapacity / self.rawCapacity * 100
+        fdr = self.cacheCapacity / self.usableCapacity * 100
         #If FDR < 12 then add Minimum SSD
         if fdr < 12:
             ssdSizeList =  [0.96,1.92,3.84,7.68]
             #Add More SSD
             for ssdSize in ssdSizeList:
-                if (self.cacheCapacity + 3*ssdSize) / self.rawCapacity * 100 >= 12:
+                if (self.cacheCapacity + 3*ssdSize) / self.usableCapacity * 100 >= 12:
                     lastShelf = self.shelfList[len(self.shelfList)-1]
                     lastShelf.AddSSDCache(ssdSize,3)
 
@@ -188,10 +188,13 @@ class NimbleSizer:
                     if ssdSize < 1: result = result +  str(allSSD[str(ssd)]) + "x" + str(math.floor(ssdSize*1000)) + "GB"
                     else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB"
                 result = result +  "\n"
-            if resultArray.GetAllSupportedModel == "":
+            allModel = resultArray.GetAllSupportedModel();
+            if  allModel == "":
                 result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
                 strSizing = str(newRand)
                 required = newRand
+            else:
+                result += allModel
         #Clear Object
         del resultArray
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + " " + str(required)+" TB")))
