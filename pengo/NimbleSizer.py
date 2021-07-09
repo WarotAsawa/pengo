@@ -43,6 +43,9 @@ class NimbleHFArray():
         else: return 0
 
     def AddShelf(self, hddSize):
+
+        if len(self.shelfList) >= 7: return
+        
         NewShelf = NimbleES3Shelf(hddSize)
         if len(self.shelfList) == 0:
             #Insert First Shelf SSD
@@ -106,7 +109,7 @@ class NimbleSizer:
         #set result
         resultArray = NimbleHFArray()
         diskSizeList = [14,10,6,4,2,1]
-        for shelfNo in range (0,7):
+        for shelfNo in range (0,8):
             for i in range(0,len(diskSizeList)):
                 raw = diskSizeList[i] * 21
                 addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
