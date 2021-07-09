@@ -1,0 +1,207 @@
+import math
+import random
+from AllResponse import AllResponse
+
+from linebot.models import (
+    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
+)
+from Converter import Converter
+from LineConst import LineConst
+from ImageConst import ImageConst
+
+class NimbleSizer:
+    #Primera Overhead: Using A670 4N which provide max overhead
+    systemOverheadTB = 2.92;
+
+    #Alletra9000 Overhead
+    #systemOverhead = 6.22;
+    targetUtilization = 0.9;
+    #Max Dirve supported each node Pair
+    maxDrive = {}
+    maxDrive["A630"] = 144
+    maxDrive["A650"] = 192
+    maxDrive["A670"] = 288
+    #Max Capacity supported each node Pair
+    maxCapacityTB = {}
+    maxCapacityTB["A630"] = 250
+    maxCapacityTB["A650"] = 800
+    maxCapacityTB["A670"] = 1600
+
+    #Available SSD Size
+    ssdSizeList = [1.92, 3.84, 7.68, 15.36]
+
+    @staticmethod
+    def GetTBUsable(diskSize: float, diskCount: int):
+        
+        #Config Spare
+        if diskSize < 3.84: spareRatio = 0.1
+        #Set Chunklet Overhead per drive
+        if diskSize > 1.92 and diskSize < 15:
+            diskSize = diskSize - 0.001
+        elif diskSize > 15: 
+            diskSize = diskSize - 0.313
+
+        #Defalt R6 size = 10+2 = 12
+        raid6SetSize = 12
+        spareTB = diskSize * 2
+        rawTB = diskSize * diskCount
+        spareRatio = 0.07
+        #Check drive input
+        if diskCount < 8 or diskCount%2 == 1:
+            print("Please input diskcount as even number > 8")
+            return 0
+
+        #Adjust RAID6 size
+        if diskCount < 12: raid6SetSize = diskCount
+
+        if (diskSize * diskCount * spareRatio) > spareTB:
+            spareTB = diskSize * diskCount * spareRatio;
+
+        usableTB = (rawTB - spareTB - NimbleSizer.systemOverheadTB) * (raid6SetSize - 2) / raid6SetSize
+
+        return usableTB
+    
+    @staticmethod
+    def SearchDiskCount(diskSize, usableTB):
+        
+        #Get Raw from Usable and multiply by 1.3
+        driveResult = (usableTB/diskSize*1.3)
+        #Get highest even num
+        driveResult = math.floor(driveResult/2)*2
+        
+        while True:
+            #If result is bigger that Primera supported return 0
+            if driveResult * diskSize > 3200: return 0
+            if driveResult > 576: return 0
+
+            #CHeck if usable is enough
+            ans = NimbleSizer.GetTBUsable(diskSize, driveResult)
+            if ans >= usableTB:
+                return driveResult
+            
+            #Add Drive + 2 but if drive > 288 + 4 since it is 4 Node Configuration
+            if driveResult >= 288:
+                driveResult = driveResult + 4
+            else:
+                driveResult = driveResult + 2                
+
+    @staticmethod
+    def GetSupportedModelFromConfig(config, diskCount):
+        result = "Supported Model:"
+        
+        return result
+
+    @staticmethod
+    def GenerateNimbleSizeAnswers(unit = "TB", required = 50.0):
+        multiplier = Converter.TBToUnitMultipler(unit)
+        convertedRequired = required * multiplier
+        result = AllResponse.GetRandomResponseFromKeys('preAnswer')
+
+        #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
+        buttonList = [];
+        TB100 = "TB"
+        TiB100 = "TiB"
+        TB90 = "TB @90%"
+        TiB90 = "TiB @90%"
+        strSizing = str(math.floor(required))
+        newRand = random.randint(10, 1800)
+        #Check if has no answers
+        if config == []:
+            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+            strSizing = str(newRand)
+            required = newRand
+
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(required)+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(required)+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size primera "+str(math.ceil(required/0.9))+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size primera "+str(math.ceil(required/0.9))+" TiB")))
+
+        quickReply=QuickReply(items=buttonList)
+
+        return TextSendMessage(text=result, quick_reply=quickReply)
+        #, quick_reply=quickReply)
+
+    @staticmethod
+    def GenerateExampleCarousel(title, mode):
+        title = title
+        textPreFix = "size primera "
+        exampleList = ["10 TB", "100 TB", "150 TiB", "200.5 TiB", "500 TB", "1000 TiB"]
+        columnList = []
+        #Set Column and Item Limit
+        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
+        #check command's len to prepare return message
+        for i in range(int(math.ceil(len(exampleList)/LineConst.maxActionPerColumn))):
+            if i >= LineConst.maxCarouselColumn: break
+            actions = []
+            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
+                if j >= maxAction: break
+                if j >= len(exampleList):
+                    actions.append(MessageAction(label=". . .",text=textPreFix))
+                else:
+                    actions.append(MessageAction(label=exampleList[j][0:12],text=textPreFix + exampleList[j]))
+            columnList.append(CarouselColumn(text='Usage\nsize primera [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
+        carousel_template = CarouselTemplate(columns=columnList)
+        carousel = TemplateSendMessage(
+            alt_text='Sizing Wizard support only on Mobile',
+            template=carousel_template
+        )
+        return carousel
+
+    @staticmethod
+    def GenerateModelSelection():
+        title = "Please Select Nimble Model"
+        textPreFix = "size nimble "
+        exampleList = ["AF", "HF"]
+        columnList = []
+        
+        actions = []
+        actions.append(MessageAction(label="AF",text=textPreFix + "AF"))
+        actions.append(MessageAction(label="HF",text=textPreFix + "HF"))
+        columnList.append(CarouselColumn(text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\n', title=title, actions=actions))
+        carousel_template = CarouselTemplate(columns=columnList)
+        carousel = TemplateSendMessage(
+            alt_text='Sizing Wizard support only on Mobile',
+            template=carousel_template
+        )
+        return carousel
+
+    @staticmethod
+    def GenerateNimbleSizer(words):
+        model = ""
+        if len(words) > 2:
+            model = words[2].strip().lower()
+            if model != 'af' and model != 'hf':
+                return NimbleSizer.GenerateModelSelection()
+        
+        if len(words) == 2:
+            return NimbleSizer.GenerateModelSelection()
+        elif len(words) == 3:
+            return NimbleSizer.GenerateExampleCarousel("Primera Sizer Example", model)
+        elif len(words) == 4:
+            required = 0.0
+            try:
+                required = float(words[3])
+            except ValueError:
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
+            if required <= 0 or required > 1180:  
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
+            return NimbleSizer.GeneratePrimeraSizeAnswers(unit = "TB", required = required)
+        elif len(words) > 4:
+            required = 0.0
+            try:
+                required = float(words[2])
+            except ValueError:
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
+            if required <= 0 or required > 2721.29:  
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
+            #Check if unit is tb or tib
+            unit = words[3].lower()
+            unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
+            if unit not in unitCheck:
+                return NimbleSizer.GenerateExampleCarousel("Please input unit as TB or TiB") 
+            return NimbleSizer.GeneratePrimeraSizeAnswers(unit = unit, required = required)
+
+
+
+
+        

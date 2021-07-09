@@ -24,7 +24,7 @@ class Help:
         lookUpAction.append(MessageAction(label="lookup milan",text='lookup milan'))
         lookUpAction.append(MessageAction(label="lookup rome core 64",text='lookup rome core 64'))
         #Sizer Help Menu
-        sizeTitle = 'size :Quick Sizing for each supported product'
+        sizeTitle = 'size :Quick Sizing for each product'
         sizeText = 'Tip: size [product]\nOr tab below to start'
         sizeAction = []
         sizeAction.append(MessageAction(label="size",text='size'))
