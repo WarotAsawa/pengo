@@ -1,7 +1,5 @@
 import math
 import random
-from typing_extensions import Required
-from AllResponse import AllResponse
 
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
@@ -10,6 +8,8 @@ from Converter import Converter
 from LineConst import LineConst
 from ImageConst import ImageConst
 from CSVOpener import CSVOpener
+from AllResponse import AllResponse
+
 
 class NimbleES3Shelf():
     hddSize=0
@@ -26,7 +26,7 @@ class NimbleES3Shelf():
                 self.ssdCache.append(ssdSize)
 
 class NimbleHFArray():
-    shelfList = [NimbleES3Shelf]
+    shelfList = []
     rawCapacity = 0.0
     cacheCapacity = 0.0
     usableCapacity = 0.0
