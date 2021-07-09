@@ -237,11 +237,11 @@ class NimbleSizer:
         elif len(words) > 4:
             required = 0.0
             try:
-                required = float(words[2])
+                required = float(words[-])
             except ValueError:
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
             if required <= 0 or required > 1180:  
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
             #Check if unit is tb or tib
             unit = words[3].lower()
             unitCheck = ["tb","tib"]
