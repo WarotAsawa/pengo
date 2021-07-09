@@ -136,10 +136,10 @@ class PrimeraSizer:
             result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
             strSizing = str(math.floor(random.randint(10, 1800)))
 
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(required)+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(required)+" TiB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size primera "+str(math.ceil(required/0.9))+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size primera "+str(math.ceil(required/0.9))+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(strSizing)+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(strSizing)+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size primera "+str(math.ceil(strSizing/0.9))+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size primera "+str(math.ceil(strSizing/0.9))+" TiB")))
 
         quickReply=QuickReply(items=buttonList)
 
