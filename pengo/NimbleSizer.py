@@ -107,7 +107,7 @@ class NimbleSizer:
         resultArray = NimbleHFArray()
         diskSizeList = [14,10,6,4,2,1]
         for i in range (0,7):
-            for diskSize in diskSize:
+            for diskSize in diskSizeList:
                 addedUsable =  NimbleHFArray.GetUsableFromRaw(diskSize * 21)
                 #Check if sizing too Big
                 if resultArray.usableCapacity + addedUsable - requiredTB > 16.31:
