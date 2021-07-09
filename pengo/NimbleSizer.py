@@ -30,7 +30,7 @@ class NimbleHFArray():
     cacheCapacity = 0
     usableCapacity = 0
     def __init__(self):
-        return "Nimble is craeted"
+        return 
     
     @staticmethod
     def GetUsableFromRaw(self,raw):
