@@ -173,7 +173,7 @@ class NimbleSizer:
             #If small config
             diffCapacity = resultArray.usableCapacity - requiredTB
             #Replace 42+21 with 84 for Better Price
-            if shelfNo == 6 or diffCapacity >= -16.55:
+            if shelfNo == 6 or diffCapacity >= -17.55:
                 for i in range(0,len(incDiskSizeList)):
                     raw = incDiskSizeList[i] * 24
                     addedUsable =  NimbleAFArray.GetUsableFromRaw(raw)
@@ -189,7 +189,7 @@ class NimbleSizer:
                     print(addedUsable)
                     #Replace 24x0.48 + 24*0.96 with 24*1.92 for Better Price
                     
-                    if diffCapacity + addedUsable <= 7.99:
+                    if diffCapacity + addedUsable <= 8.99:
                         resultArray.AddSet(diskSizeList[i])
                         break
                    
@@ -262,9 +262,9 @@ class NimbleSizer:
             for ssd in resultArray.ssdSetList:
                 #Print only 2 set per shelfs
                 if count%2==0:
-                    result = result + "\n\nShelf " + str(count/2 +1) + ":\nSSD A: "
+                    result = result + "\nShelf " + str(round(count/2) +1) + ":\nSSD A: "
                 else:
-                    result = result + "\nSSD B: "
+                    result = result + "SSD B: "
                 size = ssd
                 unit = "TB"
                 if size < 1: size = math.floor(size*1000); unit="GB"
