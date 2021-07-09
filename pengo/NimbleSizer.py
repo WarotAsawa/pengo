@@ -191,7 +191,7 @@ class NimbleSizer:
                     print(addedUsable)
                     #Replace 24x0.48 + 24*0.96 with 24*1.92 for Better Price
                     
-                    if diffCapacity + addedUsable <= diskOverSize[i]:
+                    if diffCapacity + addedUsable <= 16.54:
                         resultArray.AddSet(diskSizeList[i])
                         break
                    
