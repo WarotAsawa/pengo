@@ -31,6 +31,14 @@ class PrimeraSizer:
 
     @staticmethod
     def GetTBUsable(diskSize, diskCount):
+        
+        #Config Spare
+        if diskSize < 3.84: spareRatio = 0.1
+        #Set Chunklet Overhead per drive
+        if diskSize == 3.84: diskSize = 3.839
+        elif diskSize == 7.68: diskSize = 7.679
+        elif diskSize == 15.36: diskSize = 15.047
+
         #Defalt R6 size = 10+2 = 12
         raid6SetSize = 12
         spareTB = diskSize * 2
@@ -43,13 +51,6 @@ class PrimeraSizer:
 
         #Adjust RAID6 size
         if diskCount < 12: raid6SetSize = diskCount
-
-        #Config Spare
-        if diskSize < 3.84: spareRatio = 0.1
-        #Set Chunklet Overhead per drive
-        if diskSize == 3.84: diskSize = 3.839
-        elif diskSize == 7.68: diskSize = 7.679
-        elif diskSize == 15.36: diskSize = 15.047
 
         if (diskSize * diskCount * spareRatio) > spareTB:
             spareTB = diskSize * diskCount * spareRatio;
