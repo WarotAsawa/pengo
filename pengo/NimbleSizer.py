@@ -67,13 +67,13 @@ class NimbleHFArray():
         self.shelfList.append(NewShelf)
         self.ResetCapacity()
 
-        fdr = self.cacheCapacity / self.rawCapacity
+        fdr = self.cacheCapacity / self.rawCapacity * 100
         #If FDR < 12 then add Minimum SSD
         if fdr < 12:
             ssdSizeList =  [0.96,1.92,3.84,7.68]
             #Add More SSD
             for ssdSize in ssdSizeList:
-                if (self.cacheCapacity + 3*ssdSize) / self.rawCapacity >= 12:
+                if (self.cacheCapacity + 3*ssdSize) / self.rawCapacity * 100 >= 12:
                     lastShelf = self.shelfList[len(self.shelfList)-1]
                     lastShelf.AddSSDCache(ssdSize,3)
 
@@ -110,17 +110,25 @@ class NimbleSizer:
         #set result
         resultArray = NimbleHFArray()
         diskSizeList = [14,10,6,4,2,1]
-        for shelfNo in range (0,8):
-            for i in range(0,len(diskSizeList)):
-                raw = diskSizeList[i] * 21
-                addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
-                #Check if sizing too Big
-                if resultArray.usableCapacity + addedUsable - requiredTB > 16.31:
-                    #Check if exceed capacity is worth a shelf. Except for last shelf
-                    if shelfNo < 7: continue
-                    resultArray.AddShelf(diskSizeList[i])
+        incDiskSizeList = [1,2,4,6,10,14]
+        for shelfNo in range (0,7):
+            if shelfNo == 6:
+                for i in range(0,len(incDiskSizeList)):
+                    raw = diskSizeList[i] * 21
+                    addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
+                    #Check if sizing is Enough
+                    if resultArray.usableCapacity + addedUsable - requiredTB > 0:
+                        resultArray.AddShelf(diskSizeList[i])
+                        break
+            else:
+                for i in range(0,len(diskSizeList)):
+                    raw = diskSizeList[i] * 21
+                    addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
+                    #Check if sizing too Big
+                    if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31:
+                        resultArray.AddShelf(diskSizeList[i])
+                        break
                     break
-                break
         return resultArray
 
     @staticmethod
