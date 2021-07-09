@@ -16,6 +16,7 @@ class NimbleES3Shelf():
     ssdCache = []
     def __init__(self, hddSize):
         self.hddSize = hddSize
+        print("New ES3 Shelf created with "+str(hddSize))
 
     def SetHDDSize(self, hddSize):
         self.hddSize = hddSize
@@ -24,6 +25,7 @@ class NimbleES3Shelf():
         if len(self.ssdCache) + amount < 6:
             for i in range(0,amount):
                 self.ssdCache.append(ssdSize)
+        print(self.ssdCache)
 
 class NimbleHFArray():
     shelfList = []
@@ -31,7 +33,7 @@ class NimbleHFArray():
     cacheCapacity = 0.0
     usableCapacity = 0.0
     def __init__(self):
-        return 
+        print("New Array Created") 
     
     @staticmethod
     def GetUsableFromRaw(raw):
@@ -46,6 +48,7 @@ class NimbleHFArray():
 
     def AddShelf(self, hddSize):
         hddSize =math.floor(hddSize)
+        print("Nimble now has " + str(len(self.shelfList)) + " shelfs")
         if len(self.shelfList) >= 7: return
 
         NewShelf = NimbleES3Shelf(hddSize)
@@ -129,7 +132,7 @@ class NimbleSizer:
                     print(raw)
                     print(addedUsable)
                     #Check if sizing too Big
-                    if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31:
+                    if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31+33.27:
                         resultArray.AddShelf(diskSizeList[i])
                         break
         return resultArray
