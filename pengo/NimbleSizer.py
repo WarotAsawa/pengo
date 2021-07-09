@@ -176,15 +176,15 @@ class NimbleSizer:
         if len(words) == 2:
             return NimbleSizer.GenerateModelSelection()
         elif len(words) == 3:
-            return NimbleSizer.GenerateExampleCarousel("Primera Sizer Example", model)
+            return NimbleSizer.GenerateExampleCarousel("Nimble Sizer Example", model)
         elif len(words) == 4:
             required = 0.0
             try:
                 required = float(words[3])
             except ValueError:
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
             if required <= 0 or required > 1180:  
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
             return NimbleSizer.GeneratePrimeraSizeAnswers(unit = "TB", required = required)
         elif len(words) > 4:
             required = 0.0

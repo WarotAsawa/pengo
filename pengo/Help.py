@@ -41,22 +41,9 @@ class Help:
             alt_text='Help Wizard support only on Mobile',
             template=carousel_template
         )
-        #Create QuickReply ButtonList
-        
-        buttonList = [];
-        buttonList.append(QuickReplyButton(image_url=ImageConst.specIcon, action=MessageAction(label="spec", text="spec")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.specIcon, action=MessageAction(label="spec nimble", text="spec nimble")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.specIcon, action=MessageAction(label="spec rome 7262 ", text="spec rome 7262")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label="lookup", text="lookup")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label="lookup cooperlake", text="lookup cooperlake")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label="lookup rome core 64", text="lookup rome core 64")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label="size", text="size")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label="size primera", text="size primera")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label="size nimble", text="size nimble")))
-        quickReply=QuickReply(items=buttonList)
         
         #Print Carousel follow with Tips and Quick Reply
-        return [helpCarousel,TextSendMessage(text=AllResponse.allResponse["help"], quick_reply=quickReply)]
+        return [TextSendMessage(text=AllResponse.allResponse["help"]), helpCarousel]
 
     @staticmethod
     def GeneralHelp():
