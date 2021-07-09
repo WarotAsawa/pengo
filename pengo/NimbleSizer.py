@@ -1,5 +1,6 @@
 import math
 import random
+from typing_extensions import Required
 from AllResponse import AllResponse
 
 from linebot.models import (
@@ -112,6 +113,7 @@ class NimbleSizer:
         diskSizeList = [14,10,6,4,2,1]
         incDiskSizeList = [1,2,4,6,10,14]
         for shelfNo in range (0,7):
+            if resultArray.usableCapacity >= requiredTB: break
             if shelfNo == 6:
                 for i in range(0,len(incDiskSizeList)):
                     raw = diskSizeList[i] * 21
@@ -130,7 +132,6 @@ class NimbleSizer:
                     if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31:
                         resultArray.AddShelf(diskSizeList[i])
                         break
-                    break
         return resultArray
 
     @staticmethod
