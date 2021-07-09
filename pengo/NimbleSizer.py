@@ -151,6 +151,8 @@ class NimbleSizer:
     def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF"):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier
+        if convertedRequired <= 0 or convertedRequired > 1180:  
+                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 1180TB", model) 
         result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
 
         #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
@@ -262,18 +264,16 @@ class NimbleSizer:
             try:
                 required = float(words[3])
             except ValueError:
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
-            if required <= 0 or required > 1180:  
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity as float only", model) 
+
             return NimbleSizer.GenerateNimbleSizerAnswers(unit = "TB", required = required, model = model)
         elif len(words) > 4:
             required = 0.0
             try:
                 required = float(words[3])
             except ValueError:
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
-            if required <= 0 or required > 1180:  
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity as float only", model) 
+            
             #Check if unit is tb or tib
             unit = words[4].lower()
             unitCheck = ["tb","tib"]
