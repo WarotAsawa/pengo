@@ -237,7 +237,7 @@ class NimbleSizer:
         elif len(words) > 4:
             required = 0.0
             try:
-                required = float(words[-])
+                required = float(words[3])
             except ValueError:
                 return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
             if required <= 0 or required > 1180:  
