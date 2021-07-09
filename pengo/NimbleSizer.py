@@ -167,6 +167,8 @@ class NimbleSizer:
         #set result
         resultArray = NimbleAFArray()
         diskSizeList = [7.68,3.84,1.92]
+        #For remove 24x480 extra config. Oversize = 7.68 Usable - 3.84,1.92,920,480's Usable
+        diskOverSize = [10.32,9.74,9.11,8.56,0]
         incDiskSizeList = [0.48,0.96,1.92,3.84,7.68]
         for shelfNo in range (0,6):
             if resultArray.usableCapacity >= requiredTB: break
@@ -189,7 +191,7 @@ class NimbleSizer:
                     print(addedUsable)
                     #Replace 24x0.48 + 24*0.96 with 24*1.92 for Better Price
                     
-                    if diffCapacity + addedUsable <= 7.99:
+                    if diffCapacity + addedUsable <= diskOverSize[i]:
                         resultArray.AddSet(diskSizeList[i])
                         break
                    
