@@ -118,7 +118,7 @@ class NimbleSizer:
     def HFSizer(requiredTB):
         #set result
         resultArray = NimbleHFArray()
-        diskSizeList = [14,10,6,4,2,1]
+        diskSizeList = [14,10,6,4]
         incDiskSizeList = [1,2,4,6,10,14]
         for shelfNo in range (0,7):
             if resultArray.usableCapacity >= requiredTB: break
