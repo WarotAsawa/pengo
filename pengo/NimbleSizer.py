@@ -140,7 +140,8 @@ class NimbleSizer:
                     print(raw)
                     print(addedUsable)
                     #Replace 42+21 with 84 for Better Price
-                    if diffCapacity + addedUsable <= 33.27:
+                    
+                    if diffCapacity + addedUsable <= 16.31:
                         resultArray.AddShelf(diskSizeList[i])
                         break
                    
