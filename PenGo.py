@@ -47,14 +47,14 @@ def handle_message(event):
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
     profile = line_bot_api.get_profile(event.source.user_id)
-    GetResponse.ReplySticker(line_bot_api, event.reply_token, event.message.text, profile)
+    GetResponse.ReplySticker(line_bot_api, event.reply_token, profile)
     #StickerSendMessage(package_id=event.message.package_id,sticker_id=event.message.sticker_id)
 
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_sticker_message(event):
     profile = line_bot_api.get_profile(event.source.user_id)
-    GetResponse.ReplyImage(line_bot_api, event.reply_token, event.message.text, profile)
+    GetResponse.ReplyImage(line_bot_api, event.reply_token, profile)
     #StickerSendMessage(package_id=event.message.package_id,sticker_id=event.message.sticker_id)
 
 
