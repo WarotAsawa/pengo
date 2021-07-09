@@ -49,7 +49,7 @@ class NimbleAFArray():
 
     def AddSet(self, ssdSize):
         ssdSize =math.floor(ssdSize)
-        print("Nimble now has " + str(len(self.ssdSize)) + " sets")
+        print("Nimble now has " + str(len(self.ssdSetList)) + " sets")
         if len(self.ssdSetList) >= 6: return
         
         self.ssdSetList.append(ssdSize)
