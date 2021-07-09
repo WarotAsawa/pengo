@@ -26,14 +26,15 @@ class NimbleES3Shelf():
 
 class NimbleHFArray():
     shelfList = [NimbleES3Shelf]
-    rawCapacity = 0
-    cacheCapacity = 0
-    usableCapacity = 0
+    rawCapacity = 0.0
+    cacheCapacity = 0.0
+    usableCapacity = 0.0
     def __init__(self):
         return 
     
     @staticmethod
     def GetUsableFromRaw(raw):
+        raw = math.floor(raw)
         if raw == 21: return 16.31
         elif raw == 42: return 33.27
         elif raw == 84: return 67.21
@@ -87,9 +88,9 @@ class NimbleHFArray():
             totalUsable += NimbleHFArray.GetUsableFromRaw(shelf.hddSize * 21)
             for ssd in shelf.ssdCache:
                 totalSSD += ssd
-        self.rawCapacity = totalHDD
-        self.cacheCapacity = totalSSD
-        self.usableCapacity = totalUsable
+        self.rawCapacity = math.floor(totalHDD*100)/100.0
+        self.cacheCapacity = math.floor(totalSSD*100)/100.0
+        self.usableCapacity = math.floor(totalUsable*100)/100.0
 
     def GetAllSupportedModel(self):
         self.ResetCapacity;
@@ -116,8 +117,9 @@ class NimbleSizer:
                 #Check if sizing too Big
                 if resultArray.usableCapacity + addedUsable - requiredTB > 16.31:
                     #Check if exceed capacity is worth a shelf. Except for last shelf
-                    if shelfNo < 6: continue
-                resultArray.AddShelf(diskSizeList[i])
+                    if shelfNo < 7: continue
+                    resultArray.AddShelf(diskSizeList[i])
+                    break
                 break
         return resultArray
 
