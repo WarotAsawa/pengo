@@ -81,7 +81,7 @@ class NimbleHFArray():
         totalUsable = 0
         for shelf in self.shelfList:
             totalHDD += shelf.hddSize * 21
-            totalUsable = NimbleHFArray.GetUsableFromRaw(self.shelf.hddSize * 21)
+            totalUsable = NimbleHFArray.GetUsableFromRaw(shelf.hddSize * 21)
             for ssd in shelf.ssdCache:
                 totalSSD += ssd
         self.rawCapacity = totalHDD
@@ -108,7 +108,8 @@ class NimbleSizer:
         diskSizeList = [14,10,6,4,2,1]
         for i in range (0,7):
             for diskSize in diskSizeList:
-                addedUsable =  NimbleHFArray.GetUsableFromRaw(diskSize * 21)
+                raw = diskSize * 21
+                addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
                 #Check if sizing too Big
                 if resultArray.usableCapacity + addedUsable - requiredTB > 16.31:
                     #Check if exceed capacity is worth a shelf. Except for last shelf
