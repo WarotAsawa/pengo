@@ -35,9 +35,10 @@ class PrimeraSizer:
         #Config Spare
         if diskSize < 3.84: spareRatio = 0.1
         #Set Chunklet Overhead per drive
-        if diskSize == 3.84: diskSize = 3.839
-        elif diskSize == 7.68: diskSize = 7.679
-        elif diskSize == 15.36: diskSize = 15.047
+        if diskSize > 1.92:
+            diskSize = diskSize - 0.001
+        elif diskSize > 15: 
+            diskSize = diskSize - 0.313
 
         #Defalt R6 size = 10+2 = 12
         raid6SetSize = 12
