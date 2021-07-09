@@ -1,10 +1,12 @@
 import math
+from AllResponse import AllResponse
 
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
 from Converter import Converter
 from LineConst import LineConst
+from ImageConst import ImageConst
 
 class PrimeraSizer:
     #Primera Overhead: Using A670 4N which provide max overhead
@@ -100,7 +102,7 @@ class PrimeraSizer:
     def GeneratePrimeraSizeAnswers(unit = "TB", required = 50.0):
         multiplier = Converter.TBToUnitMultipler(unit)
         required = required * multiplier
-        result = ""
+        result = AllResponse.GetRandomResponseFromKeys('preAnswer')
         config = 0
         for ssdSize in PrimeraSizer.ssdSizeList:
             diskCount = PrimeraSizer.SearchDiskCount(ssdSize, required)
@@ -119,7 +121,26 @@ class PrimeraSizer:
             result = result + PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
             result = result + "\n"
 
-        return TextSendMessage(text=result)
+        #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
+        buttonList = [];
+        TB100 = "TB"
+        TiB100 = "TiB"
+        TB90 = "TB @90%"
+        TiB90 = "TiB @90%"
+        strSizing = str(math.floor(required))
+        #Check if has no answers
+        if config ==0:
+            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+            strSizing = str(math.floor(range(10, 1800)))
+
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(required)+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(required)+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size primera "+str(math.ceil(required/0.9))+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size primera "+str(math.ceil(required/0.9))+" TiB")))
+
+        quickReply=QuickReply(items=buttonList)
+
+        return TextSendMessage(text=result, quick_reply=quickReply)
         #, quick_reply=quickReply)
 
     @staticmethod
