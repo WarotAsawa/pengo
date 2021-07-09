@@ -137,9 +137,15 @@ class NimbleSizer:
                     print(raw)
                     print(addedUsable)
                     #Replace 42+21 with 84 for Better Price
-                    if requiredTB > 33.27 and resultArray.usableCapacity + addedUsable - requiredTB <= 16.31+33.27:
-                        resultArray.AddShelf(diskSizeList[i])
-                        break
+                    if requiredTB > 33.27:
+                        if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31+33.27:
+                            resultArray.AddShelf(diskSizeList[i])
+                            break
+                    else:
+                        if resultArray.usableCapacity + addedUsable - requiredTB >= 0:
+                            resultArray.AddShelf(diskSizeList[i])
+                            break
+
         return resultArray
 
     @staticmethod
