@@ -194,7 +194,7 @@ class NimbleSizer:
                 strSizing = str(newRand)
                 required = newRand
             else:
-                result += allModel
+                result += "Supported Model: " + allModel + "\n"
         #Clear Object
         del resultArray
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + " " + str(required)+" TB")))
