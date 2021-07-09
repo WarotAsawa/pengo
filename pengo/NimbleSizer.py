@@ -10,7 +10,6 @@ from ImageConst import ImageConst
 from CSVOpener import CSVOpener
 from AllResponse import AllResponse
 
-
 class NimbleES3Shelf():
     hddSize=0
     ssdCache = []
@@ -27,6 +26,57 @@ class NimbleES3Shelf():
             for i in range(0,amount):
                 self.ssdCache.append(ssdSize)
         print(self.ssdCache)
+
+class NimbleAFArray():
+    ssdSetList = []
+    rawCapacity = 0.0
+    usableCapacity = 0.0
+    def __init__(self):
+        print("New Array Created")
+        self.ssdSetList = []
+        self.rawCapacity = 0.0
+        self.usableCapacity = 0.0
+    
+    @staticmethod
+    def GetUsableFromRaw(raw):
+        raw = round(raw,3)
+        if raw == 24 * 0.480: return 7.99
+        elif raw == 24 * 0.960: return 16.55
+        elif raw == 24 * 1.92: return 33.65
+        elif raw == 24 * 3.84: return 67.93
+        elif raw == 24 * 7.68: return 136.44
+        else: return 0
+
+    def AddSet(self, ssdSize):
+        ssdSize =math.floor(ssdSize)
+        print("Nimble now has " + str(len(self.shelfList)) + " shelfs")
+        if len(self.ssdSetList) >= 6: return
+        
+        self.ssdSetList.append(ssdSize)
+        self.ResetCapacity()
+
+    def ResetCapacity(self):
+        totalSSD = 0
+        totalUsable = 0
+        for ssd in self.ssdSetList:
+            totalSSD += ssd * 24
+            totalUsable += NimbleAFArray.GetUsableFromRaw(ssd * 24)
+
+        self.rawCapacity = math.floor(totalSSD*100)/100.0
+        self.usableCapacity = math.floor(totalUsable*100)/100.0
+
+    def GetAllSupportedModel(self):
+        self.ResetCapacity
+        result = ""
+        if self.rawCapacity <= 46 and len(self.ssdSetList) <= 4:
+            result = result + "AF20 "
+        if self.rawCapacity <= 184 and len(self.ssdSetList) <= 4:
+            result = result + "AF40 "
+        if self.rawCapacity <= 553 and len(self.ssdSetList) <= 6:
+            result = result + "AF60 "
+        if self.rawCapacity <= 1106 and len(self.ssdSetList) <= 6:
+            result = result + "AF80 "
+        return result
 
 class NimbleHFArray():
     shelfList = []
@@ -113,6 +163,38 @@ class NimbleHFArray():
         return result
 
 class NimbleSizer:
+    @staticmethod
+    def AFSizer(requiredTB):
+        #set result
+        resultArray = NimbleAFArray()
+        diskSizeList = [7.68,3.84,1.92]
+        incDiskSizeList = [0.48,0.96,1.92,3.84,7.68]
+        for shelfNo in range (0,6):
+            if resultArray.usableCapacity >= requiredTB: break
+            #If small config
+            diffCapacity = resultArray.usableCapacity - requiredTB
+            #Replace 42+21 with 84 for Better Price
+            if shelfNo == 6 or diffCapacity >= -16.55:
+                for i in range(0,len(incDiskSizeList)):
+                    raw = incDiskSizeList[i] * 24
+                    addedUsable =  NimbleAFArray.GetUsableFromRaw(raw)
+                    #Check if sizing is Enough
+                    if diffCapacity + addedUsable >= 0:
+                        resultArray.AddShelf(incDiskSizeList[i])
+                        break
+            else:
+                for i in range(0,len(diskSizeList)):
+                    raw = diskSizeList[i] * 24
+                    addedUsable =  NimbleAFArray.GetUsableFromRaw(raw)
+                    print(raw)
+                    print(addedUsable)
+                    #Replace 42+21 with 84 for Better Price
+                    
+                    if diffCapacity + addedUsable <= 7.99:
+                        resultArray.AddShelf(diskSizeList[i])
+                        break
+                   
+        return resultArray
 
     @staticmethod
     def HFSizer(requiredTB):
@@ -151,8 +233,6 @@ class NimbleSizer:
     def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF"):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier
-        if convertedRequired <= 0 or convertedRequired > 1012:  
-                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 1180TB", model) 
         result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
 
         #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
@@ -165,9 +245,37 @@ class NimbleSizer:
         newRand = random.randint(10, 1800)
         #Check if has no answers
         if model == 'AF':
-            result = "This feature is not yet implemented. Please try HF Sizing these instead"
-            model = 'HF'
+            if convertedRequired <= 0 or convertedRequired > 820:  
+                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 820TB", model) 
+
+            resultArray = NimbleSizer.AFSizer(convertedRequired)
+
+            result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
+            result = result + "Total Usable: "      + str(resultArray.usableCapacity) + "TB / " + str(round(resultArray.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
+            allModel = resultArray.GetAllSupportedModel();
+            if  allModel == "":
+                result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+                strSizing = str(newRand)
+                required = newRand
+            else:
+                result += "\nSupported Model: " + allModel + "\n"
+            count = 0
+            for ssd in resultArray.ssdSetList:
+                count = count + 1
+                if count%2==0:
+                    result = result + "\n\nShelf " + str(count/2 +1) + ":\nSSD A: "
+                else:
+                    result = result + "\nSSD B: "
+                size = ssd
+                unit = "TB"
+                if size < 1: size = math.floor(size*1000); unit="GB"
+                result = result + "24 x " + str(size) + unit
+                result = result + "\n"
+
         elif model == 'HF':
+            if convertedRequired <= 0 or convertedRequired > 1012:  
+                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 1180TB", model) 
+
             resultArray = NimbleSizer.HFSizer(convertedRequired)
 
             result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
@@ -193,8 +301,8 @@ class NimbleSizer:
                     else: allSSD[str(ssd)] += 1
                 for ssd in allSSD.keys():
                     ssdSize = float(ssd)
-                    if ssdSize < 1: result = result +  str(allSSD[str(ssd)]) + "x" + str(math.floor(ssdSize*1000)) + "GB"
-                    else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB"
+                    if ssdSize < 1: result = result +  str(allSSD[str(ssd)]) + "x" + str(math.floor(ssdSize*1000)) + "GB "
+                    else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB "
                 result = result +  "\n"
             
         #Clear Object
