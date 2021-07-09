@@ -17,7 +17,8 @@ class GetResponse:
     
     #Everything Start Here . Except Main
     @staticmethod
-    def SendByInput(line_bot_api: LineBotApi,token, input):
+    def SendByInput(line_bot_api: LineBotApi,token, input, profile):
+        userName = profile.display_name
         lowerInput = input.lower()
         trimmedInput = lowerInput.strip()
         words = str.split(trimmedInput)
@@ -37,11 +38,11 @@ class GetResponse:
         elif "size" in words:
             line_bot_api.reply_message(token,Sizer.GenerateSizerResponse(words))
         elif "hello" in words or "hi" in words or "greet" in words:
-            response = AllResponse.GetRandomResponseFromKeys('hello')
+            response = AllResponse.GetRandomResponseFromKeys('hello') + " " + userName
         elif "thank" in words:
-            response = AllResponse.GetRandomResponseFromKeys('thank')
+            response = AllResponse.GetRandomResponseFromKeys('thank') + " " + userName
         elif "bye" in words:
-            response = AllResponse.GetRandomResponseFromKeys('bye')
+            response = AllResponse.GetRandomResponseFromKeys('bye') + " " + userName
         elif "why" in words:
             response = AllResponse.GetRandomResponseFromKeys('why')
         elif "when" in words:

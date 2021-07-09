@@ -40,7 +40,8 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    GetResponse.SendByInput(line_bot_api, event.reply_token, event.message.text)
+    profile = line_bot_api.get_profile(event.source.user_id)
+    GetResponse.SendByInput(line_bot_api, event.reply_token, event.message.text, profile)
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
 
 
