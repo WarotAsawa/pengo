@@ -180,7 +180,7 @@ class NimbleSizer:
                     addedUsable =  NimbleAFArray.GetUsableFromRaw(raw)
                     #Check if sizing is Enough
                     if diffCapacity + addedUsable >= 0:
-                        resultArray.AddShelf(incDiskSizeList[i])
+                        resultArray.AddSet(incDiskSizeList[i])
                         break
             else:
                 for i in range(0,len(diskSizeList)):
@@ -188,10 +188,10 @@ class NimbleSizer:
                     addedUsable =  NimbleAFArray.GetUsableFromRaw(raw)
                     print(raw)
                     print(addedUsable)
-                    #Replace 42+21 with 84 for Better Price
+                    #Replace 24x0.48 + 24*0.96 with 24*1.92 for Better Price
                     
                     if diffCapacity + addedUsable <= 7.99:
-                        resultArray.AddShelf(diskSizeList[i])
+                        resultArray.AddSet(diskSizeList[i])
                         break
                    
         return resultArray
