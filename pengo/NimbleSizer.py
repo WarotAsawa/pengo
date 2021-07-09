@@ -11,7 +11,7 @@ from ImageConst import ImageConst
 from CSVOpener import CSVOpener
 
 class NimbleES3Shelf():
-    hddSize = 1
+    hddSize=0
     ssdCache = []
     def __init__(self, hddSize):
         self.hddSize = hddSize
@@ -44,7 +44,7 @@ class NimbleHFArray():
         else: return 0
 
     def AddShelf(self, hddSize):
-
+        hddSize =math.floor(hddSize)
         if len(self.shelfList) >= 7: return
 
         NewShelf = NimbleES3Shelf(hddSize)
@@ -118,12 +118,14 @@ class NimbleSizer:
                     addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
                     #Check if sizing is Enough
                     if resultArray.usableCapacity + addedUsable - requiredTB > 0:
-                        resultArray.AddShelf(diskSizeList[i])
+                        resultArray.AddShelf(incDiskSizeList[i])
                         break
             else:
                 for i in range(0,len(diskSizeList)):
                     raw = diskSizeList[i] * 21
                     addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
+                    print(raw)
+                    print(addedUsable)
                     #Check if sizing too Big
                     if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31:
                         resultArray.AddShelf(diskSizeList[i])
