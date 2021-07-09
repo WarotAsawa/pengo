@@ -45,7 +45,7 @@ class NimbleHFArray():
     def AddShelf(self, hddSize):
 
         if len(self.shelfList) >= 7: return
-        
+
         NewShelf = NimbleES3Shelf(hddSize)
         if len(self.shelfList) == 0:
             #Insert First Shelf SSD
@@ -150,14 +150,14 @@ class NimbleSizer:
                 count = count + 1
                 result = result + "\nShelf " + str(count) + " :\n"
                 result = result + "HDD: 21x" + str(shelf.hddSize) + "TB HDD\n"
-                result = result + "Cache: "
+                result = result + "SSD Cache: "
                 allSSD = {}
                 for ssd in shelf.ssdCache:
-                    if ssd not in allSSD: allSSD[str(ssd)] = 1
+                    if str(ssd) not in allSSD: allSSD[str(ssd)] = 1
                     else: allSSD[str(ssd)] += 1
                 for ssd in allSSD.keys():
                     ssdSize = float(ssd)
-                    if ssdSize < 1: result = result +  allSSD[ssd] + "x" + str(math.floor(ssdSize*1000)) + "GB"
+                    if ssdSize < 1: result = result +  str(allSSD[str(ssd)]) + "x" + str(math.floor(ssdSize*1000)) + "GB"
                     else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB"
                 result = result +  "\n"
             if resultArray.GetAllSupportedModel == "":
@@ -165,10 +165,10 @@ class NimbleSizer:
                 strSizing = str(newRand)
                 required = newRand
 
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + str(required)+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size nimble "+model + str(required)+" TiB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size nimble "+model + str(math.ceil(required/0.9))+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size nimble "+model + str(math.ceil(required/0.9))+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + " " + str(required)+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size nimble "+ model + " " + str(required)+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size nimble "+ model + " " + str(math.ceil(required/0.9))+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size nimble "+ model + " " + str(math.ceil(required/0.9))+" TiB")))
 
         quickReply=QuickReply(items=buttonList)
 
