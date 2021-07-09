@@ -1,4 +1,5 @@
 import math
+import random
 from AllResponse import AllResponse
 
 from linebot.models import (
@@ -30,12 +31,12 @@ class PrimeraSizer:
     ssdSizeList = [1.92, 3.84, 7.68, 15.36]
 
     @staticmethod
-    def GetTBUsable(diskSize, diskCount):
+    def GetTBUsable(diskSize: float, diskCount: int):
         
         #Config Spare
         if diskSize < 3.84: spareRatio = 0.1
         #Set Chunklet Overhead per drive
-        if diskSize > 1.92:
+        if diskSize > 1.92 and diskSize < 15:
             diskSize = diskSize - 0.001
         elif diskSize > 15: 
             diskSize = diskSize - 0.313
@@ -103,11 +104,11 @@ class PrimeraSizer:
     @staticmethod
     def GeneratePrimeraSizeAnswers(unit = "TB", required = 50.0):
         multiplier = Converter.TBToUnitMultipler(unit)
-        required = required * multiplier
+        convertedRequired = required * multiplier
         result = AllResponse.GetRandomResponseFromKeys('preAnswer')
         config = 0
         for ssdSize in PrimeraSizer.ssdSizeList:
-            diskCount = PrimeraSizer.SearchDiskCount(ssdSize, required)
+            diskCount = PrimeraSizer.SearchDiskCount(ssdSize, convertedRequired)
             #If error means too big
             if (diskCount == 0): continue
 
@@ -133,7 +134,7 @@ class PrimeraSizer:
         #Check if has no answers
         if config ==0:
             result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
-            strSizing = str(math.floor(range(10, 1800)))
+            strSizing = str(math.floor(random(10, 1800)))
 
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(required)+" TB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(required)+" TiB")))
