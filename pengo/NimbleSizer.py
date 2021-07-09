@@ -8,91 +8,117 @@ from linebot.models import (
 from Converter import Converter
 from LineConst import LineConst
 from ImageConst import ImageConst
+from CSVOpener import CSVOpener
 
-class NimbleSizer:
-    #Primera Overhead: Using A670 4N which provide max overhead
-    systemOverheadTB = 2.92;
+class NimbleES3Shelf():
+    hddSize = 1
+    ssdCache = []
+    def __init__(self, hddSize):
+        self.hddSize = hddSize
 
-    #Alletra9000 Overhead
-    #systemOverhead = 6.22;
-    targetUtilization = 0.9;
-    #Max Dirve supported each node Pair
-    maxDrive = {}
-    maxDrive["A630"] = 144
-    maxDrive["A650"] = 192
-    maxDrive["A670"] = 288
-    #Max Capacity supported each node Pair
-    maxCapacityTB = {}
-    maxCapacityTB["A630"] = 250
-    maxCapacityTB["A650"] = 800
-    maxCapacityTB["A670"] = 1600
+    def SetHDDSize(self, hddSize):
+        self.hddSize = hddSize
 
-    #Available SSD Size
-    ssdSizeList = [1.92, 3.84, 7.68, 15.36]
+    def AddSSDCache(self, ssdSize, amount = 1):
+        if len(self.ssdCache) + amount < 6:
+            for i in range(0,amount):
+                self.ssdCache.append(ssdSize)
 
-    @staticmethod
-    def GetTBUsable(diskSize: float, diskCount: int):
-        
-        #Config Spare
-        if diskSize < 3.84: spareRatio = 0.1
-        #Set Chunklet Overhead per drive
-        if diskSize > 1.92 and diskSize < 15:
-            diskSize = diskSize - 0.001
-        elif diskSize > 15: 
-            diskSize = diskSize - 0.313
-
-        #Defalt R6 size = 10+2 = 12
-        raid6SetSize = 12
-        spareTB = diskSize * 2
-        rawTB = diskSize * diskCount
-        spareRatio = 0.07
-        #Check drive input
-        if diskCount < 8 or diskCount%2 == 1:
-            print("Please input diskcount as even number > 8")
-            return 0
-
-        #Adjust RAID6 size
-        if diskCount < 12: raid6SetSize = diskCount
-
-        if (diskSize * diskCount * spareRatio) > spareTB:
-            spareTB = diskSize * diskCount * spareRatio;
-
-        usableTB = (rawTB - spareTB - NimbleSizer.systemOverheadTB) * (raid6SetSize - 2) / raid6SetSize
-
-        return usableTB
+class NimbleHFArray():
+    shelfList = [NimbleES3Shelf]
+    rawCapacity = 0
+    cacheCapacity = 0
+    usableCapacity = 0
+    def __init__(self):
+        return "Nimble is craeted"
     
     @staticmethod
-    def SearchDiskCount(diskSize, usableTB):
-        
-        #Get Raw from Usable and multiply by 1.3
-        driveResult = (usableTB/diskSize*1.3)
-        #Get highest even num
-        driveResult = math.floor(driveResult/2)*2
-        
-        while True:
-            #If result is bigger that Primera supported return 0
-            if driveResult * diskSize > 3200: return 0
-            if driveResult > 576: return 0
+    def GetUsableFromRaw(self,raw):
+        if raw == 21: return 16.31
+        elif raw == 42: return 33.27
+        elif raw == 84: return 67.21
+        elif raw == 126: return 101.14
+        elif raw == 210: return 169
+        elif raw == 294: return 236.39
+        else: return 0
 
-            #CHeck if usable is enough
-            ans = NimbleSizer.GetTBUsable(diskSize, driveResult)
-            if ans >= usableTB:
-                return driveResult
-            
-            #Add Drive + 2 but if drive > 288 + 4 since it is 4 Node Configuration
-            if driveResult >= 288:
-                driveResult = driveResult + 4
-            else:
-                driveResult = driveResult + 2                
-
-    @staticmethod
-    def GetSupportedModelFromConfig(config, diskCount):
-        result = "Supported Model:"
+    def AddShelf(self, hddSize):
+        NewShelf = NimbleES3Shelf(hddSize)
+        if len(self.shelfList) == 0:
+            #Insert First Shelf SSD
+            if hddSize == 1: NewShelf.AddSSDCache(0.48,6); 
+            if hddSize == 2: NewShelf.AddSSDCache(0.96,6); 
+            if hddSize == 4: NewShelf.AddSSDCache(0.96,3); NewShelf.AddSSDCache(1.92,3); 
+            if hddSize == 6: NewShelf.AddSSDCache(3.84,3); NewShelf.AddSSDCache(1.92,3)
+            if hddSize == 10: NewShelf.AddSSDCache(3.84,6)
+            if hddSize == 14: NewShelf.AddSSDCache(7.68,6)
+        elif len(self.shelfList) < 7:
+            if hddSize == 1: NewShelf.AddSSDCache(0.48,3); 
+            if hddSize == 2: NewShelf.AddSSDCache(0.96,3); 
+            if hddSize == 4: NewShelf.AddSSDCache(1.92,3)
+            if hddSize == 6: NewShelf.AddSSDCache(3.84,2); NewShelf.AddSSDCache(1.92,1);
+            if hddSize == 10: NewShelf.AddSSDCache(3.84,3); NewShelf.AddSSDCache(1.92,3);
+            if hddSize == 14: NewShelf.AddSSDCache(7.68,3);
         
+        self.shelfList.append(NewShelf)
+        self.ResetCapacity()
+
+        fdr = self.cacheCapacity / self.rawCapacity
+        #If FDR < 12 then add Minimum SSD
+        if fdr < 12:
+            ssdSizeList =  [0.96,1.92,3.84,7.68]
+            #Add More SSD
+            for ssdSize in ssdSizeList:
+                if (self.cacheCapacity + 3*ssdSize) / self.rawCapacity >= 12:
+                    lastShelf = self.shelfList[len(self.shelfList)-1]
+                    lastShelf.AddSSDCache(ssdSize,3)
+
+        self.ResetCapacity()
+
+    def ResetCapacity(self):
+        totalHDD = 0
+        totalSSD = 0
+        totalUsable = 0
+        for shelf in self.shelfList:
+            totalHDD += shelf.hddSize * 21
+            totalUsable = self.GetUsableFromRaw(self,shelf.hddSize * 21)
+            for ssd in shelf.ssdCache:
+                totalSSD += ssd
+        self.rawCapacity = totalHDD
+        self.cacheCapacity = totalSSD
+        self.usableCapacity = totalUsable
+
+    def GetAllSupportedModel(self):
+        self.ResetCapacity;
+        result = ""
+        if self.rawCapacity <= 210 and self.cacheCapacity <= 28:
+            result = result + "HF20 "
+        if self.rawCapacity <= 504 and self.cacheCapacity <= 60:
+            result = result + "HF40 "
+        if self.rawCapacity <= 1260 and self.cacheCapacity <= 156:
+            result = result + "HF60 "
         return result
 
+class NimbleSizer:
+
     @staticmethod
-    def GenerateNimbleSizeAnswers(unit = "TB", required = 50.0):
+    def HFSizer(requiredTB):
+        #set result
+        resultArray = NimbleHFArray()
+        diskSizeList = [14,10,6,4,2,1]
+        for i in range (0,7):
+            for diskSize in diskSize:
+                addedUsable =  NimbleHFArray.GetUsableFromRaw(diskSize * 21)
+                #Check if sizing too Big
+                if resultArray.usableCapacity + addedUsable - requiredTB > 31:
+                    #Check if exceed capacity is worth a shelf. Except for last shelf
+                    if i < 6: continue
+                resultArray.AddShelf(diskSize)
+                break
+        return resultArray
+
+    @staticmethod
+    def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF"):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier
         result = AllResponse.GetRandomResponseFromKeys('preAnswer')
@@ -106,15 +132,38 @@ class NimbleSizer:
         strSizing = str(math.floor(required))
         newRand = random.randint(10, 1800)
         #Check if has no answers
-        if config == []:
-            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
-            strSizing = str(newRand)
-            required = newRand
+        if model == 'AF':
+            result = "This feature is not yet implemented. Please try HF Sizing these instead"
+            model = 'HF'
+        elif model == 'HF':
+            resultArray = NimbleSizer.HFSizer(convertedRequired)
+            result = result + "Total Raw: " + resultArray.rawCapacity + "TB / " + resultArray.rawCapacity/Converter.TBToUnitMultipler("tib") + " TiB\n"
+            result = result + "Total Usable: " + resultArray.usableCapacity + "TB / " + resultArray.usableCapacity/Converter.TBToUnitMultipler("tib") + " TiB\n"
+            result = result + "Total SSD Cache: " + resultArray.cacheCapacity + "TB / " + resultArray.cacheCapacity/Converter.TBToUnitMultipler("tib") + " TiB\n"
+            result = result + "FDR: " + str(round(resultArray.cacheCapacity/resultArray.usableCapacity*100,2)) + "%"
+            count = 0
+            for shelf in resultArray.shelfList:
+                result = result + "\nShelf " + count + " :\n"
+                result = result + "HDD: 21x" + shelf.hddSize + "TB HDD\n"
+                result = result + "Cache: "
+                allSSD = {}
+                for ssd in shelf.ssdCache:
+                    if ssd not in allSSD: allSSD[str(ssd)] = 1
+                    else: allSSD[str(ssd)] += 1
+                for ssd in allSSD.keys():
+                    ssdSize = float(ssd)
+                    if ssdSize < 1: result = result +  allSSD[ssd] + "x" + str(math.floor(ssdSize*1000)) + "GB"
+                    else: result = result +  allSSD[ssd] + "x" + str(ssdSize) + "TB"
+                result = result +  "\n"
+            if resultArray.GetAllSupportedModel == "":
+                result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+                strSizing = str(newRand)
+                required = newRand
 
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(required)+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(required)+" TiB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size primera "+str(math.ceil(required/0.9))+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size primera "+str(math.ceil(required/0.9))+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + str(required)+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size nimble "+model + str(required)+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size nimble "+model + str(math.ceil(required/0.9))+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size nimble "+model + str(math.ceil(required/0.9))+" TiB")))
 
         quickReply=QuickReply(items=buttonList)
 
@@ -139,7 +188,7 @@ class NimbleSizer:
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
                     actions.append(MessageAction(label=exampleList[j][0:12],text=textPreFix + exampleList[j]))
-            columnList.append(CarouselColumn(text='Usage\nsize primera [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
+            columnList.append(CarouselColumn(text='Usage\nsize nimble [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(
             alt_text='Sizing Wizard support only on Mobile',
@@ -151,7 +200,6 @@ class NimbleSizer:
     def GenerateModelSelection():
         title = "Please Select Nimble Model"
         textPreFix = "size nimble "
-        exampleList = ["AF", "HF"]
         columnList = []
         
         actions = []
@@ -169,7 +217,7 @@ class NimbleSizer:
     def GenerateNimbleSizer(words):
         model = ""
         if len(words) > 2:
-            model = words[2].strip().lower()
+            model = words[2].strip().upper()
             if model != 'af' and model != 'hf':
                 return NimbleSizer.GenerateModelSelection()
         
@@ -185,21 +233,22 @@ class NimbleSizer:
                 return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
             if required <= 0 or required > 1180:  
                 return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
-            return NimbleSizer.GeneratePrimeraSizeAnswers(unit = "TB", required = required)
+            return NimbleSizer.GenerateNimbleSizerAnswers(unit = "TB", required = required, model = model)
         elif len(words) > 4:
             required = 0.0
             try:
                 required = float(words[2])
             except ValueError:
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
-            if required <= 0 or required > 2721.29:  
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
+            if required <= 0 or required > 1180:  
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180") 
             #Check if unit is tb or tib
             unit = words[3].lower()
-            unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
+            unitCheck = ["tb","tib"]
+            #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
                 return NimbleSizer.GenerateExampleCarousel("Please input unit as TB or TiB") 
-            return NimbleSizer.GeneratePrimeraSizeAnswers(unit = unit, required = required)
+            return NimbleSizer.GenerateNimbleSizerAnswers(unit = unit, required = required,model = model)
 
 
 

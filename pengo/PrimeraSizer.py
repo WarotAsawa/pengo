@@ -197,7 +197,8 @@ class PrimeraSizer:
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             #Check if unit is tb or tib
             unit = words[3].lower()
-            unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
+            unitCheck = ["tb","tib"]
+            #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
                 return PrimeraSizer.GenerateExampleCarousel("Please input unit as TB or TiB") 
             return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = unit, required = required)

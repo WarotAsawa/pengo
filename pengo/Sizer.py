@@ -1,7 +1,8 @@
 import random;
 import csv;
 import os;
-import math;
+import math
+from NimbleSizer import NimbleSizer;
 
 from linebot import (
     LineBotApi
@@ -55,8 +56,6 @@ class Sizer:
                 if selectedProduct == product.lower().strip: unMatch = True
             if unMatch: return [TextSendMessage(text="Please Select supported Products"),Sizer.GetSizerMenu()]
             if selectedProduct == "primera":
-                #TODO
                 return PrimeraSizer.GeneratePrimeraSizer(words)
             elif selectedProduct == "nimble":
-                #TODO
-                return TextSendMessage(text="This feature is not implement yet")
+                return NimbleSizer.GenerateNimbleSizer(words)
