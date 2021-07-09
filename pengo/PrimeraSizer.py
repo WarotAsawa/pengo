@@ -134,7 +134,7 @@ class PrimeraSizer:
         #Check if has no answers
         if config ==0:
             result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
-            strSizing = str(math.floor(random(10, 1800)))
+            strSizing = str(math.floor(random.randint(10, 1800)))
 
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(required)+" TB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(required)+" TiB")))
