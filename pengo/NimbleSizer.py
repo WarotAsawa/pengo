@@ -138,14 +138,14 @@ class NimbleSizer:
             model = 'HF'
         elif model == 'HF':
             resultArray = NimbleSizer.HFSizer(convertedRequired)
-            result = result + "Total Raw: " + resultArray.rawCapacity + "TB / " + resultArray.rawCapacity/Converter.TBToUnitMultipler("tib") + " TiB\n"
-            result = result + "Total Usable: " + resultArray.usableCapacity + "TB / " + resultArray.usableCapacity/Converter.TBToUnitMultipler("tib") + " TiB\n"
-            result = result + "Total SSD Cache: " + resultArray.cacheCapacity + "TB / " + resultArray.cacheCapacity/Converter.TBToUnitMultipler("tib") + " TiB\n"
+            result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
+            result = result + "Total Usable: "      + str(resultArray.usableCapacity) + "TB / " + str(round(resultArray.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
+            result = result + "Total SSD Cache: "   + str(resultArray.cacheCapacity) + "TB / "  + str(round(resultArray.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "FDR: " + str(round(resultArray.cacheCapacity/resultArray.usableCapacity*100,2)) + "%"
             count = 0
             for shelf in resultArray.shelfList:
-                result = result + "\nShelf " + count + " :\n"
-                result = result + "HDD: 21x" + shelf.hddSize + "TB HDD\n"
+                result = result + "\nShelf " + str(count) + " :\n"
+                result = result + "HDD: 21x" + str(shelf.hddSize) + "TB HDD\n"
                 result = result + "Cache: "
                 allSSD = {}
                 for ssd in shelf.ssdCache:
