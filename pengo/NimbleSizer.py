@@ -122,12 +122,15 @@ class NimbleSizer:
         incDiskSizeList = [1,2,4,6,10,14]
         for shelfNo in range (0,7):
             if resultArray.usableCapacity >= requiredTB: break
-            if shelfNo == 6:
+            #If small config
+            diffCapacity = resultArray.usableCapacity - requiredTB
+            #Replace 42+21 with 84 for Better Price
+            if shelfNo == 6 or diffCapacity <= 33.27:
                 for i in range(0,len(incDiskSizeList)):
                     raw = diskSizeList[i] * 21
                     addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
                     #Check if sizing is Enough
-                    if resultArray.usableCapacity + addedUsable - requiredTB > 0:
+                    if diffCapacity + addedUsable > 0:
                         resultArray.AddShelf(incDiskSizeList[i])
                         break
             else:
@@ -137,14 +140,10 @@ class NimbleSizer:
                     print(raw)
                     print(addedUsable)
                     #Replace 42+21 with 84 for Better Price
-                    if requiredTB > 33.27:
-                        if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31+33.27:
-                            resultArray.AddShelf(diskSizeList[i])
-                            break
-                    else:
-                        if resultArray.usableCapacity + addedUsable - requiredTB >= 0:
-                            resultArray.AddShelf(diskSizeList[i])
-                            break
+                    if diffCapacity + addedUsable <= 16.31+33.27:
+                        resultArray.AddShelf(diskSizeList[i])
+                        break
+                   
 
         return resultArray
 
