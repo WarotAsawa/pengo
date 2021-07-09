@@ -7,7 +7,7 @@ from Converter import Converter
 from LineConst import LineConst
 
 class PrimeraSizer:
-    #Primera Overhead
+    #Primera Overhead: Using A670 4N which provide max overhead
     systemOverheadTB = 2.92;
 
     #Alletra9000 Overhead
@@ -26,6 +26,7 @@ class PrimeraSizer:
 
     #Available SSD Size
     ssdSizeList = [1.92, 3.84, 7.68, 15.36]
+
     @staticmethod
     def GetTBUsable(diskSize, diskCount):
         #Defalt R6 size = 10+2 = 12
@@ -43,6 +44,11 @@ class PrimeraSizer:
 
         #Config Spare
         if diskSize < 3.84: spareRatio = 0.1
+        #Set Chunklet Overhead per drive
+        if diskSize == 3.84: diskSize = 3.839
+        elif diskSize == 7.68: diskSize = 7.679
+        elif diskSize == 15.36: diskSize = 15.047
+
         if (diskSize * diskCount * spareRatio) > spareTB:
             spareTB = diskSize * diskCount * spareRatio;
 
@@ -52,7 +58,7 @@ class PrimeraSizer:
     
     @staticmethod
     def SearchDiskCount(diskSize, usableTB):
-
+        
         #Get Raw from Usable and multiply by 1.3
         driveResult = (usableTB/diskSize*1.3)
         #Get highest even num
