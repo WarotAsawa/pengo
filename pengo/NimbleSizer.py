@@ -110,7 +110,7 @@ class NimbleSizer:
             for diskSize in diskSize:
                 addedUsable =  NimbleHFArray.GetUsableFromRaw(diskSize * 21)
                 #Check if sizing too Big
-                if resultArray.usableCapacity + addedUsable - requiredTB > 31:
+                if resultArray.usableCapacity + addedUsable - requiredTB > 16.31:
                     #Check if exceed capacity is worth a shelf. Except for last shelf
                     if i < 6: continue
                 resultArray.AddShelf(diskSize)
@@ -243,11 +243,11 @@ class NimbleSizer:
             if required <= 0 or required > 1180:  
                 return NimbleSizer.GenerateExampleCarousel("Please input capacity between 0 and 1180", model) 
             #Check if unit is tb or tib
-            unit = words[3].lower()
+            unit = words[4].lower()
             unitCheck = ["tb","tib"]
             #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
-                return NimbleSizer.GenerateExampleCarousel("Please input unit as TB or TiB") 
+                return NimbleSizer.GenerateExampleCarousel("Please input unit as TB or TiB",model) 
             return NimbleSizer.GenerateNimbleSizerAnswers(unit = unit, required = required,model = model)
 
 
