@@ -260,7 +260,7 @@ class NimbleSizer:
                 result += "\nSupported Model: " + allModel + "\n"
             count = 0
             for ssd in resultArray.ssdSetList:
-                count = count + 1
+                #Print only 2 set per shelfs
                 if count%2==0:
                     result = result + "\n\nShelf " + str(count/2 +1) + ":\nSSD A: "
                 else:
@@ -270,6 +270,8 @@ class NimbleSizer:
                 if size < 1: size = math.floor(size*1000); unit="GB"
                 result = result + "24 x " + str(size) + unit
                 result = result + "\n"
+
+                count = count + 1
 
         elif model == 'HF':
             if convertedRequired <= 0 or convertedRequired > 1012:  
