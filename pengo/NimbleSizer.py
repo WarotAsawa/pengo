@@ -136,8 +136,8 @@ class NimbleSizer:
                     addedUsable =  NimbleHFArray.GetUsableFromRaw(raw)
                     print(raw)
                     print(addedUsable)
-                    #Check if sizing too Big
-                    if resultArray.usableCapacity + addedUsable - requiredTB <= 16.31+33.27:
+                    #Replace 42+21 with 84 for Better Price
+                    if requiredTB > 33.27 and resultArray.usableCapacity + addedUsable - requiredTB <= 16.31+33.27:
                         resultArray.AddShelf(diskSizeList[i])
                         break
         return resultArray
