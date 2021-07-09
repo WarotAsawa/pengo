@@ -29,6 +29,7 @@ class Spec:
         if i==0: return TextSendMessage(text=AllResponse.GetRandomResponseFromKeys('errorWord'))
         buttonList = [];
         for i in range(1,len(fieldList)):
+            if (i > LineConst.maxQuickReply): break
             fieldWhited = fieldList[i].replace("-", " ")
             response = response + "\n" + fieldWhited
             response = response + " : "

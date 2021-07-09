@@ -7,7 +7,6 @@ from linebot.models import (
 from Converter import Converter
 from LineConst import LineConst
 from ImageConst import ImageConst
-from CSVOpener import CSVOpener
 from AllResponse import AllResponse
 
 class NimbleES3Shelf():

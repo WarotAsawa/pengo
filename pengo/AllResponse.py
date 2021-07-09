@@ -3,7 +3,7 @@ import random;
 class AllResponse:
     #Response String
     allResponse = {};
-    allResponse["help"] = "You can see what I can do listed on the Carousel above. Tap on each item or you quick reply below for example"
+    allResponse["help"] = "You can see what I can do listed on the Carousel bloew. I am case-insensitive bot so no worries about your inputs. Tap on each item to start the wizard of each feature."
     allResponse["helpspec"] = "Type \"spec\" for wizard or use or use \nspec [productname] [model] \n ex: \n - spec 3par 8200\n - spec nimble af20"
     allResponse["helplookup"] =  "Type \"lookup\" for wizard or use or use \nlookup [productname] [attribute] [value] \n ex: \n - lookup intel core 20\n - lookup amd clock 3.3"
     allResponse["helptips"] = ["Ask me for 'help' to see what I can do for you","Want to learn how to talk to me? Ask me for 'help'.","Ask for 'help' to see how smart I am."]

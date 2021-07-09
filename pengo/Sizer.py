@@ -51,9 +51,9 @@ class Sizer:
         elif len(words) > 1:
             selectedProduct = str(words[1]).lower().strip()
             #Check if valid product
-            unMatch = False
+            unMatch = True
             for product in Sizer.products:
-                if selectedProduct == product.lower().strip: unMatch = True
+                if selectedProduct == product.lower().strip(): unMatch = False
             if unMatch: return [TextSendMessage(text="Please Select supported Products"),Sizer.GetSizerMenu()]
             if selectedProduct == "primera":
                 return PrimeraSizer.GeneratePrimeraSizer(words)
