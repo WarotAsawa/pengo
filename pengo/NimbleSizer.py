@@ -33,7 +33,7 @@ class NimbleHFArray():
         return 
     
     @staticmethod
-    def GetUsableFromRaw(self,raw):
+    def GetUsableFromRaw(raw):
         if raw == 21: return 16.31
         elif raw == 42: return 33.27
         elif raw == 84: return 67.21
@@ -81,7 +81,7 @@ class NimbleHFArray():
         totalUsable = 0
         for shelf in self.shelfList:
             totalHDD += shelf.hddSize * 21
-            totalUsable = self.GetUsableFromRaw(self,shelf.hddSize * 21)
+            totalUsable = NimbleHFArray.GetUsableFromRaw(self.shelf.hddSize * 21)
             for ssd in shelf.ssdCache:
                 totalSSD += ssd
         self.rawCapacity = totalHDD
