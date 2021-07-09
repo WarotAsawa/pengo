@@ -180,7 +180,8 @@ class NimbleSizer:
                 result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
                 strSizing = str(newRand)
                 required = newRand
-
+        #Clear Object
+        del resultArray
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + " " + str(required)+" TB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size nimble "+ model + " " + str(required)+" TiB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size nimble "+ model + " " + str(math.ceil(required/0.9))+" TB")))
