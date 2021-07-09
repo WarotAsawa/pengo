@@ -171,9 +171,9 @@ class NimbleSizer:
         #, quick_reply=quickReply)
 
     @staticmethod
-    def GenerateExampleCarousel(title, mode):
+    def GenerateExampleCarousel(title, model):
         title = title
-        textPreFix = "size primera "
+        textPreFix = "size nimble "+ model + " "
         exampleList = ["10 TB", "100 TB", "150 TiB", "200.5 TiB", "500 TB", "1000 TiB"]
         columnList = []
         #Set Column and Item Limit
@@ -187,8 +187,8 @@ class NimbleSizer:
                 if j >= len(exampleList):
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
-                    actions.append(MessageAction(label=exampleList[j][0:12],text=textPreFix + exampleList[j]))
-            columnList.append(CarouselColumn(text='Usage\nsize nimble [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
+                    actions.append(MessageAction(label=model + " " + exampleList[j][0:12],text=textPreFix + exampleList[j]))
+            columnList.append(CarouselColumn(text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(
             alt_text='Sizing Wizard support only on Mobile',
