@@ -38,7 +38,7 @@ class SimplivitySizer:
         convertedRequired = required * multiplier * 100 / utilization
         result = AllResponse.GetRandomResponseFromKeys('preAnswer')
         modelList = SimplivitySizer.GetSimplivityModel()
-        modelCapacity = SimplivitySizer.GetSimplivityModel()
+        modelCapacity = SimplivitySizer.GetSimplivityUsableCapacity()
         config = 0;
         for i in range(0,len(modelList)):
             TiBPerNode = modelCapacity[i]
