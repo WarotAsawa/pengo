@@ -53,14 +53,20 @@ class SimplivitySizer:
             totalUsableTB = round(requiredNode * TBPerNode,2)
             result += "------------------\n"
             result += model + ": " + str(requiredNode) + "xNodes\nUsable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB\n"
+            
+        buttonList = [];
+        TB100 = "TB"
+        TiB100 = "TiB"
+        TB90 = "TB @90%"
+        TiB90 = "TiB @90%"
+        strSizing = str(math.floor(required))
+        newRand = random.randint(10, 1800)
         #Check if has no answers
         if config ==0:
-            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nYour Sizing is too big to fit in 32-node SimpliVity"
-            newRand = random.randint(10,200)
+            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
             strSizing = str(newRand)
             required = newRand
 
-        buttonList = []
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size SimpliVity "+str(required)+" TB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size SimpliVity "+str(required)+" TiB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size SimpliVity "+str(required)+" TB 90")))
