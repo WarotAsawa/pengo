@@ -63,7 +63,7 @@ class SimplivitySizer:
         newRand = random.randint(10, 522)
         #Check if has no answers
         if config ==0:
-            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\n Your Sizing is too big for 32-Node Simplivity !!\nTry these instead."
+            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nYour Sizing is too big for 32-Node Simplivity !!\nTry these instead."
             strSizing = str(newRand)
             required = newRand
 
@@ -96,7 +96,7 @@ class SimplivitySizer:
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
                     actions.append(MessageAction(label=exampleList[j][0:12],text=textPreFix + exampleList[j]))
-            columnList.append(CarouselColumn(text='Usage\nsize SimpliVity [required usable] [TB/TiB]', title=title, actions=actions))
+            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Usage\nsize SimpliVity [required usable] [TB/TiB]', title=title, actions=actions))
 
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(

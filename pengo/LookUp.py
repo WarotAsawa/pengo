@@ -142,7 +142,7 @@ class LookUp:
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
                     actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
-            columnList.append(CarouselColumn(text='Page '+str(i+1), title=title, actions=actions))
+            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.lookupImage, text='Page '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
 
         lookUpMessage = TemplateSendMessage(

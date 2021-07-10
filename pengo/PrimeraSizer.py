@@ -166,7 +166,7 @@ class PrimeraSizer:
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
                     actions.append(MessageAction(label=exampleList[j][0:12],text=textPreFix + exampleList[j]))
-            columnList.append(CarouselColumn(text='Usage\nsize primera [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
+            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Usage\nsize primera [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(
             alt_text='Sizing Wizard support only on Mobile',

@@ -338,7 +338,7 @@ class NimbleSizer:
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
                     actions.append(MessageAction(label=model + " " + exampleList[j][0:12],text=textPreFix + exampleList[j]))
-            columnList.append(CarouselColumn(text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
+            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(
             alt_text='Sizing Wizard support only on Mobile',
@@ -355,7 +355,7 @@ class NimbleSizer:
         actions = []
         actions.append(MessageAction(label="AF",text=textPreFix + "AF"))
         actions.append(MessageAction(label="HF",text=textPreFix + "HF"))
-        columnList.append(CarouselColumn(text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\n', title=title, actions=actions))
+        columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\n', title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(
             alt_text='Sizing Wizard support only on Mobile',
