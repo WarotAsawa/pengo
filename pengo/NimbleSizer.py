@@ -321,8 +321,8 @@ class NimbleSizer:
         #, quick_reply=quickReply)
 
     @staticmethod
-    def GenerateExampleCarousel(title, model):
-        title = title
+    def GenerateExampleCarousel(warning, model):
+        title = "Here is some sizing example"
         textPreFix = "size nimble "+ model + " "
         exampleList = ["10 TB", "100 TB", "150 TiB", "200.5 TiB", "500 TB", "1000 TiB"]
         columnList = []
@@ -344,8 +344,8 @@ class NimbleSizer:
             alt_text='Sizing Wizard support only on Mobile',
             template=carousel_template
         )
-        return carousel
-
+        return [TextSendMessage(text=warning), carousel]
+    
     @staticmethod
     def GenerateModelSelection():
         title = "Please Select Nimble Model"

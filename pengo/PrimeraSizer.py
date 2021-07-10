@@ -172,7 +172,7 @@ class PrimeraSizer:
             alt_text='Sizing Wizard support only on Mobile',
             template=carousel_template
         )
-        return [TextSendMessage(text=AllResponse.allResponse[warning]), carousel]
+        return [TextSendMessage(text=warning), carousel]
 
     @staticmethod
     def GeneratePrimeraSizer(words):
