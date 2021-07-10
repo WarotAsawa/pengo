@@ -1,0 +1,4 @@
+model,Nodes,CPU-per-node,Cache-per-Node,16Gb-FC,32Gb-FC,10Gb-iSCSI,Max-NVMe-SSD,Max-SSD-Raw
+unit,Nodes,,GiB,Ports,Ports,Ports,SSD,TiB
+9060,4,2 x 10 Core CPU,256,48,48,48,48,656
+9080,4,2 x 20 Core CPU,768,48,48,48,48,656
