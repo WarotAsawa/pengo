@@ -149,8 +149,8 @@ class PrimeraSizer:
         #, quick_reply=quickReply)
 
     @staticmethod
-    def GenerateExampleCarousel(title):
-        title = title
+    def GenerateExampleCarousel(warning):
+        title = "Here is some sizing example"
         textPreFix = "size primera "
         exampleList = ["10 TB", "100 TB", "150 TiB", "200.5 TiB", "500 TB", "1000 TiB"]
         columnList = []
@@ -172,7 +172,7 @@ class PrimeraSizer:
             alt_text='Sizing Wizard support only on Mobile',
             template=carousel_template
         )
-        return carousel
+        return [TextSendMessage(text=AllResponse.allResponse[warning]), carousel]
 
     @staticmethod
     def GeneratePrimeraSizer(words):
