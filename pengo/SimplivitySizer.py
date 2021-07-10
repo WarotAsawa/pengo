@@ -36,7 +36,7 @@ class SimplivitySizer:
     def GenerateSimplivitySizeAnswers(unit = "TB", required = 50.0, utilization = 100.0):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier * 100 / utilization
-        result = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
         modelList = SimplivitySizer.GetSimplivityModel()
         modelCapacity = SimplivitySizer.GetSimplivityUsableCapacity()
         config = 0;
@@ -53,24 +53,24 @@ class SimplivitySizer:
             totalUsableTB = round(requiredNode * TBPerNode,2)
             result += "------------------\n"
             result += model + ": " + str(requiredNode) + "xNodes\nUsable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB\n"
-            
+
         buttonList = [];
         TB100 = "TB"
         TiB100 = "TiB"
-        TB90 = "TB @90%"
-        TiB90 = "TiB @90%"
+        TB90 = "TB @70%"
+        TiB90 = "TiB @70%"
         strSizing = str(math.floor(required))
-        newRand = random.randint(10, 1800)
+        newRand = random.randint(10, 522)
         #Check if has no answers
         if config ==0:
-            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\n Your Sizing is too big for 32-Node Simplivity !!\nTry these instead."
             strSizing = str(newRand)
             required = newRand
 
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size SimpliVity "+str(required)+" TB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size SimpliVity "+str(required)+" TiB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size SimpliVity "+str(required)+" TB 90")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size SimpliVity "+str(required)+" TiB 90")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size SimpliVity "+str(required)+" TB 70")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size SimpliVity "+str(required)+" TiB 70")))
 
         quickReply=QuickReply(items=buttonList)
 
