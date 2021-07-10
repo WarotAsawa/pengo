@@ -277,7 +277,7 @@ class NimbleSizer:
 
         elif model == 'HF':
             if convertedRequired <= 0 or convertedRequired > 1012:  
-                return NimbleSizer.GenerateExampleCarousel("Nimble HF Capacity must be between 0TB and 1180TB", model) 
+                return NimbleSizer.GenerateExampleCarousel("Nimble HF Capacity must be between 0TB and 1012TB", model) 
 
             resultArray = NimbleSizer.HFSizer(convertedRequired)
 
@@ -324,7 +324,7 @@ class NimbleSizer:
     def GenerateExampleCarousel(warning, model):
         title = "Here is some sizing example"
         textPreFix = "size nimble "+ model + " "
-        exampleList = ["10 TB", "100 TB", "150 TiB", "200.5 TiB", "500 TB", "1000 TiB"]
+        exampleList = ["10 TB", "100 TB", "150 TiB", "200.5 TiB", "500 TiB", "800 TB"]
         columnList = []
         #Set Column and Item Limit
         maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
@@ -374,7 +374,7 @@ class NimbleSizer:
         if len(words) == 2:
             return NimbleSizer.GenerateModelSelection()
         elif len(words) == 3:
-            return NimbleSizer.GenerateExampleCarousel("Nimble Sizer Example", model)
+            return NimbleSizer.GenerateExampleCarousel("Here are Nimble " + model + " Sizer Example", model)
         elif len(words) == 4:
             required = 0.0
             try:
