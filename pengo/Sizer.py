@@ -17,7 +17,7 @@ from SimplivitySizer import SimplivitySizer
 
 class Sizer:
     #List Supported Product
-    products = ["Primera", "Nimble"]
+    products = ["Primera", "Nimble", "SimpliVity"]
     @staticmethod
     def GetSizerMenu():
         title = "Select Your Product"

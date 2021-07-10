@@ -55,16 +55,16 @@ class SimplivitySizer:
             result += model + ": " + requiredNode + "xNodes\nUsable:" + totalUsableTB + "TB/" + totalUsableTiB + "TiB\n"
         #Check if has no answers
         if config ==0:
-            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nYour Sizing is too big to fit in 32-node simplivity"
+            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nYour Sizing is too big to fit in 32-node SimpliVity"
             newRand = random.randint(10,200)
             strSizing = str(newRand)
             required = newRand
-            
+
         buttonList = []
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size simplivity "+str(required)+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size simplivity "+str(required)+" TiB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size simplivity "+str(required)+" TB 90")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size simplivity "+str(required)+" TiB 90")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size SimpliVity "+str(required)+" TB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size SimpliVity "+str(required)+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size SimpliVity "+str(required)+" TB 90")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size SimpliVity "+str(required)+" TiB 90")))
 
         quickReply=QuickReply(items=buttonList)
 
@@ -74,15 +74,15 @@ class SimplivitySizer:
 
     @staticmethod
     def GenerateExampleCarousel(warning):
-        title = "Simplivity Capacity Sizing with Model"
+        title = "SimpliVity Capacity Sizing with Model"
         modelList = SimplivitySizer.GetSimplivityModel()
-        textPreFix = "size simplivity "
+        textPreFix = "size SimpliVity "
         exampleList = ["10 TB", "20 TiB", "30 TB","40 TiB", "50 TB", "60 TiB"]
         columnList = []
         actions = []
         for i in range(0,len(exampleList)):
             actions.append(MessageAction(label=exampleList[i],text=textPreFix + exampleList[i]))
-        columnList.append(CarouselColumn(text='Usage\nsize simplivity [required usable] [TB/TiB]\n', title=title, actions=actions))
+        columnList.append(CarouselColumn(text='Usage\nsize SimpliVity [required usable] [TB/TiB]\n', title=title, actions=actions))
 
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(
@@ -94,7 +94,7 @@ class SimplivitySizer:
     @staticmethod
     def GenerateSimplivitySizer(words):
         if len(words) == 2:
-            return SimplivitySizer.GenerateExampleCarousel("Simplivity Sizer Example")
+            return SimplivitySizer.GenerateExampleCarousel("SimpliVity Sizer Example")
         elif len(words) == 3:
             required = 0.0
             try:
