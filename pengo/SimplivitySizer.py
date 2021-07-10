@@ -14,7 +14,7 @@ class SimplivitySizer:
     @staticmethod
     def GetSimplivityModel():
         model = []
-        modelMatrix = CSVOpener.GetArrayFromCSV('../data/Simplivity.csv')
+        modelMatrix = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+"Simplivity.csv")
         for i in range(2,len(modelMatrix)):
             model.append(str(modelMatrix[i][0]).upper().strip())
         return model
@@ -22,7 +22,7 @@ class SimplivitySizer:
     @staticmethod
     def GetSimplivityUsableCapacity():
         model = []
-        modelMatrix = CSVOpener.GetArrayFromCSV('../data/Simplivity.csv')
+        modelMatrix = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+"Simplivity.csv")
         for i in range(2,len(modelMatrix)):
             try:
                 capacity = float(modelMatrix[i][4])
@@ -75,7 +75,6 @@ class SimplivitySizer:
     @staticmethod
     def GenerateExampleCarousel(warning):
         title = "SimpliVity Capacity Sizing with Model"
-        modelList = SimplivitySizer.GetSimplivityModel()
         textPreFix = "size SimpliVity "
         exampleList = ["10 TB", "20 TiB", "30 TB","40 TiB", "50 TB", "60 TiB"]
         columnList = []
