@@ -78,10 +78,19 @@ class SimplivitySizer:
         textPreFix = "size SimpliVity "
         exampleList = ["10 TB", "20 TiB", "30 TB","40 TiB", "50 TB", "60 TiB"]
         columnList = []
-        actions = []
-        for i in range(0,len(exampleList)):
-            actions.append(MessageAction(label=exampleList[i],text=textPreFix + exampleList[i]))
-        columnList.append(CarouselColumn(text='Usage\nsize SimpliVity [required usable] [TB/TiB]\n', title=title, actions=actions))
+        #Set Column and Item Limit
+        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
+        #check command's len to prepare return message
+        for i in range(int(math.ceil(len(exampleList)/LineConst.maxActionPerColumn))):
+            if i >= LineConst.maxCarouselColumn: break
+            actions = []
+            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
+                if j >= maxAction: break
+                if j >= len(exampleList):
+                    actions.append(MessageAction(label=". . .",text=textPreFix))
+                else:
+                    actions.append(MessageAction(label=exampleList[j][0:12],text=textPreFix + exampleList[j]))
+            columnList.append(CarouselColumn(text='Usage\nsize SimpliVity [required usable] [TB/TiB]', title=title, actions=actions))
 
         carousel_template = CarouselTemplate(columns=columnList)
         carousel = TemplateSendMessage(
