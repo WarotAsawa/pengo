@@ -194,18 +194,26 @@ class PrimeraSizer:
             if len(words) > 4:
                 try: utilization = float(words[4])
                 except ValueError: utilization = 100.0
+            if utilization <= 0: utilization = 1.0
+            if utilization > 100: utilization = 100.0
+
             try:
                 required = float(words[2])
             except ValueError:
-                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
-            if required <= 0 or required > 2721.29:  
-                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity as float") 
+            
             #Check if unit is tb or tib
             unit = words[3].lower()
             unitCheck = ["tb","tib"]
             #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
                 return PrimeraSizer.GenerateExampleCarousel("Please input unit as TB or TiB") 
+            #Capacity Check
+            multiplier = Converter.TBToUnitMultipler(unit)
+            convertedRequired = required * multiplier * 100 / utilization
+            if convertedRequired <= 0 or convertedRequired > 2721.29:  
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
+            #Get Sizing
             return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = unit, required = required, utilization = utilization)
 
 
