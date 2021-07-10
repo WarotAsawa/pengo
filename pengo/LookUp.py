@@ -45,7 +45,7 @@ class LookUp:
             for i in range(len(uniqueValue)):
                 if i >= LineConst.maxQuickReply: break
                 lookupText = "lookup " + selectedProduct + " " + fieldList[fieldIndex] + " " + uniqueValue[i]
-                buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=uniqueValue[i], text=lookupText)))
+                buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=uniqueValue[i][0:20], text=lookupText)))
         
         quickReply=QuickReply(items=buttonList)
         #Print Carousel follow with Tips and Quick Reply
