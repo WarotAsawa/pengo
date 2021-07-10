@@ -49,10 +49,10 @@ class SimplivitySizer:
             if requiredNode == 1: requiredNode = 2
             config += 1
             model = modelList[i]
-            totalUsableTiB = requiredNode * TiBPerNode
-            totalUsableTB = requiredNode * TBPerNode
+            totalUsableTiB = round(requiredNode * TiBPerNode,2)
+            totalUsableTB = round(requiredNode * TBPerNode,2)
             result += "------------------\n"
-            result += model + ": " + requiredNode + "xNodes\nUsable:" + totalUsableTB + "TB/" + totalUsableTiB + "TiB\n"
+            result += model + ": " + str(requiredNode) + "xNodes\nUsable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB\n"
         #Check if has no answers
         if config ==0:
             result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nYour Sizing is too big to fit in 32-node SimpliVity"
