@@ -61,5 +61,5 @@ class Sizer:
                 return PrimeraSizer.GeneratePrimeraSizer(words)
             elif selectedProduct == "nimble":
                 return NimbleSizer.GenerateNimbleSizer(words)
-            elif selectedProduct == "nimble":
+            elif selectedProduct == "simplivity":
                 return SimplivitySizer.GenerateSimplivitySizer(words)
