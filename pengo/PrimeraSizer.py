@@ -140,8 +140,8 @@ class PrimeraSizer:
 
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size primera "+str(required)+" TB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size primera "+str(required)+" TiB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size primera "+str(math.ceil(required/0.9))+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size primera "+str(math.ceil(required/0.9))+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size primera "+str(required)+" TB 90")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size primera "+str(required)+" TiB 90")))
 
         quickReply=QuickReply(items=buttonList)
 
@@ -188,11 +188,17 @@ class PrimeraSizer:
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = "TB", required = required)
         elif len(words) > 3:
+            utilization = 100.0
             required = 0.0
+            #add utilization
+            if len(words) > 4:
+                try: utilization = float(words[4])
+                except ValueError: utilization = 100.0
             try:
                 required = float(words[2])
             except ValueError:
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
+            required = required * 100 / utilization
             if required <= 0 or required > 2721.29:  
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             #Check if unit is tb or tib
