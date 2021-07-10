@@ -2,6 +2,7 @@ import random;
 import csv;
 import os;
 import math
+from ImageConst import ImageConst
 from NimbleSizer import NimbleSizer;
 
 from linebot import (
@@ -34,7 +35,7 @@ class Sizer:
                     actions.append(MessageAction(label=". . .",text=textPreFix))
                 else:
                     actions.append(MessageAction(label=productList[j][0:12],text=textPreFix + productList[j]))
-            columnList.append(CarouselColumn(text='Page '+str(i+1), title=title, actions=actions))
+            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Page '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
 
         specMessage = TemplateSendMessage(

@@ -390,8 +390,9 @@ class NimbleSizer:
             except ValueError:
                 return NimbleSizer.GenerateExampleCarousel("Please input capacity as float only", model) 
             #add utilization
+            utilization = 100.0
             if len(words) > 5:
-                try: utilization = float(words[4])
+                try: utilization = float(words[5])
                 except ValueError: utilization = 100.0
             if utilization <= 0: utilization = 1.0
             if utilization > 100: utilization = 100.0

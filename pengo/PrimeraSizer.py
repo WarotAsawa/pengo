@@ -188,9 +188,9 @@ class PrimeraSizer:
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = "TB", required = required)
         elif len(words) > 3:
-            utilization = 100.0
             required = 0.0
             #add utilization
+            utilization = 100.0
             if len(words) > 4:
                 try: utilization = float(words[4])
                 except ValueError: utilization = 100.0
