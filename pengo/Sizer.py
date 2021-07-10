@@ -13,6 +13,7 @@ from linebot.models import (
 )
 from LineConst import LineConst
 from PrimeraSizer import PrimeraSizer
+from SimplivitySizer import SimplivitySizer
 
 class Sizer:
     #List Supported Product
@@ -60,3 +61,5 @@ class Sizer:
                 return PrimeraSizer.GeneratePrimeraSizer(words)
             elif selectedProduct == "nimble":
                 return NimbleSizer.GenerateNimbleSizer(words)
+            elif selectedProduct == "nimble":
+                return SimplivitySizer.GenerateSimplivitySizer(words)

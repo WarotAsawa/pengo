@@ -183,7 +183,7 @@ class PrimeraSizer:
             try:
                 required = float(words[2])
             except ValueError:
-                return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity as Decimal") 
             if required <= 0 or required > 2721.29:  
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = "TB", required = required)
@@ -200,7 +200,7 @@ class PrimeraSizer:
             try:
                 required = float(words[2])
             except ValueError:
-                return PrimeraSizer.GenerateExampleCarousel("Please input capacity as float") 
+                return PrimeraSizer.GenerateExampleCarousel("Please input capacity as Decimal") 
             
             #Check if unit is tb or tib
             unit = words[3].lower()

@@ -380,7 +380,7 @@ class NimbleSizer:
             try:
                 required = float(words[3])
             except ValueError:
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity as float only", model) 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity as Decimal", model) 
 
             return NimbleSizer.GenerateNimbleSizerAnswers(unit = "TB", required = required, model = model)
         elif len(words) > 4:
@@ -388,7 +388,7 @@ class NimbleSizer:
             try:
                 required = float(words[3])
             except ValueError:
-                return NimbleSizer.GenerateExampleCarousel("Please input capacity as float only", model) 
+                return NimbleSizer.GenerateExampleCarousel("Please input capacity as Decimal", model) 
             #add utilization
             utilization = 100.0
             if len(words) > 5:
