@@ -231,9 +231,9 @@ class NimbleSizer:
         return resultArray
 
     @staticmethod
-    def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF"):
+    def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF", utilization = 100):
         multiplier = Converter.TBToUnitMultipler(unit)
-        convertedRequired = required * multiplier
+        convertedRequired = required * multiplier * 100 / utilization
         result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
 
         #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
@@ -247,7 +247,7 @@ class NimbleSizer:
         #Check if has no answers
         if model == 'AF':
             if convertedRequired <= 0 or convertedRequired > 818:  
-                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 818TB", model) 
+                return NimbleSizer.GenerateExampleCarousel("Nimble AF Capacity must be between 0TB and 818TB", model) 
 
             resultArray = NimbleSizer.AFSizer(convertedRequired)
 
@@ -277,7 +277,7 @@ class NimbleSizer:
 
         elif model == 'HF':
             if convertedRequired <= 0 or convertedRequired > 1012:  
-                return NimbleSizer.GenerateExampleCarousel("Capacity must be between 0TB and 1180TB", model) 
+                return NimbleSizer.GenerateExampleCarousel("Nimble HF Capacity must be between 0TB and 1180TB", model) 
 
             resultArray = NimbleSizer.HFSizer(convertedRequired)
 
@@ -312,8 +312,8 @@ class NimbleSizer:
         del resultArray
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + " " + str(required)+" TB")))
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB100, text="size nimble "+ model + " " + str(required)+" TiB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size nimble "+ model + " " + str(math.ceil(required/0.9))+" TB")))
-        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size nimble "+ model + " " + str(math.ceil(required/0.9))+" TiB")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB90, text="size nimble "+ model + " " +  str(required)+" TB 90")))
+        buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TiB90, text="size nimble "+ model + " " +  str(required)+" TiB 90")))
 
         quickReply=QuickReply(items=buttonList)
 
@@ -389,14 +389,20 @@ class NimbleSizer:
                 required = float(words[3])
             except ValueError:
                 return NimbleSizer.GenerateExampleCarousel("Please input capacity as float only", model) 
-            
+            #add utilization
+            if len(words) > 5:
+                try: utilization = float(words[4])
+                except ValueError: utilization = 100.0
+            if utilization <= 0: utilization = 1.0
+            if utilization > 100: utilization = 100.0
+
             #Check if unit is tb or tib
             unit = words[4].lower()
             unitCheck = ["tb","tib"]
             #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
                 return NimbleSizer.GenerateExampleCarousel("Please input unit as TB or TiB",model) 
-            return NimbleSizer.GenerateNimbleSizerAnswers(unit = unit, required = required,model = model)
+            return NimbleSizer.GenerateNimbleSizerAnswers(unit = unit, required = required,model = model, utilization = utilization)
 
 
 
