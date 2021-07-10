@@ -102,9 +102,9 @@ class PrimeraSizer:
         return result
 
     @staticmethod
-    def GeneratePrimeraSizeAnswers(unit = "TB", required = 50.0):
+    def GeneratePrimeraSizeAnswers(unit = "TB", required = 50.0, utilization = 100.0):
         multiplier = Converter.TBToUnitMultipler(unit)
-        convertedRequired = required * multiplier
+        convertedRequired = required * multiplier * 100 / utilization
         result = AllResponse.GetRandomResponseFromKeys('preAnswer')
         config = 0
         for ssdSize in PrimeraSizer.ssdSizeList:
@@ -198,7 +198,6 @@ class PrimeraSizer:
                 required = float(words[2])
             except ValueError:
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
-            required = required * 100 / utilization
             if required <= 0 or required > 2721.29:  
                 return PrimeraSizer.GenerateExampleCarousel("Please input capacity between 0 and 2721") 
             #Check if unit is tb or tib
@@ -207,7 +206,7 @@ class PrimeraSizer:
             #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
                 return PrimeraSizer.GenerateExampleCarousel("Please input unit as TB or TiB") 
-            return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = unit, required = required)
+            return PrimeraSizer.GeneratePrimeraSizeAnswers(unit = unit, required = required, utilization = utilization)
 
 
 
