@@ -20,7 +20,7 @@ class CSVOpener:
         for dir in dirList:
             fileList = os.listdir(CSVOpener.csvPath+dir+'/')
             for file in fileList:
-                if fileName.split('.')[1] != 'csv': continue
+                if file.split('.')[1] != 'csv': continue
                 targetName = file.split('.')[0]
                 if fileName == targetName.lower():
                     return CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+dir+'/'+targetName+'.csv')
