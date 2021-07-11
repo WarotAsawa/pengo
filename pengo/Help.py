@@ -62,28 +62,28 @@ class Help:
     @staticmethod
     def GenerateCarousel(type="spec product", list=[], selectedProduct="",selectedField=""):
         textPreFix = ""
-        imageUrl = ImageConst.specIcon
+        imageUrl = ImageConst.specImage
         loopList = list
 
         #Set initial menu text
         if type == "spec product": 
-            imageUrl = ImageConst.specIcon
+            imageUrl = ImageConst.specImage
             textPreFix = "spec "
             title = "Choose Your Product for Spec"
         elif type == "spec model": 
-            imageUrl = ImageConst.specIcon
+            imageUrl = ImageConst.specImage
             textPreFix = "spec " + selectedProduct + " "
             title = "Choose Your Model for Spec"
         elif type == "lookup product": 
-            imageUrl = ImageConst.lookupIcon
+            imageUrl = ImageConst.lookupImage
             textPreFix = "lookup "
             title = "Choose Your Product for Lookup"
         elif type == "lookup model": 
-            imageUrl = ImageConst.lookupIcon
+            imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " "
             title = "Choose Your Model for Lookup"
         elif type == "lookup value": 
-            imageUrl = ImageConst.lookupIcon
+            imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " " + selectedField + " "
             title = "Choose Your Value for Lookup"
 
