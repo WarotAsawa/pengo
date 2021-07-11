@@ -8,6 +8,7 @@ from AllResponse import AllResponse
 from CSVOpener import CSVOpener
 from LineConst import LineConst
 from ImageConst import ImageConst
+from Help import Help
 
 class LookUp:
 
@@ -80,7 +81,7 @@ class LookUp:
                     selectedProduct = product
             #If No matched product, return Error Message Else got Model List
             if selectedProduct == "":
-                return [TextSendMessage(text=errorMessage)]
+                return [TextSendMessage(text=errorMessage), Help.GenerateCarousel(type="lookup field", list = productList)]
 
             #Get Product's Field List
             specList = CSVOpener.SearchAndOpenCSV(selectedProduct)
@@ -100,7 +101,7 @@ class LookUp:
 
             #If No matched Field, return Error Message Else got Field List
             if selectedField == "":
-                return [TextSendMessage(text=errorMessage)]
+                return [TextSendMessage(text=errorMessage), Help.GenerateCarousel(type="lookup field", list = fieldList, selectedProduct=selectedProduct)]
 
             #Get Field's Value List
             for i in range(2,len(specList)):
@@ -113,44 +114,15 @@ class LookUp:
             for i in range(3,len(words)):
                 selectedValue = selectedValue + words[i] + " "
             selectedValue = selectedValue.strip().lower()
-        #Set Column and Item Limit
-        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
-        #Create Carosel Colume base on product or Model or Field
-        columnList = []
-        loopList = []
-        textPreFix = ""
-        title = ""
+        
         #Check if command is completed
         if selectedProduct != "" and selectedField != "" and selectedValue != "":
             lookUpResponse = LookUp.GenerateLookUpAnswers(specList, selectedProduct, fieldIndex, selectedValue)
             return lookUpResponse
         #check command's len to prepare return message
         if (len(words) == 3):
-            loopList = valueList
-            textPreFix = "lookUp " + selectedProduct + " " + selectedField + " "
-            title = "Choose Your Value"
+            return Help.GenerateCarousel(type="lookup value", list = valueList, selectedProduct=selectedProduct, selectedField=selectedField)
         elif (len(words) == 2):
-            loopList = fieldList
-            textPreFix = "lookUp " + selectedProduct + " "
-            title = "Choose Your Field"
+            return Help.GenerateCarousel(type="lookup field", list = fieldList, selectedProduct=selectedProduct)
         elif (len(words) == 1):
-            loopList = productList
-            textPreFix = "lookUp "
-            title = "Choose Your Product"
-        for i in range(int(math.ceil(len(loopList)/LineConst.maxActionPerColumn))):
-            if i >= LineConst.maxCarouselColumn: break
-            actions = []
-            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
-                if j >= maxAction: break
-                if j >= len(loopList):
-                    actions.append(MessageAction(label=". . .",text=textPreFix))
-                else:
-                    actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
-            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.lookupImage, text='Page '+str(i+1), title=title, actions=actions))
-        carousel_template = CarouselTemplate(columns=columnList)
-
-        lookUpMessage = TemplateSendMessage(
-            alt_text='LookUp Wizard support only on Mobile',
-            template=carousel_template
-        )
-        return lookUpMessage
+            return Help.GenerateCarousel(type="lookup field", list = productList)
