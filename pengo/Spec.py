@@ -66,7 +66,7 @@ class Spec:
                     selectedProduct = product
             #If No matched product, return Error Message Else got Model List
             if selectedProduct == "":
-                return [TextSendMessage(text=errorMessage)]
+                return [TextSendMessage(text=errorMessage), Help.GenerateCarousel(type="spec model", list = modelList, selectedProduct=selectedProduct)]
 
             #Get Product's Model List
             specList = CSVOpener.SearchAndOpenCSV(selectedProduct)

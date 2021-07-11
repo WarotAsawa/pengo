@@ -104,7 +104,8 @@ class Help:
             columnList.append(CarouselColumn(thumbnail_image_url =imageUrl, text='Page '+str(i+1), title=title, actions=actions))
         carousel_template = CarouselTemplate(columns=columnList)
 
-        lookUpMessage = TemplateSendMessage(
+        message = TemplateSendMessage(
             alt_text='LookUp Wizard support only on Mobile',
             template=carousel_template
         )
+        return message
