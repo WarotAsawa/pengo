@@ -8,6 +8,7 @@ from AllResponse import AllResponse
 from CSVOpener import CSVOpener
 from LineConst import LineConst
 from ImageConst import ImageConst
+from Help import Help
 
 class Spec:
 
@@ -77,47 +78,21 @@ class Spec:
         if (len(words) > 2):
             errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec " + selectedProduct + "\" or Select one of these model:\n"
             for model in modelList:
+                #Prepare error message and quick reply buttons
                 errorMessage = errorMessage + model + " "
                 if words[2] == model.strip().lower():
                     selectedModel = model
             #If No matched model, return Error Message Else got Model List
             if selectedModel == "":
-                return [TextSendMessage(text=errorMessage)]
+                return [TextSendMessage(text=errorMessage), Help.GenerateCarousel(type="spec model", list = modelList, selectedProduct=selectedProduct)]
         
-        #Set Column and Item Limit
-        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
-        #Create Carosel Colume base on product or Model
-        columnList = []
-        loopList = []
-        textPreFix = ""
-        title = ""
         #Check if command is completed
         if selectedProduct != "" and selectedModel != "":
             specResponse = Spec.GenerateSpecAnswers(specList, selectedProduct, selectedModel)
             return specResponse
         #check command's len to prepare return message
         if (len(words) == 2):
-            loopList = modelList
-            textPreFix = "spec " + selectedProduct + " "
-            title = "Choose Your Model"
+            return Help.GenerateCarousel(type="spec model", list = modelList, selectedProduct=selectedProduct)
         elif (len(words) == 1):
-            loopList = productList
-            textPreFix = "spec "
-            title = "Choose Your Product"
-        for i in range(int(math.ceil(len(loopList)/LineConst.maxActionPerColumn))):
-            if i >= LineConst.maxCarouselColumn: break
-            actions = []
-            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
-                if j >= maxAction: break
-                if j >= len(loopList):
-                    actions.append(MessageAction(label=". . .",text=textPreFix))
-                else:
-                    actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
-            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.specImage, text='Page '+str(i+1), title=title, actions=actions))
-        carousel_template = CarouselTemplate(columns=columnList)
-
-        specMessage = TemplateSendMessage(
-            alt_text='Spec Wizard support only on Mobile',
-            template=carousel_template
-        )
-        return specMessage
+            return Help.GenerateCarousel(type="spec product", list = productList, selectedProduct=selectedProduct)
+        

@@ -1,9 +1,12 @@
+import math
+
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
 
 from AllResponse import AllResponse
 from ImageConst import ImageConst
+from LineConst import LineConst
 
 class Help:
     #Generate help output
@@ -55,3 +58,53 @@ class Help:
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label="size", text="size")))
         quickReply=QuickReply(items=buttonList)
         return quickReply
+
+    @staticmethod
+    def GenerateCarousel(type="spec product", list=[], selectedProduct="",selectedField=""):
+        textPreFix = ""
+        imageUrl = ImageConst.specIcon
+        loopList = list
+
+        #Set initial menu text
+        if type == "spec product": 
+            imageUrl = ImageConst.specIcon
+            textPreFix = "spec "
+            title = "Choose Your Product for Spec"
+        elif type == "spec model": 
+            imageUrl = ImageConst.specIcon
+            textPreFix = "spec " + selectedProduct + " "
+            title = "Choose Your Model for Spec"
+        elif type == "lookup product": 
+            imageUrl = ImageConst.lookupIcon
+            textPreFix = "lookup "
+            title = "Choose Your Product for Lookup"
+        elif type == "lookup model": 
+            imageUrl = ImageConst.lookupIcon
+            textPreFix = "lookup " + selectedProduct + " "
+            title = "Choose Your Model for Lookup"
+        elif type == "lookup value": 
+            imageUrl = ImageConst.lookupIcon
+            textPreFix = "lookup " + selectedProduct + " " + selectedField + " "
+            title = "Choose Your Value for Lookup"
+
+        
+        #Set Column and Item Limit
+        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
+        #Create Carosel Colume base on product or Model or Field
+        columnList = [];
+        for i in range(int(math.ceil(len(loopList)/LineConst.maxActionPerColumn))):
+            if i >= LineConst.maxCarouselColumn: break
+            actions = []
+            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
+                if j >= maxAction: break
+                if j >= len(loopList):
+                    actions.append(MessageAction(label=". . .",text=textPreFix))
+                else:
+                    actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
+            columnList.append(CarouselColumn(thumbnail_image_url =imageUrl, text='Page '+str(i+1), title=title, actions=actions))
+        carousel_template = CarouselTemplate(columns=columnList)
+
+        lookUpMessage = TemplateSendMessage(
+            alt_text='LookUp Wizard support only on Mobile',
+            template=carousel_template
+        )
