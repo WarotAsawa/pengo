@@ -83,7 +83,7 @@ class LookUp:
                 return [TextSendMessage(text=errorMessage)]
 
             #Get Product's Field List
-            specList = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+selectedProduct+".csv")
+            specList = CSVOpener.SearchAndOpenCSV(selectedProduct)
             for i in range(1,len(specList[0])):
                 field = str(specList[0][i])
                 fieldList.append(field)

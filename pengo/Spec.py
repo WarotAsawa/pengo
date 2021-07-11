@@ -68,7 +68,7 @@ class Spec:
                 return [TextSendMessage(text=errorMessage)]
 
             #Get Product's Model List
-            specList = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+selectedProduct+".csv")
+            specList = CSVOpener.SearchAndOpenCSV(selectedProduct)
             for i in range(2,len(specList)):
                 model = str(specList[i][0])
                 modelList.append(model)
