@@ -42,16 +42,20 @@ class Spec:
     #Generate spec output
     @staticmethod
     def GenerateSpec(words):
-        fileList = os.listdir(CSVOpener.csvPath)
+        dirList = os.listdir(CSVOpener.csvPath)
+        dirList.sort()
         productList = [];
         modelList = [];
         specList = [];
         selectedProduct = ""
         selectedModel = ""
         #Get All Product Name from Directory
-        for file in fileList:
-            name = file.split('.')
-            productList.append(name[0])
+        for dir in dirList:
+            fileList = os.listdir(CSVOpener.csvPath+dir+'/')
+            fileList.sort()
+            for file in fileList:
+                name = file.split('.')
+                productList.append(name[0])
         #Check if Product name is valide and output error
         if (len(words) > 1):
             errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec\" or Select one of these product:\n"

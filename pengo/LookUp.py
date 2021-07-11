@@ -54,7 +54,8 @@ class LookUp:
     #Generate lookUp output
     @staticmethod
     def GenerateLookUp(words):
-        fileList = os.listdir(CSVOpener.csvPath)
+        dirList = os.listdir(CSVOpener.csvPath)
+        dirList.sort()
         productList = [];
         fieldList = [];
         specList = [];
@@ -64,9 +65,12 @@ class LookUp:
         selectedValue = ""
         fieldIndex = 0
         #Get All Product Name from Directory
-        for file in fileList:
-            name = file.split('.')
-            productList.append(name[0])
+        for dir in dirList:
+            fileList = os.listdir(CSVOpener.csvPath+dir+'/')
+            fileList.sort()
+            for file in fileList:
+                name = file.split('.')
+                productList.append(name[0])
         #Check if Product name is valide and output error
         if (len(words) > 1):
             errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"lookUp\" or Select one of these product:\n"
