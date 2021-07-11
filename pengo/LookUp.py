@@ -74,11 +74,12 @@ class LookUp:
                 productList.append(name[0])
         #Check if Product name is valide and output error
         if (len(words) > 1):
-            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"lookUp\" or Select one of these product:\n"
+            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nYour Product was no found.\nPlease Select one of these Products:\n"
             for product in productList:
                 errorMessage = errorMessage + "\n - " + product;
                 if words[1] == product.strip().lower():
                     selectedProduct = product
+            errorMessage += "\nOr select your 'Product' the carousel below."
             #If No matched product, return Error Message Else got Model List
             if selectedProduct == "":
                 return [TextSendMessage(text=errorMessage), Help.GenerateCarousel(type="lookup field", list = productList)]
@@ -91,13 +92,14 @@ class LookUp:
                 
         #Check if Field name is valide and output error
         if (len(words) > 2):
-            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"lookUp " + selectedProduct + "\" or Select one of these field:\n"
+            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nYour Field was no found.\nPlease Select one of these Fields:\n"
             for i in range(len(fieldList)):
                 field = fieldList[i]
                 errorMessage = errorMessage + field + " "
                 if words[2] == field.strip().lower():
                     selectedField = field
                     fieldIndex = i+1
+            errorMessage += "\nOr select in your 'Field' the carousel below."
 
             #If No matched Field, return Error Message Else got Field List
             if selectedField == "":

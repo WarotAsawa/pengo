@@ -77,7 +77,7 @@ class Help:
         elif type == "lookup product": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup "
-            title = "Choose Your Product for Lookup"
+            title = "Choose Your Field for Lookup"
         elif type == "lookup field": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " "

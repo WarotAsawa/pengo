@@ -59,7 +59,7 @@ class Spec:
                 productList.append(name[0])
         #Check if Product name is valide and output error
         if (len(words) > 1):
-            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec\" or Select one of these product:\n"
+            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nYour Product was no found.\nPlease Select one of these Products:\n"
             for product in productList:
                 errorMessage = errorMessage + "\n - " + product;
                 if words[1] == product.strip().lower():
@@ -67,6 +67,7 @@ class Spec:
             #If No matched product, return Error Message Else got Model List
             if selectedProduct == "":
                 return [TextSendMessage(text=errorMessage), Help.GenerateCarousel(type="spec model", list = productList)]
+            errorMessage += "\nOr select your 'Product' the carousel below."
 
             #Get Product's Model List
             specList = CSVOpener.SearchAndOpenCSV(selectedProduct)
@@ -76,12 +77,14 @@ class Spec:
                 
         #Check if Model name is valide and output error
         if (len(words) > 2):
-            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nPlease type \"spec " + selectedProduct + "\" or Select one of these model:\n"
+            errorMessage = AllResponse.GetRandomResponseFromKeys("errorWord") + "\nYour Model was no found.\nPlease Select one of these Model:\n"
             for model in modelList:
                 #Prepare error message and quick reply buttons
                 errorMessage = errorMessage + model + " "
                 if words[2] == model.strip().lower():
                     selectedModel = model
+            errorMessage += "\nOr select in your 'Model' the carousel below."
+
             #If No matched model, return Error Message Else got Model List
             if selectedModel == "":
                 return [TextSendMessage(text=errorMessage), Help.GenerateCarousel(type="spec model", list = modelList, selectedProduct=selectedProduct)]
