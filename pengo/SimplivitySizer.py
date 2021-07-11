@@ -14,7 +14,8 @@ class SimplivitySizer:
     @staticmethod
     def GetSimplivityModel():
         model = []
-        modelMatrix = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+"Simplivity.csv")
+        #Get From File
+        modelMatrix = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+"Storage/Simplivity.csv")
         for i in range(2,len(modelMatrix)):
             model.append(str(modelMatrix[i][0]).upper().strip())
         return model
@@ -22,7 +23,8 @@ class SimplivitySizer:
     @staticmethod
     def GetSimplivityUsableCapacity():
         model = []
-        modelMatrix = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+"Simplivity.csv")
+        #Get From File
+        modelMatrix = CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+"Storage/Simplivity.csv")
         for i in range(2,len(modelMatrix)):
             try:
                 capacity = float(modelMatrix[i][4])

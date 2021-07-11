@@ -20,8 +20,9 @@ class CSVOpener:
         for dir in dirList:
             fileList = os.listdir(CSVOpener.csvPath+dir+'/')
             for file in fileList:
-                targetName = file.split('.')[0].lower()
-                if fileName == targetName:
-                    return CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+dir+'/'+fileName+'.csv')
+                if fileName.split('.')[1] != 'csv': continue
+                targetName = file.split('.')[0]
+                if fileName == targetName.lower():
+                    return CSVOpener.GetArrayFromCSV(CSVOpener.csvPath+dir+'/'+targetName+'.csv')
         return ["Can not find searched file"]
 
