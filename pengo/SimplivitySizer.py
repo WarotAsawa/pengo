@@ -19,7 +19,8 @@ class SimplivitySizer:
     def AddModelRow(model, node):
         contents = []
         contents.append(TextComponent(text=model,color='#666666',size='md',flex=6, wrap=True, weight='bold'))
-        contents.append(TextComponent(text=node,color='#d3d366',size='lg',flex=6, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=node,color='#00b088',size='lg',flex=2, wrap=True, weight='bold', align='end'))
+        contents.append(TextComponent(text="Nodes",color='#666666',size='lg',flex=3, wrap=True, weight='bold', align='end'))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
         return box
 
@@ -75,7 +76,7 @@ class SimplivitySizer:
             totalUsableTiB = round(requiredNode * TiBPerNode,2)
             totalUsableTB = round(requiredNode * TBPerNode,2)
             usableString = "Usable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB"
-            contents.append(SimplivitySizer.AddModelRow(model,str(requiredNode)+" Node"))      
+            contents.append(SimplivitySizer.AddModelRow(model,str(requiredNode)))      
             contents.append(Help.AddFlexRow("Total Usable",usableString,3,6))       
         #Check is OK
         if config == 0: contents = [TextComponent(text='Your Sizing is loo large for 32-Node SimpliVity', weight='bold', size='xl', color='ff0000')]
