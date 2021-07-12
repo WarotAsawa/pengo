@@ -100,7 +100,7 @@ class PrimeraSizer:
         rawTB = diskSize * diskCount
         maxDrive = PrimeraSizer.maxDrive
         maxCapacityTB = PrimeraSizer.maxCapacityTB
-        result = "Supported Model:"
+        result = ""
         all2NModel = ["A630", "A650", "A670"]
         for model in all2NModel:
             if diskCount <= maxDrive[model] and rawTB <= maxCapacityTB[model] and diskCount%2 == 0:
@@ -134,8 +134,8 @@ class PrimeraSizer:
             rawTB = diskCount*ssdSize
             usableTB = PrimeraSizer.GetTBUsable(ssdSize, diskCount)
             diskCountText = str(diskCount) + " x " + str(ssdSize) + " TB SSD"
-            rawText = "Raw : " + str(round(rawTB,2)) + "TB / " + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
-            usableText = "Usable : " + str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB\n"
+            rawText = str(round(rawTB,2)) + "TB / " + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
+            usableText = str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
             supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
             contents.append(TextComponent(text="Config " + str(config), weight='bold', size='sm', margin='md'))            
             contents.append(PrimeraSizer.AddFlexRow("SSD Config",diskCountText,3,6))
