@@ -69,8 +69,11 @@ class PrimeraSizer:
         
         #Get Raw from Usable and multiply by 1.3
         driveResult = (usableTB/diskSize*1.3)
-        #Get highest even num
-        driveResult = math.floor(driveResult/2)*2
+        #Get highest even num . If 4 nodes fnd cloest x4
+        if driveResult >= 288:
+            driveResult = math.floor(driveResult/4)*4
+        else:
+            driveResult = math.floor(driveResult/2)*2
         
         while True:
             #If result is bigger that Primera supported return 0
