@@ -122,10 +122,13 @@ class PrimeraSizer:
         headerContents.append(TextComponent(text='Primera Sizing Result', weight='bold', size='xl'))
         for ssdSize in PrimeraSizer.ssdSizeList:
             diskCount = PrimeraSizer.SearchDiskCount(ssdSize, convertedRequired)
-            #If error means too big and no support model
-            print(str(diskCount) + "  " + str(ssdSize))
-            if (diskCount == 0): continue
             supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
+            #If error means too big and no support model
+            
+            print(str(diskCount) + "  " + str(ssdSize) + supportedText)
+            
+            if (diskCount == 0): continue
+            
             if supportedText == "": continue
 
             #Print all sizing
