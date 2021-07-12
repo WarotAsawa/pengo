@@ -17,16 +17,16 @@ class Spec:
     @staticmethod   
     def AddField(field):
         contents = []
-        contents.append(TextComponent(text=field,color='#00c0ff',size='sm',flex=6, wrap=True, weight='bold'))
-        contents.append(TextComponent(text=' ',color='#666666',size='sm',flex=6, wrap=True))
+        contents.append(TextComponent(text=field,color='#00c0ff',size='sm',flex=11, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=' ',color='#666666',size='sm',flex=1, wrap=True))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
         return box
 
     @staticmethod   
     def AddValue(value):
         contents = []
-        contents.append(TextComponent(text=' ',color='#00c0ff',size='sm',flex=6, wrap=True, weight='bold'))
-        contents.append(TextComponent(text=value,color='#666666',size='sm',flex=6, wrap=True))
+        contents.append(TextComponent(text=' ',color='#00c0ff',size='sm',flex=1, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=value,color='#666666',size='sm',flex=11, wrap=True))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xs')
         return box
 
@@ -62,7 +62,7 @@ class Spec:
             contents.append(Spec.AddValue(valueString))
             lookupText = "lookup " + selectedProduct + " " + fieldList[i] + " " + str(specList[index][i])
             buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=fieldWhited[0:12], text=lookupText)))
-            
+
         #Add Contents
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
