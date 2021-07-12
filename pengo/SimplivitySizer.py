@@ -20,7 +20,7 @@ class SimplivitySizer:
         contents = []
         contents.append(TextComponent(text=model,color='#666666',size='md',flex=6, wrap=True, weight='bold'))
         contents.append(TextComponent(text=node,color='#00b088',size='md',flex=2, wrap=True, weight='bold', align='end'))
-        contents.append(TextComponent(text="Nodes",color='#666666',size='md',flex=3, wrap=True, weight='regular', align='end'))
+        contents.append(TextComponent(text="Nodes",color='#666666',size='md',flex=3, wrap=True, weight='regular', align='start'))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
         return box
 
