@@ -120,7 +120,7 @@ class PrimeraSizer:
         for ssdSize in PrimeraSizer.ssdSizeList:
             diskCount = PrimeraSizer.SearchDiskCount(ssdSize, convertedRequired)
             #If error means too big
-            print(str(diskCount) + str(ssdSize))
+            print(str(diskCount) + "  " + str(ssdSize))
             if (diskCount == 0): continue
 
             #Print all sizing
