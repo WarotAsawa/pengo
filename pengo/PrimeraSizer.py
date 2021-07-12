@@ -26,9 +26,9 @@ class PrimeraSizer:
     maxDrive["A670"] = 288
     #Max Capacity supported each node Pair
     maxCapacityTB = {}
-    maxCapacityTB["A630"] = 250
-    maxCapacityTB["A650"] = 800
-    maxCapacityTB["A670"] = 1600
+    maxCapacityTB["A630"] = 277.0769
+    maxCapacityTB["A650"] = 879.6093
+    maxCapacityTB["A670"] = 1759.219
 
     #Available SSD Size
     ssdSizeList = [1.92, 3.84, 7.68, 15.36]
