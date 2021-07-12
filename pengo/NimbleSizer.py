@@ -1,9 +1,11 @@
 import math
 import random
+from typing import Text
 
 from linebot.models import (
-    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
+    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply, FlexSendMessage, BubbleContainer
 )
+from linebot.models.flex_message import BoxComponent, TextComponent
 from Converter import Converter
 from LineConst import LineConst
 from ImageConst import ImageConst
@@ -76,6 +78,52 @@ class NimbleAFArray():
         if floorRaw <= 1106 and len(self.ssdSetList) <= 6:
             result = result + "AF80 "
         return result
+
+    def AddFlexRow(self, title, text, titleWidth, textWidth):
+        contents = []
+        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
+        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
+        return box
+
+    def GetFlexResponse(self):
+        isOK = True
+        contents = []
+        headerContents = []
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        #Add Header
+        headerContents.append(TextComponent(text='Nimble Sizing Result', weight='bold', size='xl'))
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        #Add Contents
+        #Add Capacity Part
+        rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        contents.append(TextComponent(text='Nimble Sizing Result', weight='bold', size='md'))
+        contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
+        contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
+        count = 0
+        for ssd in self.ssdSetList:
+            #Print only 2 set per shelfs
+            size = ssd
+            unit = "TB"
+            if size < 1: size = math.floor(size*1000); unit="GB"
+            ssdString = "24 x " + str(size) + unit
+            if count%2==0:
+                contents.append(TextComponent(text="Shelf " + str(round(count/2) +1), weight='bold', size='sm', margin='md'))
+                contents.append(self.AddFlexRow("SSD A",ssdString,2,7))
+            else:
+                contents.append(self.AddFlexRow("SSD B",ssdString,2,7))
+            
+            count = count + 1
+        #Check isOK
+        if count == 0: isOK = False
+        if self.GetAllSupportedModel() == "": isOK = False
+
+        if isOK == False: contents = [TextComponent(text='No answers found !!', weight='bold', size='md')]
+
+        bubble = BubbleContainer(direction='ltr',body=body)
+        return FlexSendMessage(alt_text="Nimble AF Sizing Results", contents=bubble)
+
 
 class NimbleHFArray():
     shelfList = []
@@ -234,8 +282,9 @@ class NimbleSizer:
     def GenerateNimbleSizerAnswers(unit = "TB", required = 50.0, model = "HF", utilization = 100):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier * 100 / utilization
-        result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
-
+        preAnswer = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        answer = TextSendMessage(text='Temp')
+        postAnswer = "See below similar Sizings"
         #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
         buttonList = [];
         TB100 = "TB"
@@ -250,44 +299,29 @@ class NimbleSizer:
                 return NimbleSizer.GenerateExampleCarousel("Nimble AF Capacity must be between 0TB and 818TB", model) 
 
             resultArray = NimbleSizer.AFSizer(convertedRequired)
+            
+            answer = resultArray.GetFlexResponse()
 
-            result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
-            result = result + "Total Usable: "      + str(resultArray.usableCapacity) + "TB / " + str(round(resultArray.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
-            allModel = resultArray.GetAllSupportedModel();
-            if  allModel == "":
-                result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+            if  resultArray.GetAllSupportedModel() == "" or len(resultArray.ssdSetList) == 0:
+                preAnswer = AllResponse.GetRandomResponseFromKeys('errorWord')
+                postAnswer = "No answers found !! Try these instead."
                 strSizing = str(newRand)
                 required = newRand
-            else:
-                result += "\nSupported Model: " + allModel + "\n"
-            count = 0
-            for ssd in resultArray.ssdSetList:
-                #Print only 2 set per shelfs
-                if count%2==0:
-                    result = result + "\nShelf " + str(round(count/2) +1) + ":\nSSD A: "
-                else:
-                    result = result + "SSD B: "
-                size = ssd
-                unit = "TB"
-                if size < 1: size = math.floor(size*1000); unit="GB"
-                result = result + "24 x " + str(size) + unit
-                result = result + "\n"
-
-                count = count + 1
 
         elif model == 'HF':
             if convertedRequired <= 0 or convertedRequired > 1012:  
                 return NimbleSizer.GenerateExampleCarousel("Nimble HF Capacity must be between 0TB and 1012TB", model) 
 
             resultArray = NimbleSizer.HFSizer(convertedRequired)
-
+            result = ""
             result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "Total Usable: "      + str(resultArray.usableCapacity) + "TB / " + str(round(resultArray.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "Total SSD Cache: "   + str(resultArray.cacheCapacity) + "TB / "  + str(round(resultArray.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
             result = result + "FDR: " + str(round(resultArray.cacheCapacity/resultArray.usableCapacity*100,2)) + "%\n"
             allModel = resultArray.GetAllSupportedModel();
             if  allModel == "":
-                result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+                preAnswer = AllResponse.GetRandomResponseFromKeys('errorWord')
+                postAnswer = "No answers found !! Try these instead."
                 strSizing = str(newRand)
                 required = newRand
             else:
@@ -307,6 +341,7 @@ class NimbleSizer:
                     if ssdSize < 1: result = result +  str(allSSD[str(ssd)]) + "x" + str(math.floor(ssdSize*1000)) + "GB "
                     else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB "
                 result = result +  "\n"
+                answer = TextSendMessage(text=result)
             
         #Clear Object
         del resultArray
@@ -317,7 +352,7 @@ class NimbleSizer:
 
         quickReply=QuickReply(items=buttonList)
 
-        return TextSendMessage(text=result, quick_reply=quickReply)
+        return [TextSendMessage(text=preAnswer), answer, TextSendMessage(text=postAnswer, quick_reply=quickReply)]
         #, quick_reply=quickReply)
 
     @staticmethod
