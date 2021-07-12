@@ -20,7 +20,7 @@ class LookUp:
         contents = []
         contents.append(TextComponent(text=title,color='#666666',size='sm',flex=4, wrap=True, weight='bold'))
         contents.append(TextComponent(text=value,color='#00c0ff',size='sm',flex=5, wrap=True))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='sm')
         return box
 
     @staticmethod   
@@ -39,7 +39,7 @@ class LookUp:
         count = 0
         #Prepare string response
         preAnswer = AllResponse.GetRandomResponseFromKeys('preAnswer')
-        header = "Here is the Spec of : " + selectedProduct
+        header = "This is what you want to find"
         postAnswer = "You can lookup these field below"
         #Add FLex Content
         contents = []
@@ -49,7 +49,8 @@ class LookUp:
         contents.append(TextComponent(text=header, weight='bold', size='sm', margin='md'))
         contents.append(LookUp.AddHeader("Field", fieldList[fieldIndex]))
         contents.append(LookUp.AddHeader("Value", selectedValue + " " + unitList[fieldIndex]))
-        
+        header = "Here is the list of " + selectedProduct + " model that matched!"
+        contents.append(TextComponent(text=header, weight='bold', size='sm', margin='xl'))
         #Prepare string response
         uniqueValue = []
         allMatchModel = []
