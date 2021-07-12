@@ -18,7 +18,7 @@ class SimplivitySizer:
         contents = []
         contents.append(TextComponent(text=model,color='#666666',size='md',flex=6, wrap=True, weight='bold'))
         contents.append(TextComponent(text=node,color='#d3d366',size='lg',flex=6, wrap=True, weight='bold'))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='sm')
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
         return box
 
     @staticmethod   
@@ -26,7 +26,7 @@ class SimplivitySizer:
         contents = []
         contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
         contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xs')
         return box
 
     @staticmethod
@@ -91,7 +91,7 @@ class SimplivitySizer:
         bubble = BubbleContainer(direction='ltr',body=body)
         #Return Flex Message
         answer = FlexSendMessage(alt_text="Nimble HF Sizing Results", contents=bubble)
-        
+
         buttonList = [];
         TB100 = "TB"
         TiB100 = "TiB"
