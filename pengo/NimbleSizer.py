@@ -97,16 +97,19 @@ class NimbleAFArray():
         #Add Capacity Part
         rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
-        contents.append(TextComponent(text='Nimble Sizing Result', weight='bold', size='md'))
+        contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
         contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
         contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
+        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel,4,5))
+        #Add Shelf Config
+        contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
         count = 0
         for ssd in self.ssdSetList:
             #Print only 2 set per shelfs
             size = ssd
-            unit = "TB"
-            if size < 1: size = math.floor(size*1000); unit="GB"
-            ssdString = "24 x " + str(size) + unit
+            unit = " TB"
+            if size < 1: size = math.floor(size*1000); unit=" GB"
+            ssdString = "24 x " + str(size) + unit + " SSD"
             if count%2==0:
                 contents.append(TextComponent(text="Shelf " + str(round(count/2) +1), weight='bold', size='sm', margin='md'))
                 contents.append(self.AddFlexRow("SSD A",ssdString,2,7))
@@ -209,6 +212,63 @@ class NimbleHFArray():
         if self.rawCapacity <= 1260 and self.cacheCapacity <= 156:
             result = result + "HF60 "
         return result
+
+    
+    def AddFlexRow(self, title, text, titleWidth, textWidth):
+        contents = []
+        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
+        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
+        return box
+
+    def GetFlexResponse(self):
+        isOK = True
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text='Nimble Sizing Result', weight='bold', size='xl'))
+        
+        #Add Contents
+        #Add Capacity Part
+        rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        cacheText = str(self.cacheCapacity) + "TB / "    + str(round(self.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
+        contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
+        contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
+        contents.append(self.AddFlexRow("Total Cache",cacheText,3,6))
+        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel,4,5))
+        #Add Shelf Config
+        contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
+        count = 0
+        for shelf in self.shelfList:
+            count += 1
+            hddString = "21 x" + str(shelf.hddSize) + " TB HDD"
+            ssdString = ""
+            allSSD = {}
+            for ssd in shelf.ssdCache:
+                if str(ssd) not in allSSD: allSSD[str(ssd)] = 1
+                else: allSSD[str(ssd)] += 1
+            for ssd in allSSD.keys():
+                ssdSize = float(ssd)
+                if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD"
+                else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD"
+            contents.append(TextComponent(text="Shelf " + str(count), weight='bold', size='sm', margin='md'))
+            contents.append(self.AddFlexRow("HDD ",hddString,2,7))
+            contents.append(self.AddFlexRow("Cache ",ssdString,2,7))
+                
+            
+        #Check isOK
+        if count == 0: isOK = False
+        if self.GetAllSupportedModel() == "": isOK = False
+        if isOK == False: contents = [TextComponent(text='No answers found !!', weight='bold', size='md')]
+        #Add Contents
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        bubble = BubbleContainer(direction='ltr',body=body)
+        #Return Flex Message
+        return FlexSendMessage(alt_text="Nimble HF Sizing Results", contents=bubble)
+
 
 class NimbleSizer:
     @staticmethod
@@ -314,36 +374,15 @@ class NimbleSizer:
                 return NimbleSizer.GenerateExampleCarousel("Nimble HF Capacity must be between 0TB and 1012TB", model) 
 
             resultArray = NimbleSizer.HFSizer(convertedRequired)
-            result = ""
-            result = result + "Total Raw: "         + str(resultArray.rawCapacity) + "TB / "    + str(round(resultArray.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
-            result = result + "Total Usable: "      + str(resultArray.usableCapacity) + "TB / " + str(round(resultArray.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
-            result = result + "Total SSD Cache: "   + str(resultArray.cacheCapacity) + "TB / "  + str(round(resultArray.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + " TiB\n"
-            result = result + "FDR: " + str(round(resultArray.cacheCapacity/resultArray.usableCapacity*100,2)) + "%\n"
-            allModel = resultArray.GetAllSupportedModel();
-            if  allModel == "":
+            
+            answer = resultArray.GetFlexResponse()
+
+            if  resultArray.GetAllSupportedModel() == "" or len(resultArray.shelfList) == 0:
                 preAnswer = AllResponse.GetRandomResponseFromKeys('errorWord')
                 postAnswer = "No answers found !! Try these instead."
                 strSizing = str(newRand)
                 required = newRand
-            else:
-                result += "\nSupported Model: " + allModel + "\n"
-            count = 0
-            for shelf in resultArray.shelfList:
-                count = count + 1
-                result = result + "\nShelf " + str(count) + " :\n"
-                result = result + "HDD: 21x" + str(shelf.hddSize) + "TB HDD\n"
-                result = result + "SSD Cache: "
-                allSSD = {}
-                for ssd in shelf.ssdCache:
-                    if str(ssd) not in allSSD: allSSD[str(ssd)] = 1
-                    else: allSSD[str(ssd)] += 1
-                for ssd in allSSD.keys():
-                    ssdSize = float(ssd)
-                    if ssdSize < 1: result = result +  str(allSSD[str(ssd)]) + "x" + str(math.floor(ssdSize*1000)) + "GB "
-                    else: result = result +  str(allSSD[str(ssd)]) + "x" + str(ssdSize) + "TB "
-                result = result +  "\n"
-                answer = TextSendMessage(text=result)
-            
+
         #Clear Object
         del resultArray
         buttonList.append(QuickReplyButton(image_url=ImageConst.sizeIcon, action=MessageAction(label=strSizing+TB100, text="size nimble "+ model + " " + str(required)+" TB")))
