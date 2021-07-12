@@ -100,7 +100,7 @@ class NimbleAFArray():
         contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
         contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
         contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
-        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel,4,5))
+        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
         count = 0
@@ -237,7 +237,7 @@ class NimbleHFArray():
         contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
         contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
         contents.append(self.AddFlexRow("Total Cache",cacheText,3,6))
-        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel,4,5))
+        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
         count = 0
