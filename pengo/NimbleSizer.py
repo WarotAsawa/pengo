@@ -230,6 +230,7 @@ class NimbleHFArray():
         
         #Add Contents
         #Add Capacity Part
+        fdr = round(self.cacheCapacity / self.usableCapacity * 100, 2)
         rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         cacheText = str(self.cacheCapacity) + "TB / "    + str(round(self.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
@@ -237,6 +238,7 @@ class NimbleHFArray():
         contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
         contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
         contents.append(self.AddFlexRow("Total Cache",cacheText,3,6))
+        contents.append(self.AddFlexRow("FDR",str(fdr)+ "%",3,6))
         contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
