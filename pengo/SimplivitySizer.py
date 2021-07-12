@@ -1,6 +1,8 @@
 import math
 import random
 
+from linebot.models.flex_message import BoxComponent, BubbleContainer, FlexSendMessage, TextComponent
+
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
@@ -10,7 +12,23 @@ from ImageConst import ImageConst
 from AllResponse import AllResponse
 from CSVOpener import CSVOpener
 class SimplivitySizer:
-    
+
+    @staticmethod   
+    def AddModelRow(model, node):
+        contents = []
+        contents.append(TextComponent(text=model,color='#666666',size='md',flex=6, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=node,color='#d3d366',size='lg',flex=6, wrap=True, weight='bold'))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='sm')
+        return box
+
+    @staticmethod   
+    def AddFlexRow(title, text, titleWidth, textWidth):
+        contents = []
+        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
+        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
+        return box
+
     @staticmethod
     def GetSimplivityModel():
         model = []
@@ -38,9 +56,18 @@ class SimplivitySizer:
     def GenerateSimplivitySizeAnswers(unit = "TB", required = 50.0, utilization = 100.0):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier * 100 / utilization
-        result = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
+        preAnswer = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        answer = TextSendMessage(text='Temp')
+        postAnswer = "See below similar Sizings"
         modelList = SimplivitySizer.GetSimplivityModel()
         modelCapacity = SimplivitySizer.GetSimplivityUsableCapacity()
+
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text='Sizing Result', weight='bold', size='xl'))
+
         config = 0;
         for i in range(0,len(modelList)):
             TiBPerNode = modelCapacity[i]
@@ -53,8 +80,11 @@ class SimplivitySizer:
             model = modelList[i]
             totalUsableTiB = round(requiredNode * TiBPerNode,2)
             totalUsableTB = round(requiredNode * TBPerNode,2)
-            result += "------------------\n"
-            result += model + ": " + str(requiredNode) + "xNodes\nUsable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB\n"
+            usableString = "Usable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB"
+            contents.append(SimplivitySizer.AddModelRow(model,requiredNode+" Node"))      
+            contents.append(SimplivitySizer.AddFlexRow("Total Usable",usableString))       
+        #Check is OK
+        if config == 0: contents = [TextComponent(text='Your Sizing is loo large for 32-Node SimpliVity', weight='bold', size='xl', color='ff0000')]
 
         buttonList = [];
         TB100 = "TB"
@@ -65,7 +95,8 @@ class SimplivitySizer:
         newRand = random.randint(10, 522)
         #Check if has no answers
         if config ==0:
-            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nYour Sizing is too big for 32-Node Simplivity !!\nTry these instead."
+            preAnswer = AllResponse.GetRandomResponseFromKeys('errorWord')
+            postAnswer = "No answers found !! Try these instead."
             strSizing = str(newRand)
             required = newRand
 
@@ -76,7 +107,7 @@ class SimplivitySizer:
 
         quickReply=QuickReply(items=buttonList)
 
-        return TextSendMessage(text=result, quick_reply=quickReply)
+        return [TextSendMessage(text=preAnswer), answer, TextSendMessage(text=postAnswer, quick_reply=quickReply)]
         #, quick_reply=quickReply)
 
 
