@@ -85,7 +85,13 @@ class SimplivitySizer:
             contents.append(SimplivitySizer.AddFlexRow("Total Usable",usableString,3,6))       
         #Check is OK
         if config == 0: contents = [TextComponent(text='Your Sizing is loo large for 32-Node SimpliVity', weight='bold', size='xl', color='ff0000')]
-
+        #Add Contents
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        bubble = BubbleContainer(direction='ltr',body=body)
+        #Return Flex Message
+        answer = FlexSendMessage(alt_text="Nimble HF Sizing Results", contents=bubble)
+        
         buttonList = [];
         TB100 = "TB"
         TiB100 = "TiB"
