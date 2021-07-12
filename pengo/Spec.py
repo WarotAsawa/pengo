@@ -1,6 +1,8 @@
 import os
 import math
 
+from linebot.models.flex_message import BoxComponent, BubbleContainer, FlexSendMessage, TextComponent
+
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
@@ -12,6 +14,22 @@ from Help import Help
 
 class Spec:
 
+    @staticmethod   
+    def AddField(field):
+        contents = []
+        contents.append(TextComponent(text=field,color='#00c0ff',size='sm',flex=6, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=' ',color='#666666',size='sm',flex=6, wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
+        return box
+
+    @staticmethod   
+    def AddValue(value):
+        contents = []
+        contents.append(TextComponent(text=' ',color='#00c0ff',size='sm',flex=6, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=value,color='#666666',size='sm',flex=6, wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xs')
+        return box
+
     #Generate Spec Reply String
     @staticmethod
     def GenerateSpecAnswers(specList, selectedProduct, selectedModel):
@@ -19,8 +37,15 @@ class Spec:
         unitList = specList[1];
         index = 0;
         #Prepare string response
-        response = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
-        response = response + "Here is the Spec of : " + selectedProduct + " " + selectedModel
+        preAnswer = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        header = "Here is the Spec of : " + selectedProduct + " " + selectedModel
+        postAnswer = "You can lookup these field below"
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text='Specification Result', weight='bold', size='xl'))
+        contents.append(TextComponent(text=header, weight='bold', size='sm', margin='md'))
 
         for i in range(2,len(specList)):
             model = specList[i][0]
@@ -28,17 +53,26 @@ class Spec:
                 index = i
                 break
         if i==0: return TextSendMessage(text=AllResponse.GetRandomResponseFromKeys('errorWord'))
-        buttonList = [];
+        buttonList = []
         for i in range(1,len(fieldList)):
             if (i > LineConst.maxQuickReply): break
             fieldWhited = fieldList[i].replace("-", " ")
-            response = response + "\n" + fieldWhited
-            response = response + " : "
-            response = response + str(specList[index][i]) + " " + unitList[i]
+            contents.append(Spec.AddField(fieldWhited))
+            valueString = str(specList[index][i]) + " " + unitList[i]
+            contents.append(Spec.AddValue(valueString))
             lookupText = "lookup " + selectedProduct + " " + fieldList[i] + " " + str(specList[index][i])
             buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=fieldWhited[0:12], text=lookupText)))
+            
+        #Add Contents
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        bubble = BubbleContainer(direction='ltr',body=body)
+        #Return Flex Message
+        answer = FlexSendMessage(alt_text="Spec Results", contents=bubble)
+
         quickReply=QuickReply(items=buttonList)
-        return TextSendMessage(text=response, quick_reply = quickReply);
+
+        return [TextSendMessage(text=preAnswer), answer, TextSendMessage(text=postAnswer, quick_reply=quickReply)]
     
     #Generate spec output
     @staticmethod
