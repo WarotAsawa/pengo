@@ -102,7 +102,7 @@ class PrimeraSizer:
         for model in all4NModel:
             if diskCount <= maxDrive[model] * 2 and rawTB <= maxCapacityTB[model] * 2 and diskCount%4 == 0:
                 result = result + " " + model + "4N"
-        return result
+        return result.strip()
 
     @staticmethod
     def GeneratePrimeraSizeAnswers(unit = "TB", required = 50.0, utilization = 100.0):
@@ -130,7 +130,7 @@ class PrimeraSizer:
             rawText = str(round(rawTB,2)) + "TB / " + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
             usableText = str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
             supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
-            contents.append(TextComponent(text="Config " + str(config), weight='bold', size='sm', margin='md'))            
+            contents.append(TextComponent(text="Config " + str(config) + " : " + str(ssdSize) + " TB SSD", weight='bold', size='sm', margin='md'))            
             contents.append(Help.AddFlexRow("SSD Config",diskCountText,3,6))
             contents.append(Help.AddFlexRow("Total Raw",rawText,3,6))
             contents.append(Help.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
