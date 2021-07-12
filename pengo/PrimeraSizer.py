@@ -33,7 +33,7 @@ class PrimeraSizer:
     ssdSizeList = [1.92, 3.84, 7.68, 15.36]
 
     @staticmethod   
-    def AddFlexRow(self, title, text, titleWidth, textWidth):
+    def AddFlexRow(title, text, titleWidth, textWidth):
         contents = []
         contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
         contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
