@@ -119,9 +119,11 @@ class PrimeraSizer:
         headerContents.append(TextComponent(text='Primera Sizing Result', weight='bold', size='xl'))
         for ssdSize in PrimeraSizer.ssdSizeList:
             diskCount = PrimeraSizer.SearchDiskCount(ssdSize, convertedRequired)
-            #If error means too big
+            #If error means too big and no support model
             print(str(diskCount) + "  " + str(ssdSize))
             if (diskCount == 0): continue
+            supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
+            if supportedText == "": continue
 
             #Print all sizing
             config = config + 1
@@ -130,7 +132,6 @@ class PrimeraSizer:
             diskCountText = str(diskCount) + " x " + str(ssdSize) + " TB SSD"
             rawText = str(round(rawTB,2)) + "TB / " + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
             usableText = str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
-            supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
             contents.append(TextComponent(text="Config " + str(config) + " : " + str(ssdSize) + " TB SSD", weight='bold', size='sm', margin='md'))            
             contents.append(Help.AddFlexRow("SSD Config",diskCountText,3,6))
             contents.append(Help.AddFlexRow("Total Raw",rawText,3,6))
