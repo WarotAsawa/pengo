@@ -39,7 +39,7 @@ class PrimeraSizer:
         contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
         return box
-        
+
     @staticmethod
     def GetTBUsable(diskSize: float, diskCount: int):
         
@@ -136,12 +136,12 @@ class PrimeraSizer:
             diskCountText = str(diskCount) + " x " + str(ssdSize) + " TB SSD"
             rawText = "Raw : " + str(round(rawTB,2)) + "TB / " + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
             usableText = "Usable : " + str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB\n"
-            result = result + PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
-            result = result + "\n"
+            supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
             contents.append(TextComponent(text="Config " + str(config), weight='bold', size='sm', margin='md'))            
             contents.append(PrimeraSizer.AddFlexRow("SSD Config",diskCountText,3,6))
             contents.append(PrimeraSizer.AddFlexRow("Total Raw",rawText,3,6))
-            contents.append(PrimeraSizer.AddFlexRow("Total Usable",usableText,3,6))      
+            contents.append(PrimeraSizer.AddFlexRow("Total Usable",usableText,3,6))
+            contents.append(PrimeraSizer.AddFlexRow("Supported Model",supportedText,4,5))   
         
         #Check is OK
         if config == 0: contents = [TextComponent(text='No answers found !!', weight='bold', size='md')]
