@@ -243,7 +243,7 @@ class NimbleHFArray():
         count = 0
         for shelf in self.shelfList:
             count += 1
-            hddString = "21 x" + str(shelf.hddSize) + " TB HDD"
+            hddString = "21 x " + str(shelf.hddSize) + " TB HDD"
             ssdString = ""
             allSSD = {}
             for ssd in shelf.ssdCache:
@@ -251,7 +251,7 @@ class NimbleHFArray():
                 else: allSSD[str(ssd)] += 1
             for ssd in allSSD.keys():
                 ssdSize = float(ssd)
-                if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD"
+                if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD\n"
                 else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD"
             contents.append(TextComponent(text="Shelf " + str(count), weight='bold', size='sm', margin='md'))
             contents.append(self.AddFlexRow("HDD ",hddString,2,7))
