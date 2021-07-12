@@ -7,6 +7,7 @@ from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
 from Converter import Converter
+from Help import Help
 from LineConst import LineConst
 from ImageConst import ImageConst
 from AllResponse import AllResponse
@@ -75,7 +76,7 @@ class SimplivitySizer:
             totalUsableTB = round(requiredNode * TBPerNode,2)
             usableString = "Usable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB"
             contents.append(SimplivitySizer.AddModelRow(model,str(requiredNode)+" Node"))      
-            contents.append(Sizer.AddFlexRow("Total Usable",usableString,3,6))       
+            contents.append(Help.AddFlexRow("Total Usable",usableString,3,6))       
         #Check is OK
         if config == 0: contents = [TextComponent(text='Your Sizing is loo large for 32-Node SimpliVity', weight='bold', size='xl', color='ff0000')]
         #Add Contents

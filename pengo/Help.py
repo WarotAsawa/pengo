@@ -3,6 +3,7 @@ import math
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
+from linebot.models.flex_message import BoxComponent, TextComponent
 
 from AllResponse import AllResponse
 from ImageConst import ImageConst
@@ -109,3 +110,12 @@ class Help:
             template=carousel_template
         )
         return message
+
+    
+    @staticmethod   
+    def AddFlexRow(title, text, titleWidth, textWidth, color = '#00b088', weight = 'regular'):
+        contents = []
+        contents.append(TextComponent(text=title,color=color,size='sm',flex=titleWidth, wrap='regular'))
+        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True, weight=isBold))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
+        return box

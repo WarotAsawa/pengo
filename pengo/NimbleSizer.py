@@ -7,6 +7,7 @@ from linebot.models import (
 )
 from linebot.models.flex_message import BoxComponent, TextComponent
 from Converter import Converter
+from Help import Help
 from LineConst import LineConst
 from ImageConst import ImageConst
 from AllResponse import AllResponse
@@ -92,9 +93,9 @@ class NimbleAFArray():
         rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
-        contents.append(Sizer.AddFlexRow("Total Raw",rawText,3,6))
-        contents.append(Sizer.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
-        contents.append(Sizer.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
+        contents.append(Help.AddFlexRow("Total Raw",rawText,3,6))
+        contents.append(Help.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+        contents.append(Help.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
         count = 0
@@ -106,9 +107,9 @@ class NimbleAFArray():
             ssdString = "24 x " + str(size) + unit + " SSD"
             if count%2==0:
                 contents.append(TextComponent(text="Shelf " + str(round(count/2) +1), weight='bold', size='sm', margin='md'))
-                contents.append(Sizer.AddFlexRow("SSD A",ssdString,2,7))
+                contents.append(Help.AddFlexRow("SSD A",ssdString,2,7))
             else:
-                contents.append(Sizer.AddFlexRow("SSD B",ssdString,2,7))
+                contents.append(Help.AddFlexRow("SSD B",ssdString,2,7))
             
             count = count + 1
         #Check isOK
@@ -221,11 +222,11 @@ class NimbleHFArray():
         usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         cacheText = str(self.cacheCapacity) + "TB / "    + str(round(self.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
-        contents.append(Sizer.AddFlexRow("Total Raw",rawText,3,6))
-        contents.append(Sizer.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
-        contents.append(Sizer.AddFlexRow("Total Cache",cacheText,3,6))
-        contents.append(Sizer.AddFlexRow("FDR",str(fdr)+ "%",3,6))
-        contents.append(Sizer.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
+        contents.append(Help.AddFlexRow("Total Raw",rawText,3,6))
+        contents.append(Help.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+        contents.append(Help.AddFlexRow("Total Cache",cacheText,3,6))
+        contents.append(Help.AddFlexRow("FDR",str(fdr)+ "%",3,6))
+        contents.append(Help.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
         count = 0
@@ -242,8 +243,8 @@ class NimbleHFArray():
                 if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD\n"
                 else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD"
             contents.append(TextComponent(text="Shelf " + str(count), weight='bold', size='sm', margin='md'))
-            contents.append(Sizer.AddFlexRow("HDD ",hddString,2,7))
-            contents.append(Sizer.AddFlexRow("Cache ",ssdString,2,7))
+            contents.append(Help.AddFlexRow("HDD ",hddString,2,7))
+            contents.append(Help.AddFlexRow("Cache ",ssdString,2,7))
                 
             
         #Check isOK
