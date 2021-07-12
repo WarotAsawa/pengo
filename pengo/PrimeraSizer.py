@@ -8,9 +8,9 @@ from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
 from Converter import Converter
+from Help import Help
 from LineConst import LineConst
 from ImageConst import ImageConst
-from Sizer import Sizer
 
 class PrimeraSizer:
     #Primera Overhead: Using A670 4N which provide max overhead
@@ -131,10 +131,10 @@ class PrimeraSizer:
             usableText = str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
             supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
             contents.append(TextComponent(text="Config " + str(config), weight='bold', size='sm', margin='md'))            
-            contents.append(Sizer.AddFlexRow("SSD Config",diskCountText,3,6))
-            contents.append(Sizer.AddFlexRow("Total Raw",rawText,3,6))
-            contents.append(Sizer.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
-            contents.append(Sizer.AddFlexRow("Supported Model",supportedText,4,5))   
+            contents.append(Help.AddFlexRow("SSD Config",diskCountText,3,6))
+            contents.append(Help.AddFlexRow("Total Raw",rawText,3,6))
+            contents.append(Help.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+            contents.append(Help.AddFlexRow("Supported Model",supportedText,4,5))   
         
         #Check is OK
         if config == 0: contents = [TextComponent(text='No answers found !!', weight='bold', size='md')]

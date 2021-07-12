@@ -11,7 +11,6 @@ from Help import Help
 from LineConst import LineConst
 from ImageConst import ImageConst
 from AllResponse import AllResponse
-from Sizer import Sizer
 
 class NimbleES3Shelf():
     hddSize=0
