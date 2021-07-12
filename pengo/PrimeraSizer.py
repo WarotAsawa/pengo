@@ -1,5 +1,7 @@
 import math
 import random
+
+from linebot.models.flex_message import BoxComponent, BubbleContainer, FlexSendMessage, TextComponent
 from AllResponse import AllResponse
 
 from linebot.models import (
@@ -29,6 +31,46 @@ class PrimeraSizer:
 
     #Available SSD Size
     ssdSizeList = [1.92, 3.84, 7.68, 15.36]
+
+    @staticmethod   
+    def AddFlexRow(self, title, text, titleWidth, textWidth):
+        contents = []
+        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
+        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
+        return box
+    
+    @staticmethod
+    def GetFlexResponse(self):
+        isOK = True
+        
+        
+        #Add Contents
+        #Add Capacity Part
+        rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        usableText = str(PrimeraSizer.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        cacheText = str(self.cacheCapacity) + "TB / "    + str(round(self.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
+        contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
+        
+        contents.append(PrimeraSizer.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
+        #Add Shelf Config
+        contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
+        count = 0
+        for shelf in self.shelfList:
+            count += 1
+            hddString = "21 x" + str(shelf.hddSize) + " TB HDD"
+            ssdString = ""
+            allSSD = {}
+            for ssd in shelf.ssdCache:
+                if str(ssd) not in allSSD: allSSD[str(ssd)] = 1
+                else: allSSD[str(ssd)] += 1
+            for ssd in allSSD.keys():
+                ssdSize = float(ssd)
+                if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD"
+                else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD"
+            contents.append(TextComponent(text="Shelf " + str(count), weight='bold', size='sm', margin='md'))
+            contents.append(PrimeraSizer.AddFlexRow("HDD ",hddString,2,7))
+            contents.append(PrimeraSizer.AddFlexRow("Cache ",ssdString,2,7))
 
     @staticmethod
     def GetTBUsable(diskSize: float, diskCount: int):
@@ -105,8 +147,15 @@ class PrimeraSizer:
     def GeneratePrimeraSizeAnswers(unit = "TB", required = 50.0, utilization = 100.0):
         multiplier = Converter.TBToUnitMultipler(unit)
         convertedRequired = required * multiplier * 100 / utilization
-        result = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        preAnswer = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        answer = TextSendMessage(text='Temp')
+        postAnswer = "See below similar Sizings"
         config = 0
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text='Primera Sizing Result', weight='bold', size='xl'))
         for ssdSize in PrimeraSizer.ssdSizeList:
             diskCount = PrimeraSizer.SearchDiskCount(ssdSize, convertedRequired)
             #If error means too big
@@ -116,13 +165,24 @@ class PrimeraSizer:
             config = config + 1
             rawTB = diskCount*ssdSize
             usableTB = PrimeraSizer.GetTBUsable(ssdSize, diskCount)
-            result = result + "\n"
-            result = result + "Config " + str(config) + ":\n"
-            result = result + str(diskCount) + " x " + str(ssdSize) + "TB SSD\n"
-            result = result + "Raw : " + str(round(rawTB,2)) + " TB / " + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + " TiB\n"
-            result = result + "Usable : " + str(round(usableTB,2)) + " TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + " TiB\n"
+            diskCountText = str(diskCount) + " x " + str(ssdSize) + " TB SSD"
+            rawText = "Raw : " + str(round(rawTB,2)) + "TB / " + str(round(rawTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
+            usableText = "Usable : " + str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB\n"
             result = result + PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
             result = result + "\n"
+            contents.append(TextComponent(text="Config " + str(config), weight='bold', size='sm', margin='md'))            
+            contents.append(PrimeraSizer.AddFlexRow("SSD Config",diskCountText,3,6))
+            contents.append(PrimeraSizer.AddFlexRow("Total Raw",rawText,3,6))
+            contents.append(PrimeraSizer.AddFlexRow("Total Usable",usableText,3,6))      
+        
+        #Check is OK
+        if config == 0: contents = [TextComponent(text='No answers found !!', weight='bold', size='md')]
+        #Add Contents
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        bubble = BubbleContainer(direction='ltr',body=body)
+        #Return Flex Message
+        answer = FlexSendMessage(alt_text="Nimble HF Sizing Results", contents=bubble)
 
         #Set Quick reply for convert unit (TB,TiB) and offer 100,90% utilization sizing
         buttonList = [];
@@ -145,7 +205,7 @@ class PrimeraSizer:
 
         quickReply=QuickReply(items=buttonList)
 
-        return TextSendMessage(text=result, quick_reply=quickReply)
+        return [TextSendMessage(text=preAnswer), answer, TextSendMessage(text=postAnswer, quick_reply=quickReply)]
         #, quick_reply=quickReply)
 
     @staticmethod
