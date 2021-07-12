@@ -12,7 +12,7 @@ from LineConst import LineConst
 from ImageConst import ImageConst
 from AllResponse import AllResponse
 from CSVOpener import CSVOpener
-from Sizer import Sizer
+
 class SimplivitySizer:
 
     @staticmethod   
