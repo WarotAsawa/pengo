@@ -11,6 +11,7 @@ from LineConst import LineConst
 from ImageConst import ImageConst
 from AllResponse import AllResponse
 from CSVOpener import CSVOpener
+from Sizer import Sizer
 class SimplivitySizer:
 
     @staticmethod   
@@ -19,14 +20,6 @@ class SimplivitySizer:
         contents.append(TextComponent(text=model,color='#666666',size='md',flex=6, wrap=True, weight='bold'))
         contents.append(TextComponent(text=node,color='#d3d366',size='lg',flex=6, wrap=True, weight='bold'))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
-        return box
-
-    @staticmethod   
-    def AddFlexRow(title, text, titleWidth, textWidth):
-        contents = []
-        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
-        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xs')
         return box
 
     @staticmethod
@@ -82,7 +75,7 @@ class SimplivitySizer:
             totalUsableTB = round(requiredNode * TBPerNode,2)
             usableString = "Usable:" + str(totalUsableTB) + "TB/" + str(totalUsableTiB) + "TiB"
             contents.append(SimplivitySizer.AddModelRow(model,str(requiredNode)+" Node"))      
-            contents.append(SimplivitySizer.AddFlexRow("Total Usable",usableString,3,6))       
+            contents.append(Sizer.AddFlexRow("Total Usable",usableString,3,6))       
         #Check is OK
         if config == 0: contents = [TextComponent(text='Your Sizing is loo large for 32-Node SimpliVity', weight='bold', size='xl', color='ff0000')]
         #Add Contents

@@ -10,6 +10,7 @@ from Converter import Converter
 from LineConst import LineConst
 from ImageConst import ImageConst
 from AllResponse import AllResponse
+from Sizer import Sizer
 
 class NimbleES3Shelf():
     hddSize=0
@@ -79,13 +80,6 @@ class NimbleAFArray():
             result = result + "AF80 "
         return result
 
-    def AddFlexRow(self, title, text, titleWidth, textWidth):
-        contents = []
-        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
-        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
-        return box
-
     def GetFlexResponse(self):
         isOK = True
         contents = []
@@ -98,9 +92,9 @@ class NimbleAFArray():
         rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
-        contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
-        contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
-        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
+        contents.append(Sizer.AddFlexRow("Total Raw",rawText,3,6))
+        contents.append(Sizer.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+        contents.append(Sizer.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
         count = 0
@@ -112,9 +106,9 @@ class NimbleAFArray():
             ssdString = "24 x " + str(size) + unit + " SSD"
             if count%2==0:
                 contents.append(TextComponent(text="Shelf " + str(round(count/2) +1), weight='bold', size='sm', margin='md'))
-                contents.append(self.AddFlexRow("SSD A",ssdString,2,7))
+                contents.append(Sizer.AddFlexRow("SSD A",ssdString,2,7))
             else:
-                contents.append(self.AddFlexRow("SSD B",ssdString,2,7))
+                contents.append(Sizer.AddFlexRow("SSD B",ssdString,2,7))
             
             count = count + 1
         #Check isOK
@@ -213,14 +207,6 @@ class NimbleHFArray():
             result = result + "HF60 "
         return result
 
-    
-    def AddFlexRow(self, title, text, titleWidth, textWidth):
-        contents = []
-        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
-        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
-        return box
-
     def GetFlexResponse(self):
         isOK = True
         contents = []
@@ -235,11 +221,11 @@ class NimbleHFArray():
         usableText = str(self.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         cacheText = str(self.cacheCapacity) + "TB / "    + str(round(self.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
         contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
-        contents.append(self.AddFlexRow("Total Raw",rawText,3,6))
-        contents.append(self.AddFlexRow("Total Usable",usableText,3,6))
-        contents.append(self.AddFlexRow("Total Cache",cacheText,3,6))
-        contents.append(self.AddFlexRow("FDR",str(fdr)+ "%",3,6))
-        contents.append(self.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
+        contents.append(Sizer.AddFlexRow("Total Raw",rawText,3,6))
+        contents.append(Sizer.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+        contents.append(Sizer.AddFlexRow("Total Cache",cacheText,3,6))
+        contents.append(Sizer.AddFlexRow("FDR",str(fdr)+ "%",3,6))
+        contents.append(Sizer.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
         count = 0
@@ -256,8 +242,8 @@ class NimbleHFArray():
                 if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD\n"
                 else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD"
             contents.append(TextComponent(text="Shelf " + str(count), weight='bold', size='sm', margin='md'))
-            contents.append(self.AddFlexRow("HDD ",hddString,2,7))
-            contents.append(self.AddFlexRow("Cache ",ssdString,2,7))
+            contents.append(Sizer.AddFlexRow("HDD ",hddString,2,7))
+            contents.append(Sizer.AddFlexRow("Cache ",ssdString,2,7))
                 
             
         #Check isOK

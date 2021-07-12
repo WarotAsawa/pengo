@@ -10,6 +10,7 @@ from linebot.models import (
 from Converter import Converter
 from LineConst import LineConst
 from ImageConst import ImageConst
+from Sizer import Sizer
 
 class PrimeraSizer:
     #Primera Overhead: Using A670 4N which provide max overhead
@@ -31,14 +32,6 @@ class PrimeraSizer:
 
     #Available SSD Size
     ssdSizeList = [1.92, 3.84, 7.68, 15.36]
-
-    @staticmethod   
-    def AddFlexRow(title, text, titleWidth, textWidth):
-        contents = []
-        contents.append(TextComponent(text=title,color='#bebe66',size='sm',flex=titleWidth, wrap=True))
-        contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
-        return box
 
     @staticmethod
     def GetTBUsable(diskSize: float, diskCount: int):
@@ -138,10 +131,10 @@ class PrimeraSizer:
             usableText = str(round(usableTB,2)) + "TB / " + str(round(usableTB/Converter.TBToUnitMultipler("TiB"),2)) + "TiB"
             supportedText = PrimeraSizer.GetSupportedModelFromDrives(ssdSize, diskCount)
             contents.append(TextComponent(text="Config " + str(config), weight='bold', size='sm', margin='md'))            
-            contents.append(PrimeraSizer.AddFlexRow("SSD Config",diskCountText,3,6))
-            contents.append(PrimeraSizer.AddFlexRow("Total Raw",rawText,3,6))
-            contents.append(PrimeraSizer.AddFlexRow("Total Usable",usableText,3,6))
-            contents.append(PrimeraSizer.AddFlexRow("Supported Model",supportedText,4,5))   
+            contents.append(Sizer.AddFlexRow("SSD Config",diskCountText,3,6))
+            contents.append(Sizer.AddFlexRow("Total Raw",rawText,3,6))
+            contents.append(Sizer.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+            contents.append(Sizer.AddFlexRow("Supported Model",supportedText,4,5))   
         
         #Check is OK
         if config == 0: contents = [TextComponent(text='No answers found !!', weight='bold', size='md')]
