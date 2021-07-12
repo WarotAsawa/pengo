@@ -17,7 +17,7 @@ class Spec:
     @staticmethod   
     def AddField(field):
         contents = []
-        contents.append(TextComponent(text=field,color='#00c0ff',size='sm',flex=11, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=field,color='#ff5964',size='sm',flex=11, wrap=True, weight='bold'))
         contents.append(TextComponent(text=' ',color='#666666',size='sm',flex=1, wrap=True))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
         return box
@@ -25,7 +25,7 @@ class Spec:
     @staticmethod   
     def AddValue(value):
         contents = []
-        contents.append(TextComponent(text=' ',color='#00c0ff',size='sm',flex=1, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=' ',color='#ff5964',size='sm',flex=1, wrap=True, weight='bold'))
         contents.append(TextComponent(text=value,color='#666666',size='sm',flex=11, wrap=True))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xs')
         return box

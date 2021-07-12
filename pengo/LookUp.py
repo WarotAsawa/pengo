@@ -1,9 +1,12 @@
 import os
 import math
 
+from linebot.models.flex_message import BoxComponent, BubbleContainer, FlexSendMessage, TextComponent
+
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
+
 from AllResponse import AllResponse
 from CSVOpener import CSVOpener
 from LineConst import LineConst
@@ -12,6 +15,22 @@ from Help import Help
 
 class LookUp:
 
+    @staticmethod   
+    def AddHeader(title, value):
+        contents = []
+        contents.append(TextComponent(text=title,color='#666666',size='sm',flex=4, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=value,color='#00c0ff',size='sm',flex=5, wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xl')
+        return box
+
+    @staticmethod   
+    def AddValue(value):
+        contents = []
+        contents.append(TextComponent(text=' ',color='#00c0ff',size='sm',flex=1, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=value,color='#666666',size='sm',flex=11, wrap=True))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='xs')
+        return box
+
     #Generate Lookup Reply String
     @staticmethod
     def GenerateLookUpAnswers(specList, selectedProduct, fieldIndex, selectedValue):
@@ -19,19 +38,31 @@ class LookUp:
         unitList = specList[1]
         count = 0
         #Prepare string response
-        response = AllResponse.GetRandomResponseFromKeys('preAnswer') + "\n"
-        response = response + "Here is the list of model of : " + selectedProduct + ", which " + fieldList[fieldIndex] + " is " + selectedValue + " " + unitList[fieldIndex];
+        preAnswer = AllResponse.GetRandomResponseFromKeys('preAnswer')
+        header = "Here is the Spec of : " + selectedProduct
+        postAnswer = "You can lookup these field below"
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text='Look Up Result', weight='bold', size='xl'))
+        contents.append(TextComponent(text=header, weight='bold', size='sm', margin='md'))
+        contents.append(LookUp.AddHeader("Field", fieldList[fieldIndex]))
+        contents.append(LookUp.AddHeader("Value", selectedValue + " " + unitList[fieldIndex]))
+        
+        #Prepare string response
         uniqueValue = []
         allMatchModel = []
         buttonList = []
         for i in range(2,len(specList)):
             value = str(specList[i][fieldIndex]).lower().strip()
             if selectedValue == value:
-                response = response + "\n - " + str(specList[i][0])
+                contents.append(LookUp.AddValue(str(specList[i][0])))
                 allMatchModel.append(str(specList[i][0]))
                 count = count + 1
             if value not in uniqueValue:
                 uniqueValue.append(value)
+
         #Add quickreply for spec for match model
         for i in range(len(allMatchModel)):
             if i >= LineConst.maxQuickReply: break
@@ -48,9 +79,16 @@ class LookUp:
                 lookupText = "lookup " + selectedProduct + " " + fieldList[fieldIndex] + " " + uniqueValue[i]
                 buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=uniqueValue[i][0:20], text=lookupText)))
         
+        #Add Contents
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        bubble = BubbleContainer(direction='ltr',body=body)
+        #Return Flex Message
+        answer = FlexSendMessage(alt_text="Spec Results", contents=bubble)
+
         quickReply=QuickReply(items=buttonList)
-        #Print Carousel follow with Tips and Quick Reply
-        return TextSendMessage(text=response, quick_reply=quickReply)
+
+        return [TextSendMessage(text=preAnswer), answer, TextSendMessage(text=postAnswer, quick_reply=quickReply)]
 
     #Generate lookUp output
     @staticmethod
