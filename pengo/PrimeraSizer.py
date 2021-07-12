@@ -39,39 +39,7 @@ class PrimeraSizer:
         contents.append(TextComponent(text=text ,color='#666666',size='sm',flex=textWidth , wrap=True))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents)
         return box
-    
-    @staticmethod
-    def GetFlexResponse(self):
-        isOK = True
         
-        
-        #Add Contents
-        #Add Capacity Part
-        rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
-        usableText = str(PrimeraSizer.usableCapacity) + "TB / "    + str(round(self.usableCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
-        cacheText = str(self.cacheCapacity) + "TB / "    + str(round(self.cacheCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
-        contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
-        
-        contents.append(PrimeraSizer.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
-        #Add Shelf Config
-        contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
-        count = 0
-        for shelf in self.shelfList:
-            count += 1
-            hddString = "21 x" + str(shelf.hddSize) + " TB HDD"
-            ssdString = ""
-            allSSD = {}
-            for ssd in shelf.ssdCache:
-                if str(ssd) not in allSSD: allSSD[str(ssd)] = 1
-                else: allSSD[str(ssd)] += 1
-            for ssd in allSSD.keys():
-                ssdSize = float(ssd)
-                if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD"
-                else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD"
-            contents.append(TextComponent(text="Shelf " + str(count), weight='bold', size='sm', margin='md'))
-            contents.append(PrimeraSizer.AddFlexRow("HDD ",hddString,2,7))
-            contents.append(PrimeraSizer.AddFlexRow("Cache ",ssdString,2,7))
-
     @staticmethod
     def GetTBUsable(diskSize: float, diskCount: int):
         
@@ -193,8 +161,9 @@ class PrimeraSizer:
         strSizing = str(math.floor(required))
         newRand = random.randint(10, 1800)
         #Check if has no answers
-        if config ==0:
-            result = AllResponse.GetRandomResponseFromKeys('errorWord') + "\nNo answers found !! Try these instead."
+        if  config == 0:
+            preAnswer = AllResponse.GetRandomResponseFromKeys('errorWord')
+            postAnswer = "No answers found !! Try these instead."
             strSizing = str(newRand)
             required = newRand
 
