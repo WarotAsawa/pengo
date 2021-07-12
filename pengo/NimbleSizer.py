@@ -90,10 +90,9 @@ class NimbleAFArray():
         isOK = True
         contents = []
         headerContents = []
-        body = BoxComponent(layout='vertical', contents=headerContents)
         #Add Header
         headerContents.append(TextComponent(text='Nimble Sizing Result', weight='bold', size='xl'))
-        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        
         #Add Contents
         #Add Capacity Part
         rawText = str(self.rawCapacity) + "TB / "    + str(round(self.rawCapacity/Converter.TBToUnitMultipler("tib"),2)) + "TiB"
@@ -118,10 +117,12 @@ class NimbleAFArray():
         #Check isOK
         if count == 0: isOK = False
         if self.GetAllSupportedModel() == "": isOK = False
-
         if isOK == False: contents = [TextComponent(text='No answers found !!', weight='bold', size='md')]
-
+        #Add Contents
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
         bubble = BubbleContainer(direction='ltr',body=body)
+        #Return Flex Message
         return FlexSendMessage(alt_text="Nimble AF Sizing Results", contents=bubble)
 
 
