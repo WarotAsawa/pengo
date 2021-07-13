@@ -424,7 +424,7 @@ class NimbleSizer:
         buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="All-Flash", text=textPreFix + "AF")))
         buttonList.append(SeparatorComponent(margin='md'))
         buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="Hybrid-Flash", text=textPreFix + "HF")))
-        box = BoxComponent(layout='baseline',spacing='sm',contents=buttonList)
+        box = BoxComponent(layout='horizontal',spacing='sm',contents=buttonList)
         contents.append(box)
         
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
