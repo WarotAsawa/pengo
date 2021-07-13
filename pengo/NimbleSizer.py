@@ -3,12 +3,11 @@ import random
 from typing import Text
 
 from linebot.models import (
-    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply, FlexSendMessage, BubbleContainer, ButtonComponent, ImageComponent
+    TextSendMessage, QuickReplyButton, MessageAction , QuickReply, FlexSendMessage, BubbleContainer, ButtonComponent, ImageComponent
 )
 from linebot.models.flex_message import BoxComponent, SeparatorComponent, TextComponent
 from Converter import Converter
 from Help import Help
-from LineConst import LineConst
 from ImageConst import ImageConst
 from AllResponse import AllResponse
 
@@ -405,7 +404,7 @@ class NimbleSizer:
         headerContents.append(TextComponent(text=title, weight='bold', size='md',wrap=True))
         contents.append(TextComponent(text="Tip: size nimble [AF/HF] [required usable] [TB/TiB]", size='xs', wrap=True))
         #Add Model Button
-        for i in range(0,len(exampleList)/1):
+        for i in range(0,math.floor(len(exampleList)/2)):
             buttonList = []
             buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2], text=textPreFix + exampleList[i*2])))
             buttonList.append(SeparatorComponent(margin='md'))

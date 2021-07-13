@@ -3,7 +3,6 @@ import csv;
 import os;
 import math
 
-from linebot.models.flex_message import BoxComponent, TextComponent
 from ImageConst import ImageConst
 from NimbleSizer import NimbleSizer;
 
@@ -11,7 +10,7 @@ from linebot import (
     LineBotApi
 )
 from linebot.models import (
-    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
+    TextSendMessage, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn
 )
 from LineConst import LineConst
 from PrimeraSizer import PrimeraSizer
