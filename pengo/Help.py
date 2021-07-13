@@ -124,8 +124,8 @@ class Help:
             contents = []
             headerContents = []
             #Add Header
-            headerContents.append(TextComponent(text=title, weight='bold', size=''))
-            contents.append(TextComponent(text=tooltip, weight='bold', size='sm', margin='md'))
+            headerContents.append(TextComponent(text=title, weight='bold', size='md'))
+            contents.append(TextComponent(text=tooltip, weight='bold', size='xs'))
             for j in range(i*maxActionPerColumn,(i*maxActionPerColumn)+maxActionPerColumn):
                 if j >= len(loopList): break
                 else:
@@ -134,7 +134,7 @@ class Help:
             headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
             body = BoxComponent(layout='vertical', contents=headerContents)
             hero = ImageComponent(url=imageUrl,background_color=bgColor,aspect_ratio='20:5',aspect_mode='fit',size='full')
-            bubble = BubbleContainer(direction='ltr',body=body, hero=hero)
+            bubble = BubbleContainer(direction='ltr',body=body,hero=hero)
             bubbleList.append(bubble)
 
         carousel_template = CarouselContainer(contents=bubbleList)
