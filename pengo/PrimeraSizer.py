@@ -105,6 +105,7 @@ class PrimeraSizer:
         for model in all4NModel:
             if diskCount <= maxDrive[model] * 2 and rawTB <= maxCapacityTB[model] * 2 and diskCount%4 == 0:
                 result = result + " " + model + "4N"
+        result = result + "\n"
         return result.strip()
 
     @staticmethod

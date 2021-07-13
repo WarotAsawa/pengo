@@ -2,7 +2,7 @@ class LineConst:
 
     #LINE Limitation
     maxQuickReply = 13
-    maxCarouselColumn = 10
+    maxCarouselColumn = 12
     maxActionPerColumn = 3
 
     #Channel Credentials

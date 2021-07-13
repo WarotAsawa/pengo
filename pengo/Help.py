@@ -1,5 +1,7 @@
 import math
 
+from linebot.models.flex_message import BoxComponent, BubbleContainer, ButtonComponent, FlexSendMessage, TextComponent, CarouselContainer
+
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
 )
@@ -63,52 +65,64 @@ class Help:
     @staticmethod
     def GenerateCarousel(type="spec product", list=[], selectedProduct="",selectedField=""):
         textPreFix = ""
+        tooltip = ""
         imageUrl = ImageConst.specImage
         loopList = list
-
+        bgColor = '#'
         #Set initial menu text
         if type == "spec product": 
             imageUrl = ImageConst.specImage
             textPreFix = "spec "
             title = "Choose Your Product for Spec"
+            tooltip = "Tip: spec [product] [model]"
         elif type == "spec model": 
             imageUrl = ImageConst.specImage
             textPreFix = "spec " + selectedProduct + " "
             title = "Choose Your Model for Spec"
+            tooltip = "Tip: spec [product] [model]"
         elif type == "lookup product": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup "
             title = "Choose Your Field for Lookup"
+            tooltip = "Tip: lookup [product] [field] [value]"
         elif type == "lookup field": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " "
             title = "Choose Your Model for Lookup"
+            tooltip = "Tip: lookup [product] [field] [value]"
         elif type == "lookup value": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " " + selectedField + " "
             title = "Choose Your Value for Lookup"
+            tooltip = "Tip: lookup [product] [field] [value]"
 
-        
         #Set Column and Item Limit
-        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
-        #Create Carosel Colume base on product or Model or Field
-        columnList = [];
-        for i in range(int(math.ceil(len(loopList)/LineConst.maxActionPerColumn))):
-            if i >= LineConst.maxCarouselColumn: break
-            actions = []
-            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
-                if j >= maxAction: break
-                if j >= len(loopList):
-                    actions.append(MessageAction(label=". . .",text=textPreFix))
-                else:
-                    actions.append(MessageAction(label=loopList[j][0:12],text=textPreFix + loopList[j]))
-            columnList.append(CarouselColumn(thumbnail_image_url =imageUrl, text='Page '+str(i+1), title=title, actions=actions))
-        carousel_template = CarouselTemplate(columns=columnList)
+        maxActionPerColumn = 5
+        if len(list) > 60: maxActionPerColumn = math.ceil(len(list)/12)
 
-        message = TemplateSendMessage(
-            alt_text='LookUp Wizard support only on Mobile',
-            template=carousel_template
-        )
+        #Create Carosel Colume base on product or Model or Field
+        bubbleList = [];
+        for i in range(int(math.ceil(len(loopList)/maxActionPerColumn))):
+            if i >= LineConst.maxCarouselColumn: break
+            #Add FLex Content
+            contents = []
+            headerContents = []
+            #Add Header
+            headerContents.append(TextComponent(text=title, weight='bold', size='xl'))
+            contents.append(TextComponent(text=tooltip, weight='bold', size='sm', margin='md'))
+            for j in range(i*maxActionPerColumn,(i*maxActionPerColumn)+maxActionPerColumn):
+                if j >= len(loopList): break
+                else:
+                    contents.append(ButtonComponent(style='message',color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=loopList[j], text=textPreFix + loopList[j])))
+             #Add Bubble's Content
+            headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+            body = BoxComponent(layout='vertical', contents=headerContents)
+            bubble = BubbleContainer(direction='ltr',body=body)
+            bubbleList.append(bubble)
+
+        carousel_template = CarouselContainer(contents=bubbleList)
+
+        message = FlexSendMessage(alt_text=type+" carousel", contents=carousel_template)
         return message
 
     

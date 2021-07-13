@@ -240,7 +240,7 @@ class NimbleHFArray():
             for ssd in allSSD.keys():
                 ssdSize = float(ssd)
                 if ssdSize < 1: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(math.floor(ssdSize*1000)) + " GB SSD\n"
-                else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD"
+                else: ssdString = ssdString +  str(allSSD[str(ssd)]) + " x " + str(ssdSize) + " TB SSD\n"
             contents.append(TextComponent(text="Shelf " + str(count), weight='bold', size='sm', margin='md'))
             contents.append(Help.AddFlexRow("HDD ",hddString,2,7))
             contents.append(Help.AddFlexRow("Cache ",ssdString,2,7))
