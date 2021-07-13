@@ -19,38 +19,64 @@ class Help:
     #Generate help output
     @staticmethod
     def GenerateHelp():
+        bubbleList = []
         #Spec Help Menu
         specTitle = 'spec :Show detail of product\'s model'
         specText = 'Tip: spec [product] [model]\nOr tab below to start'
-        specAction = []
-        specAction.append(MessageAction(label="spec",text='spec'))
-        specAction.append(MessageAction(label="spec nimble",text='spec nimble'))
-        specAction.append(MessageAction(label="spec rome 7262",text='spec rome 7262'))
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text=specTitle, weight='bold', size='md'))
+        contents.append(TextComponent(text=specText, size='xs', wrap=True))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="spec",text='spec')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="spec nimble",text='spec nimble')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="spec rome 7262",text='spec rome 7262')))
+        #Add Bubble's Content
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.specImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        bubbleList.append(BubbleContainer(direction='ltr',body=body,hero=hero))
+        
         #Lookup Help Menu
         lookUpTitle = 'lookup :Search product\'s model by spec'
         lookUpText = 'Tip: lookup [product] [spec] [value]\nOr tab below to start'
-        lookUpAction = []
-        lookUpAction.append(MessageAction(label="lookup",text='lookup'))
-        lookUpAction.append(MessageAction(label="lookup milan",text='lookup milan'))
-        lookUpAction.append(MessageAction(label="lookup rome core 64",text='lookup rome core 64'))
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text=lookUpTitle, weight='bold', size='md'))
+        contents.append(TextComponent(text=lookUpText, size='xs', wrap=True))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="lookup",text='lookup')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="lookup milan",text='lookup milan')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="lookup rome core 64",text='lookup rome core 64')))
+        #Add Bubble's Content
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.specImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        bubbleList.append(BubbleContainer(direction='ltr',body=body,hero=hero))
+        
         #Sizer Help Menu
         sizeTitle = 'size :Quick Sizing for each product'
         sizeText = 'Tip: size [product]\nOr tab below to start'
-        sizeAction = []
-        sizeAction.append(MessageAction(label="size",text='size'))
-        sizeAction.append(MessageAction(label="size primera",text='size primera'))
-        sizeAction.append(MessageAction(label="size nimble",text='size nimble'))
-        # Create Column List for Carosel
-        columnList = []
-        columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.specImage, title=specTitle, text=specText, actions=specAction))
-        columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.lookupImage, title=lookUpTitle, text=lookUpText, actions=lookUpAction))
-        columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, title=sizeTitle, text=sizeText, actions=sizeAction))
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text=sizeTitle, weight='bold', size='md'))
+        contents.append(TextComponent(text=sizeText, size='xs', wrap=True))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size",text='size')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size primera",text='size primera')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size nimble",text='size nimble')))
+        #Add Bubble's Content
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.specImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        bubbleList.append(BubbleContainer(direction='ltr',body=body,hero=hero))
+        
+        carousel_template = CarouselContainer(contents=bubbleList)
 
-        carousel_template = CarouselTemplate(columns=columnList)
-        helpCarousel = TemplateSendMessage(
-            alt_text='Help Wizard support only on Mobile',
-            template=carousel_template
-        )
+        helpCarousel = FlexSendMessage(alt_text=type+" carousel", contents=carousel_template)
         
         #Print Carousel follow with Tips and Quick Reply
         return [TextSendMessage(text=AllResponse.allResponse["help"]), helpCarousel]
@@ -110,7 +136,7 @@ class Help:
             textPreFix = "size "
             title = "Choose your Product"
             tooltip = Help.sizeToolTip
-            bgColor = ImageConst.specColor
+            bgColor = ImageConst.sizeColor
 
         #Set Column and Item Limit
         maxActionPerColumn = 5
