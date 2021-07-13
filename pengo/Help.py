@@ -53,7 +53,7 @@ class Help:
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
-        hero = ImageComponent(url=ImageConst.specImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        hero = ImageComponent(url=ImageConst.lookupImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
         bubbleList.append(BubbleContainer(direction='ltr',body=body,hero=hero))
         
         #Sizer Help Menu
@@ -72,7 +72,7 @@ class Help:
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
-        hero = ImageComponent(url=ImageConst.specImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        hero = ImageComponent(url=ImageConst.sizeImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
         bubbleList.append(BubbleContainer(direction='ltr',body=body,hero=hero))
         
         carousel_template = CarouselContainer(contents=bubbleList)
