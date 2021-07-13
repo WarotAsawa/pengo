@@ -1,6 +1,6 @@
 import math
 
-from linebot.models.flex_message import BoxComponent, BubbleContainer, ButtonComponent, FlexSendMessage, TextComponent, CarouselContainer
+from linebot.models.flex_message import BoxComponent, BubbleContainer, ButtonComponent, FlexSendMessage, ImageComponent, TextComponent, CarouselContainer
 
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
@@ -75,26 +75,37 @@ class Help:
             textPreFix = "spec "
             title = "Choose Your Product for Spec"
             tooltip = "Tip: spec [product] [model]"
+            bgColor = '#ff5964'
         elif type == "spec model": 
             imageUrl = ImageConst.specImage
             textPreFix = "spec " + selectedProduct + " "
             title = "Choose Your Model for Spec"
             tooltip = "Tip: spec [product] [model]"
+            bgColor = '#ff5964'
         elif type == "lookup product": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup "
             title = "Choose Your Field for Lookup"
             tooltip = "Tip: lookup [product] [field] [value]"
+            bgColor = '#00c0fe'
         elif type == "lookup field": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " "
             title = "Choose Your Model for Lookup"
             tooltip = "Tip: lookup [product] [field] [value]"
+            bgColor = '#00c0fe'
         elif type == "lookup value": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " " + selectedField + " "
             title = "Choose Your Value for Lookup"
             tooltip = "Tip: lookup [product] [field] [value]"
+            bgColor = '#00c0fe'
+        elif type == 'size product':
+            imageUrl = ImageConst.sizeImage
+            textPreFix = "size "
+            title = "Choose Product for Sizing"
+            tooltip = "Tip: size [product] [model] [size] [TB/TiB]"
+            bgColor = '#ffed01'
 
         #Set Column and Item Limit
         maxActionPerColumn = 5
@@ -113,10 +124,11 @@ class Help:
             for j in range(i*maxActionPerColumn,(i*maxActionPerColumn)+maxActionPerColumn):
                 if j >= len(loopList): break
                 else:
-                    contents.append(ButtonComponent(style='message',color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=loopList[j], text=textPreFix + loopList[j])))
+                    contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=loopList[j], text=textPreFix + loopList[j])))
              #Add Bubble's Content
             headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
             body = BoxComponent(layout='vertical', contents=headerContents)
+            hero = ImageComponent(url=imageUrl,background_color=bgColor,aspect_ratio='20:5',aspect_mode='fit',size='full')
             bubble = BubbleContainer(direction='ltr',body=body)
             bubbleList.append(bubble)
 
