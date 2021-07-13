@@ -32,6 +32,7 @@ class Help:
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="spec",text='spec')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="spec nimble",text='spec nimble')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="spec rome 7262",text='spec rome 7262')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="spec simplivity 380-XL",text='spec simplivity 380-XL')))
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
@@ -50,6 +51,7 @@ class Help:
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="lookup",text='lookup')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="lookup milan",text='lookup milan')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="lookup rome core 64",text='lookup rome core 64')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="lookup cascadelake clock 2.1",text='lookup cascadelake clock 2.l')))
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
@@ -68,7 +70,7 @@ class Help:
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size",text='size')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size primera",text='size primera')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size nimble",text='size nimble')))
-        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size nimble",text='size simplivity')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size simplivity",text='size simplivity')))
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
