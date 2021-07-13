@@ -129,7 +129,7 @@ class Help:
             for j in range(i*maxActionPerColumn,(i*maxActionPerColumn)+maxActionPerColumn):
                 if j >= len(loopList): break
                 else:
-                    contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=loopList[j], text=textPreFix + loopList[j])))
+                    contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=loopList[j][0:40], text=textPreFix + loopList[j])))
              #Add Bubble's Content
             headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
             body = BoxComponent(layout='vertical', contents=headerContents)
