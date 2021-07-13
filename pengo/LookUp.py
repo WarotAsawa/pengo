@@ -18,8 +18,8 @@ class LookUp:
     @staticmethod   
     def AddHeader(title, value):
         contents = []
-        contents.append(TextComponent(text=title,color='#666666',size='sm',flex=4, wrap=True, weight='bold'))
-        contents.append(TextComponent(text=value,color='#00c0ff',size='sm',flex=5, wrap=True))
+        contents.append(TextComponent(text=title,color='#666666',size='sm',flex=1, wrap=True, weight='bold'))
+        contents.append(TextComponent(text=value,color='#00c0ff',size='sm',flex=3, wrap=True))
         box = BoxComponent(layout='baseline',spacing='sm',contents=contents, margin='sm')
         return box
 

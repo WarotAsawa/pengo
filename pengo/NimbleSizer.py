@@ -3,9 +3,9 @@ import random
 from typing import Text
 
 from linebot.models import (
-    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply, FlexSendMessage, BubbleContainer
+    TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply, FlexSendMessage, BubbleContainer, ButtonComponent, ImageComponent
 )
-from linebot.models.flex_message import BoxComponent, TextComponent
+from linebot.models.flex_message import BoxComponent, SeparatorComponent, TextComponent
 from Converter import Converter
 from Help import Help
 from LineConst import LineConst
@@ -413,18 +413,25 @@ class NimbleSizer:
     def GenerateModelSelection():
         title = "Please Select Nimble Model"
         textPreFix = "size nimble "
-        columnList = []
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text=title, weight='bold', size='md'))
+        contents.append(TextComponent(text="Tip: size nimble [AF/HF] [required usable] [TB/TiB]", size='xs'))
+        #Add Model Button
+        buttonList = []
+        buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="All-Flash", text=textPreFix + "AF")))
+        buttonList.append(SeparatorComponent(margin='md'))
+        buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="Hybrid-Flash", text=textPreFix + "HF")))
+        box = BoxComponent(layout='baseline',spacing='sm',contents=buttonList)
+        contents.append(box)
         
-        actions = []
-        actions.append(MessageAction(label="AF",text=textPreFix + "AF"))
-        actions.append(MessageAction(label="HF",text=textPreFix + "HF"))
-        columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\n', title=title, actions=actions))
-        carousel_template = CarouselTemplate(columns=columnList)
-        carousel = TemplateSendMessage(
-            alt_text='Sizing Wizard support only on Mobile',
-            template=carousel_template
-        )
-        return carousel
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.sizeImage,background_color=ImageConst.sizeColor,aspect_ratio='20:5',aspect_mode='fit',size='full')
+        bubble = BubbleContainer(direction='ltr',body=body,hero=hero)
+        return bubble
 
     @staticmethod
     def GenerateNimbleSizer(words):

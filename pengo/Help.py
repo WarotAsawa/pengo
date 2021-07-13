@@ -125,7 +125,7 @@ class Help:
             headerContents = []
             #Add Header
             headerContents.append(TextComponent(text=title, weight='bold', size='md'))
-            contents.append(TextComponent(text=tooltip, weight='bold', size='xs'))
+            contents.append(TextComponent(text=tooltip, size='xs', wrap=True))
             for j in range(i*maxActionPerColumn,(i*maxActionPerColumn)+maxActionPerColumn):
                 if j >= len(loopList): break
                 else:
