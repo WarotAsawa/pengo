@@ -50,7 +50,7 @@ class LookUp:
         contents.append(LookUp.AddHeader("Field", fieldList[fieldIndex]))
         contents.append(LookUp.AddHeader("Value", selectedValue + " " + unitList[fieldIndex]))
         header = "Here is the matched " + selectedProduct + " model!"
-        contents.append(TextComponent(text=header, weight='bold', size='sm', margin='xl'))
+        contents.append(TextComponent(text=header, weight='bold', size='sm', margin='xl', wrap=True))
         #Prepare string response
         uniqueValue = []
         allMatchModel = []
