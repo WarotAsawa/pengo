@@ -431,7 +431,8 @@ class NimbleSizer:
         body = BoxComponent(layout='vertical', contents=headerContents)
         hero = ImageComponent(url=ImageConst.sizeImage,background_color=ImageConst.sizeColor,aspect_ratio='20:5',aspect_mode='fit',size='full')
         bubble = BubbleContainer(direction='ltr',body=body,hero=hero)
-        return bubble
+        message = FlexSendMessage(alt_text="Nimble Model Selection", contents=bubble)
+        return message
 
     @staticmethod
     def GenerateNimbleSizer(words):
