@@ -77,7 +77,7 @@ class Help:
         
         carousel_template = CarouselContainer(contents=bubbleList)
 
-        helpCarousel = FlexSendMessage(alt_text=type+" carousel", contents=carousel_template)
+        helpCarousel = FlexSendMessage(alt_text="Help Menu", contents=carousel_template)
         
         #Print Carousel follow with Tips and Quick Reply
         return [TextSendMessage(text=AllResponse.allResponse["help"]), helpCarousel]
