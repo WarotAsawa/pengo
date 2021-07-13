@@ -385,16 +385,18 @@ class NimbleSizer:
 
     @staticmethod
     def GenerateExampleCarousel(warning, model, capacity=0):
-        title = "Here is some sizing example"
+        title = "Nimble "+model+" sizing example"
         exampleList = []
         textPreFix = "size nimble "+ model + " "
+        #If no capacity generate random units
         if capacity == 0:
             for i in range(0,10):
                 unitRand = random.choice([" TB", " TiB"])
                 capaRand = str(random.randint(1,70)*10)
                 exampleList.append(capaRand+unitRand)
         else:
-            exampleList  [str(capacity)+" TB", str(capacity)+" TiB"]
+            #Is have capacity recommend units
+            exampleList = [str(capacity)+" TB", str(capacity)+" TiB"]
 
         #Add FLex Content
         contents = []
