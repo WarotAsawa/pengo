@@ -406,9 +406,9 @@ class NimbleSizer:
         #Add Model Button
         for i in range(0,math.floor(len(exampleList)/2)):
             buttonList = []
-            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2], text=textPreFix + exampleList[i*2])))
+            buttonList.append(Help.DefaultButton(label=exampleList[i*2], text=textPreFix + exampleList[i*2]))
             buttonList.append(SeparatorComponent(margin='md'))
-            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2+1], text=textPreFix + exampleList[i*2+1])))
+            buttonList.append(Help.DefaultButton(label=exampleList[i*2+1], text=textPreFix + exampleList[i*2+1]))
             box = BoxComponent(layout='horizontal',spacing='sm',contents=buttonList)
             contents.append(box)
         
@@ -432,9 +432,9 @@ class NimbleSizer:
         contents.append(TextComponent(text="Tip: size nimble [AF/HF] [required usable] [TB/TiB]", size='xs', wrap=True))
         #Add Model Button
         buttonList = []
-        buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="All-Flash", text=textPreFix + "AF")))
+        buttonList.append(Help.DefaultButton(label="All-Flash", text=textPreFix + "AF"))
         buttonList.append(SeparatorComponent(margin='md'))
-        buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="Hybrid-Flash", text=textPreFix + "HF")))
+        buttonList.append(Help.DefaultButton(label="Hybrid-Flash", text=textPreFix + "HF"))
         box = BoxComponent(layout='horizontal',spacing='sm',contents=buttonList)
         contents.append(box)
         

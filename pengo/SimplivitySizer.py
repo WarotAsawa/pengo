@@ -136,9 +136,9 @@ class SimplivitySizer:
         #Add Model Button
         for i in range(0,math.floor(len(exampleList)/2)):
             buttonList = []
-            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2], text=textPreFix + exampleList[i*2])))
+            buttonList.append(Help.DefaultButton(label=exampleList[i*2], text=textPreFix + exampleList[i*2]))
             buttonList.append(SeparatorComponent(margin='md'))
-            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2+1], text=textPreFix + exampleList[i*2+1])))
+            buttonList.append(Help.DefaultButton(label=exampleList[i*2+1], text=textPreFix + exampleList[i*2+1]))
             box = BoxComponent(layout='horizontal',spacing='sm',contents=buttonList)
             contents.append(box)
         
