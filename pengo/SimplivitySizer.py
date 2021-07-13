@@ -1,7 +1,7 @@
 import math
 import random
 
-from linebot.models.flex_message import BoxComponent, BubbleContainer, FlexSendMessage, TextComponent
+from linebot.models.flex_message import BoxComponent, BubbleContainer, ButtonComponent, FlexSendMessage, ImageComponent, SeparatorComponent, TextComponent
 
 from linebot.models import (
     TextSendMessage, QuickReplyButton, MessageAction , TemplateSendMessage, CarouselTemplate, CarouselColumn, QuickReply
@@ -113,32 +113,42 @@ class SimplivitySizer:
 
 
     @staticmethod
-    def GenerateExampleCarousel(warning):
-        title = "SimpliVity Capacity Sizing with Model"
-        textPreFix = "size SimpliVity "
-        exampleList = ["10 TB", "20 TiB", "30 TB","40 TiB", "50 TB", "60 TiB"]
-        columnList = []
-        #Set Column and Item Limit
-        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
-        #check command's len to prepare return message
-        for i in range(int(math.ceil(len(exampleList)/LineConst.maxActionPerColumn))):
-            if i >= LineConst.maxCarouselColumn: break
-            actions = []
-            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
-                if j >= maxAction: break
-                if j >= len(exampleList):
-                    actions.append(MessageAction(label=". . .",text=textPreFix))
-                else:
-                    actions.append(MessageAction(label=exampleList[j][0:12],text=textPreFix + exampleList[j]))
-            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Usage\nsize SimpliVity [required usable] [TB/TiB]', title=title, actions=actions))
+    def GenerateExampleCarousel(warning, capacity = 0):
+        title = "Simplivity capacity sizing by model"
+        exampleList = []
+        textPreFix = "size simplivity "
+        #If no capacity generate random units
+        if capacity == 0:
+            for i in range(0,10):
+                unitRand = random.choice([" TB", " TiB"])
+                capaRand = str(random.randint(1,25)*10)
+                exampleList.append(capaRand+unitRand)
+        else:
+            #Is have capacity recommend units
+            exampleList = [str(capacity)+" TB", str(capacity)+" TiB"]
 
-        carousel_template = CarouselTemplate(columns=columnList)
-        carousel = TemplateSendMessage(
-            alt_text='Sizing Wizard support only on Mobile',
-            template=carousel_template
-        )
-        return [TextSendMessage(text=warning), carousel]
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text=title, weight='bold', size='md',wrap=True))
+        contents.append(TextComponent(text="Tip: size simplivity [required usable] [TB/TiB]", size='xs', wrap=True))
+        #Add Model Button
+        for i in range(0,math.floor(len(exampleList)/2)):
+            buttonList = []
+            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2], text=textPreFix + exampleList[i*2])))
+            buttonList.append(SeparatorComponent(margin='md'))
+            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2+1], text=textPreFix + exampleList[i*2+1])))
+            box = BoxComponent(layout='horizontal',spacing='sm',contents=buttonList)
+            contents.append(box)
+        
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.sizeImage,background_color=ImageConst.sizeColor,aspect_ratio='20:5',aspect_mode='fit',size='full')
+        bubble = BubbleContainer(direction='ltr',body=body,hero=hero)
+        bubbleMessage = FlexSendMessage(alt_text="Simplivity Sizing Example", contents=bubble)
 
+        return [TextSendMessage(text=warning), bubbleMessage]
     @staticmethod
     def GenerateSimplivitySizer(words):
         if len(words) == 2:
@@ -171,7 +181,7 @@ class SimplivitySizer:
             unitCheck = ["tb","tib"]
             #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
-                return SimplivitySizer.GenerateExampleCarousel("Please input unit as TB or TiB") 
+                return SimplivitySizer.GenerateExampleCarousel("Please input unit as TB or TiB", capacity=required) 
             
             #Get Sizing
             return SimplivitySizer.GenerateSimplivitySizeAnswers(unit = unit, required = required, utilization = utilization)
