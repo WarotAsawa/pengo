@@ -68,6 +68,7 @@ class Help:
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size",text='size')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size primera",text='size primera')))
         contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size nimble",text='size nimble')))
+        contents.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="size nimble",text='size simplivity')))
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
