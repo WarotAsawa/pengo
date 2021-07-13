@@ -12,6 +12,10 @@ from ImageConst import ImageConst
 from LineConst import LineConst
 
 class Help:
+    #Variable
+    specToolTip =       "Find specification for each product model\nTip: spec [product] [model]"
+    lookupToolTip =     "Lookup match model for selected field value\nTip: lookup [product] [field] [value]"
+    sizeToolTip =       "Tip: size [product] [model] [size] [TB/TiB]"
     #Generate help output
     @staticmethod
     def GenerateHelp():
@@ -68,44 +72,45 @@ class Help:
         tooltip = ""
         imageUrl = ImageConst.specImage
         loopList = list
+        
         bgColor = '#'
         #Set initial menu text
         if type == "spec product": 
             imageUrl = ImageConst.specImage
             textPreFix = "spec "
-            title = "Choose Your Product for Spec"
-            tooltip = "Tip: spec [product] [model]"
-            bgColor = '#ff5964'
+            title = "Choose Your Product"
+            tooltip = Help.specToolTip
+            bgColor = ImageConst.specColor
         elif type == "spec model": 
             imageUrl = ImageConst.specImage
             textPreFix = "spec " + selectedProduct + " "
-            title = "Choose Your Model for Spec"
-            tooltip = "Tip: spec [product] [model]"
-            bgColor = '#ff5964'
+            title = "Choose Your Model"
+            tooltip = Help.specToolTip
+            bgColor = ImageConst.specColor
         elif type == "lookup product": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup "
             title = "Choose Your Field for Lookup"
-            tooltip = "Tip: lookup [product] [field] [value]"
-            bgColor = '#00c0fe'
+            tooltip = Help.lookupToolTip
+            bgColor = ImageConst.lookupColor
         elif type == "lookup field": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " "
-            title = "Choose Your Model for Lookup"
-            tooltip = "Tip: lookup [product] [field] [value]"
-            bgColor = '#00c0fe'
+            title = "Choose Your Model"
+            tooltip = Help.lookupToolTip
+            bgColor = ImageConst.lookupColor
         elif type == "lookup value": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " " + selectedField + " "
-            title = "Choose Your Value for Lookup"
-            tooltip = "Tip: lookup [product] [field] [value]"
-            bgColor = '#00c0fe'
+            title = "Choose Your Value"
+            tooltip = Help.lookupToolTip
+            bgColor = ImageConst.lookupColor
         elif type == 'size product':
             imageUrl = ImageConst.sizeImage
             textPreFix = "size "
-            title = "Choose Product for Sizing"
-            tooltip = "Tip: size [product] [model] [size] [TB/TiB]"
-            bgColor = '#ffed01'
+            title = "Choose your Product"
+            tooltip = Help.sizeToolTip
+            bgColor = ImageConst.specColor
 
         #Set Column and Item Limit
         maxActionPerColumn = 5
@@ -119,7 +124,7 @@ class Help:
             contents = []
             headerContents = []
             #Add Header
-            headerContents.append(TextComponent(text=title, weight='bold', size='xl'))
+            headerContents.append(TextComponent(text=title, weight='bold', size=''))
             contents.append(TextComponent(text=tooltip, weight='bold', size='sm', margin='md'))
             for j in range(i*maxActionPerColumn,(i*maxActionPerColumn)+maxActionPerColumn):
                 if j >= len(loopList): break
@@ -129,7 +134,7 @@ class Help:
             headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
             body = BoxComponent(layout='vertical', contents=headerContents)
             hero = ImageComponent(url=imageUrl,background_color=bgColor,aspect_ratio='20:5',aspect_mode='fit',size='full')
-            bubble = BubbleContainer(direction='ltr',body=body)
+            bubble = BubbleContainer(direction='ltr',body=body, hero=hero)
             bubbleList.append(bubble)
 
         carousel_template = CarouselContainer(contents=bubbleList)

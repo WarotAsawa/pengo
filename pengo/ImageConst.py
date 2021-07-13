@@ -10,3 +10,6 @@ class ImageConst:
 
     helpIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/help_icon.png'
     
+    specColor = '#ff5964'
+    lookupColor = '#00c0fe'
+    sizeColor = '#ffed01'
