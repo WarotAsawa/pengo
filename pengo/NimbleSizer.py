@@ -384,30 +384,40 @@ class NimbleSizer:
         #, quick_reply=quickReply)
 
     @staticmethod
-    def GenerateExampleCarousel(warning, model):
+    def GenerateExampleCarousel(warning, model, capacity=0):
         title = "Here is some sizing example"
+        exampleList = []
         textPreFix = "size nimble "+ model + " "
-        exampleList = ["10 TB", "100 TB", "150 TiB", "200.5 TiB", "500 TiB", "800 TB"]
-        columnList = []
-        #Set Column and Item Limit
-        maxAction = LineConst.maxCarouselColumn * LineConst.maxActionPerColumn
-        #check command's len to prepare return message
-        for i in range(int(math.ceil(len(exampleList)/LineConst.maxActionPerColumn))):
-            if i >= LineConst.maxCarouselColumn: break
-            actions = []
-            for j in range(i*LineConst.maxActionPerColumn,(i*LineConst.maxActionPerColumn)+LineConst.maxActionPerColumn):
-                if j >= maxAction: break
-                if j >= len(exampleList):
-                    actions.append(MessageAction(label=". . .",text=textPreFix))
-                else:
-                    actions.append(MessageAction(label=model + " " + exampleList[j][0:12],text=textPreFix + exampleList[j]))
-            columnList.append(CarouselColumn(thumbnail_image_url =ImageConst.sizeImage, text='Usage\nsize nimble [AF/HF] [required usable] [TB/TiB]\nPage '+str(i+1), title=title, actions=actions))
-        carousel_template = CarouselTemplate(columns=columnList)
-        carousel = TemplateSendMessage(
-            alt_text='Sizing Wizard support only on Mobile',
-            template=carousel_template
-        )
-        return [TextSendMessage(text=warning), carousel]
+        if capacity == 0:
+            for i in range(0,10):
+                unitRand = random.choice([" TB", " TiB"])
+                capaRand = str(random.randint(1,70)*10)
+                exampleList.append(capaRand+unitRand)
+        else:
+            exampleList  [str(capacity)+" TB", str(capacity)+" TiB"]
+
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text=title, weight='bold', size='md',wrap=True))
+        contents.append(TextComponent(text="Tip: size nimble [AF/HF] [required usable] [TB/TiB]", size='xs', wrap=True))
+        #Add Model Button
+        for i in range(0,len(exampleList)/1):
+            buttonList = []
+            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2], text=textPreFix + exampleList[i*2])))
+            buttonList.append(SeparatorComponent(margin='md'))
+            buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label=exampleList[i*2+1], text=textPreFix + exampleList[i*2+1])))
+            box = BoxComponent(layout='horizontal',spacing='sm',contents=buttonList)
+            contents.append(box)
+        
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.sizeImage,background_color=ImageConst.sizeColor,aspect_ratio='20:5',aspect_mode='fit',size='full')
+        bubble = BubbleContainer(direction='ltr',body=body,hero=hero)
+        bubbleMessage = FlexSendMessage(alt_text="Nimble Sizing Example", contents=bubble)
+
+        return [TextSendMessage(text=warning), bubbleMessage]
     
     @staticmethod
     def GenerateModelSelection():
@@ -418,7 +428,7 @@ class NimbleSizer:
         headerContents = []
         #Add Header
         headerContents.append(TextComponent(text=title, weight='bold', size='md'))
-        contents.append(TextComponent(text="Tip: size nimble [AF/HF] [required usable] [TB/TiB]", size='xs'))
+        contents.append(TextComponent(text="Tip: size nimble [AF/HF] [required usable] [TB/TiB]", size='xs', wrap=True))
         #Add Model Button
         buttonList = []
         buttonList.append(ButtonComponent(color='#eeeeee',style='secondary',height='sm',action=MessageAction(label="All-Flash", text=textPreFix + "AF")))
@@ -473,7 +483,7 @@ class NimbleSizer:
             unitCheck = ["tb","tib"]
             #unitCheck = ["tb","tib", "gb", "gib", "pb", "pib"]
             if unit not in unitCheck:
-                return NimbleSizer.GenerateExampleCarousel("Please input unit as TB or TiB",model) 
+                return NimbleSizer.GenerateExampleCarousel("Please input unit as TB or TiB",model, required) 
             return NimbleSizer.GenerateNimbleSizerAnswers(unit = unit, required = required,model = model, utilization = utilization)
 
 
