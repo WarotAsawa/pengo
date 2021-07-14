@@ -143,6 +143,7 @@ class PrimeraSizer:
             contents.append(Help.AddFlexRow("SSD Config",diskCountText,3,6))
             contents.append(Help.AddFlexRow("Total Raw",rawText,3,6))
             contents.append(Help.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+            contents.append(Help.AddUsageBar(usage=required * multiplier/usableTB))
             contents.append(Help.AddFlexRow("Supported Model",supportedText,4,5))   
         
         #Check is OK
