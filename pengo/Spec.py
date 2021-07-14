@@ -55,12 +55,12 @@ class Spec:
         if i==0: return TextSendMessage(text=AllResponse.GetRandomResponseFromKeys('errorWord'))
         buttonList = []
         for i in range(1,len(fieldList)):
-            if (i > LineConst.maxQuickReply): break
             fieldWhited = fieldList[i].replace("-", " ")
             contents.append(Spec.AddField(fieldWhited))
             valueString = str(specList[index][i]) + " " + unitList[i]
             contents.append(Spec.AddValue(valueString))
             lookupText = "lookup " + selectedProduct + " " + fieldList[i] + " " + str(specList[index][i])
+            if (i > LineConst.maxQuickReply): break
             buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=fieldWhited[0:12], text=lookupText)))
 
         #Add Contents
