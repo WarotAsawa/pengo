@@ -7,7 +7,8 @@ class ImageConst:
     lookupImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/lookup_image.png'
     sizeIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/size_icon.png'
     sizeImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/size_image.png'
-
+    disclaimerImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/disclaimer.png'
+    heroImage = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/pengo-hero.png'
     helpIcon = 'https://github.com/WarotAsawa/pengo/raw/main/public/img/help_icon.png'
     
     specColor = '#ff5964'

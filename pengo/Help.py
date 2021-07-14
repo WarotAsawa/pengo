@@ -1,5 +1,6 @@
 import math
 from os import stat
+from typing import Text
 
 from linebot.models.flex_message import BoxComponent, BubbleContainer, ButtonComponent, FlexSendMessage, ImageComponent, TextComponent, CarouselContainer
 
@@ -26,6 +27,23 @@ class Help:
     @staticmethod
     def GenerateHelp():
         bubbleList = []
+        #Hero Help Menu
+        heroTitle = "I'm PenGo !!!"
+        heroText = "I am PenGo and I am a very convenient Bot for my creator. You can say hello or talk with me.\n\nBy the way, you can scroll left to see what I can do !!"
+        #Add Hero
+        contents = []
+        headerContents = []
+        #Add Header
+        headerContents.append(TextComponent(text=heroTitle, weight='bold', size='md'))
+        contents.append(TextComponent(text=heroTitle, size='xs', wrap=True))
+        contents.append(TextComponent(text=heroText, size='sm', wrap=True))
+        contents.append(ButtonComponent(color='#ff3f3f',style='primary',height='sm',action=MessageAction(label="DISCLAIMER",text='disclaimer')))
+        #Add Bubble's Content
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.heroImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        bubbleList.append(BubbleContainer(direction='ltr',body=body,hero=hero))
+
         #Spec Help Menu
         specTitle = 'spec :Show detail of product\'s model'
         specText = 'Tip: spec [product] [model]\nOr tab below to start'
@@ -176,7 +194,6 @@ class Help:
 
         message = FlexSendMessage(alt_text=type+" carousel", contents=carousel_template)
         return message
-
     
     @staticmethod   
     def AddFlexRow(title, text, titleWidth, textWidth, color = '#00b088', weight = 'regular'):
@@ -203,3 +220,24 @@ class Help:
         contents.append(TextComponent(text=usageText ,color='#666666',size='sm',flex=2, align='end', wrap=True))
         box = BoxComponent(layout='horizontal',spacing='sm', align_items='center',contents=contents)
         return box
+
+    @staticmethod
+    def GenerateDisclaimer():
+        #Add FLex Content
+        contents = []
+        headerContents = []
+        #Add Header
+        tooltip1 = "Whlist PenGo's creator endeavour to keep information up to date and corrent. Every information was researched from public information hence the information is not own by the creator. The creator makes no representation or warranties of completeness, accuracy, availability of the infomation."
+        tooltip2 = "Any reliance you place on PenGo's information is therefore strictly at your own risk."
+        headerContents.append(TextComponent(text="Disclaimer", weight='bold', size='md'))
+        contents.append(TextComponent(text=tooltip1, size='xs', wrap=True))
+        contents.append(TextComponent(text=tooltip2, size='xs', wrap=True))
+
+        #Add Bubble's Content
+        headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
+        body = BoxComponent(layout='vertical', contents=headerContents)
+        hero = ImageComponent(url=ImageConst.disclaimerImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        bubble = BubbleContainer(direction='ltr',body=body,hero=hero)
+
+        message = FlexSendMessage(alt_text="Disclaimer", contents=bubble)
+        return message

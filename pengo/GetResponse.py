@@ -42,6 +42,8 @@ class GetResponse:
             else:
                 line_bot_api.reply_message(token,Help.GenerateHelp())
                 return
+        elif "disclaimer" in words:
+            line_bot_api.reply_message(token,Help.GenerateDisclaimer())
         elif "spec" in words:
             line_bot_api.reply_message(token,Spec.GenerateSpec(words))
         elif "lookup" in words:
