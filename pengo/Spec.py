@@ -60,8 +60,8 @@ class Spec:
             valueString = str(specList[index][i]) + " " + unitList[i]
             contents.append(Spec.AddValue(valueString))
             lookupText = "lookup " + selectedProduct + " " + fieldList[i] + " " + str(specList[index][i])
-            if (i > LineConst.maxQuickReply): break
-            buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=fieldWhited[0:12], text=lookupText)))
+            if (i <= LineConst.maxQuickReply):
+                buttonList.append(QuickReplyButton(image_url=ImageConst.lookupIcon, action=MessageAction(label=fieldWhited[0:12], text=lookupText)))
 
         #Add Contents
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
