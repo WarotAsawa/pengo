@@ -187,7 +187,7 @@ class Help:
         return box
 
     @staticmethod   
-    def AddUsageBar(usage = 90.0, color = '#00b088'):
+    def AddUsageBar(usage = 90.0, color = '#00b088', title='Total Usage'):
         usageText = str(round(usage,1)) + "%"
         usageColor = '#00b088'
         if usage > 95: 
@@ -196,9 +196,9 @@ class Help:
             usageColor = ImageConst.sizeColor
 
         usageBox = BoxComponent(layout='vertical',spacing='sm',height='6px', background_color=usageColor, corner_radius='3px', width=usageText)
-        totalBox = BoxComponent(layout='vertical',spacing='sm',height='6px', background_color='#dddddd', corner_radius='3px', flex=5, contents=[usageBox])
+        totalBox = BoxComponent(layout='vertical',spacing='sm',height='6px', background_color='#dddddd', corner_radius='3px', flex=4, contents=[usageBox])
         contents = []
-        contents.append(TextComponent(text='Usage',color=color,size='sm',flex=2, wrap=True))
+        contents.append(TextComponent(text=title,color=color,size='sm',flex=3, wrap=True))
         contents.append(totalBox)
         contents.append(TextComponent(text=usageText ,color='#666666',size='sm',flex=2, align='end', wrap=True))
         box = BoxComponent(layout='horizontal',spacing='sm', align_items='center',contents=contents)

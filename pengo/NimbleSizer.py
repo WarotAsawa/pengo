@@ -79,7 +79,7 @@ class NimbleAFArray():
             result = result + "AF80 "
         return result
 
-    def GetFlexResponse(self):
+    def GetFlexResponse(self, usage=90.0):
         isOK = True
         contents = []
         headerContents = []
@@ -93,6 +93,7 @@ class NimbleAFArray():
         contents.append(TextComponent(text="Result's Capacity", weight='bold', size='md'))
         contents.append(Help.AddFlexRow("Total Raw",rawText,3,6))
         contents.append(Help.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
+        contents.append(Help.AddUsageBar(usage=usage))
         contents.append(Help.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
@@ -206,7 +207,7 @@ class NimbleHFArray():
             result = result + "HF60 "
         return result
 
-    def GetFlexResponse(self):
+    def GetFlexResponse(self, usage = 90.0):
         isOK = True
         contents = []
         headerContents = []
@@ -224,6 +225,7 @@ class NimbleHFArray():
         contents.append(Help.AddFlexRow("Total Usable",usableText,3,6,weight='bold'))
         contents.append(Help.AddFlexRow("Total Cache",cacheText,3,6))
         contents.append(Help.AddFlexRow("FDR",str(fdr)+ "%",3,6))
+        contents.append(Help.AddUsageBar(usage=usage))
         contents.append(Help.AddFlexRow("Supported Model",self.GetAllSupportedModel(),4,5))
         #Add Shelf Config
         contents.append(TextComponent(text="Result's Config", weight='bold', size='md', margin='xl'))
@@ -348,7 +350,7 @@ class NimbleSizer:
 
             resultArray = NimbleSizer.AFSizer(convertedRequired)
             
-            answer = resultArray.GetFlexResponse()
+            answer = resultArray.GetFlexResponse(usage=(required * 100 * multiplier/resultArray.usableCapacity))
 
             if  resultArray.GetAllSupportedModel() == "" or len(resultArray.ssdSetList) == 0:
                 preAnswer = AllResponse.GetRandomResponseFromKeys('errorWord')
@@ -362,7 +364,7 @@ class NimbleSizer:
 
             resultArray = NimbleSizer.HFSizer(convertedRequired)
             
-            answer = resultArray.GetFlexResponse()
+            answer = resultArray.GetFlexResponse(usage=(required * 100 * multiplier/resultArray.usableCapacity))
 
             if  resultArray.GetAllSupportedModel() == "" or len(resultArray.shelfList) == 0:
                 preAnswer = AllResponse.GetRandomResponseFromKeys('errorWord')
