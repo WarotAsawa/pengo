@@ -195,7 +195,7 @@ class Help:
         elif usage > 90:
             usageColor = ImageConst.sizeColor
 
-        usageBox = BoxComponent(layout='vertical',spacing='sm',height='6px', background_color=usageColor, width=usageText)
+        usageBox = BoxComponent(layout='vertical',spacing='sm',height='6px', background_color=usageColor, corner_radius='3px', width=usageText)
         totalBox = BoxComponent(layout='vertical',spacing='sm',height='6px', background_color='#dddddd', corner_radius='3px', flex=5, contents=[usageBox])
         contents = []
         contents.append(TextComponent(text='Usage',color=color,size='sm',flex=2, wrap=True))
