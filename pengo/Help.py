@@ -29,7 +29,7 @@ class Help:
         bubbleList = []
         #Hero Help Menu
         heroTitle = "I'm PenGo !!!"
-        heroText = "I am PenGo and I am a very convenient Bot for my creator. You can say hello or talk with me.\n\nBy the way, you can scroll left to see what I can do !!"
+        heroText = "I am PenGo and I am a very convenient Bot for my creator. You can say hello or talk with me.\n\nBy the way, you can scroll left to see what I can do !!\n\n"
         #Add Hero
         contents = []
         headerContents = []
@@ -227,7 +227,7 @@ class Help:
         contents = []
         headerContents = []
         #Add Header
-        tooltip1 = "Whlist PenGo's creator endeavour to keep information up to date and corrent. Every information was researched from public information hence the information is not own by the creator. The creator makes no representation or warranties of completeness, accuracy, availability of the infomation."
+        tooltip1 = "Whilst PenGo's creator endeavour to keep information up to date and corrent. Every information was researched from public information hence the information is not own by the creator. The creator makes no representation or warranties of completeness, accuracy, availability of the infomation."
         tooltip2 = "Any reliance you place on PenGo's information is therefore strictly at your own risk."
         headerContents.append(TextComponent(text="Disclaimer", weight='bold', size='md'))
         contents.append(TextComponent(text=tooltip1, size='xs', wrap=True))
