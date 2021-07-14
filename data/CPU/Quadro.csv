@@ -7,31 +7,31 @@ RTX-8000,8/13/2018,TU102-875,1395-1770,1750,48 (96 with NVLink),384-bit GDDR6,67
 RTX-6000,8/13/2018,TU102-875,1440-1770,1750,24 (48 with NVLink),384-bit GDDR6,672,Yes,4608,7.5,576,72,32.6,16.3,509.8,12.0 (12_2),4.6,3,1.2,295,"4x DP 1.4, Virtual Link",Nvidia TITAN RTX,Turing-based
 RTX-5000,8/13/2018,TU104-875,1620-1815,1750,16 (32 with NVLink),256-bit GDDR6,448,Yes,3072,7.5,384,48,22.3,11.2,350,12.0 (12_2),4.6,3,1.2,265,"4x DP 1.4, Virtual Link",GeForce RTX 2080 Super,Turing-based
 RTX-4000,11/13/2018,TU104-850,1005-1545,1625,8,256-bit GDDR6,416,Yes,2304,7.5,288,36,14.2,7.1,221.8,12.0 (12_2),4.6,3,1.2,160,"3x DP 1.4, Virtual Link",GeForce RTX 2070,Turing-based
-GV100,3/27/2018,GV100-875,1132-1627,848,32768,4096-bit HBM2,868.4,Yes,5120,7,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,250,4x DP 1.4,Nvidia TITAN V,Volta-based
-GP100,2/6/2017,GP100GL,1304-1442,715,16384,4096-bit HBM2,732.2,Yes,3584,6,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,235,"Dual-Link DVI, 4x DP 1.4",Nvidia TITAN xp,Pascal-based
-P6000,10/1/2016,GP102-875,1506-1645,1127,24576,384-bit GDDR5x,432.8,Yes,3840,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,250,"DVI, 4x DP 1.4",Nvidia TITAN xp,Pascal-based
-P5000,10/1/2016,GP104-875,1607-1733,1127,16384,256-bit GDDR5x,288.5,Yes,2560,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,180,"DVI, 4x DP 1.4",GeForce GTx 1080,Pascal-based
-P4000,2/6/2017,GP104-850,1202-1480,1901,8192,256-bit GDDR5,243.3,Yes,1792,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,105,"DVI, 4x DP 1.4",GeForce GTx 1070,Pascal-based
-P2200,6/10/2019,GP106-880-K1,1000-1493,1253,5120,160-bit GDDR5x,200.5,No,1280,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,75,4x DP 1.4,GeForce GTx 1060,Pascal-based
-P2000,2/6/2017,GP106-875-K1,1076-1480,1752,5120,160-bit GDDR5,140.2,No,1024,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,75,4x DP 1.4,GeForce GTx 1060,Pascal-based
-P1000,2/6/2017,GP107-860,1266-1481,1253,4096,128-bit GDDR5,80.19,No,640,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,47,4x mini-DP 1.4,GeForce GTx 1050,Pascal-based
-P620,2/1/2018,GP107-855,1266-1354,1252,2048,128-bit GDDR5,80.13,No,512,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,40,4x mini-DP 1.4,GeForce GTx 1050,Pascal-based
-P600,2/6/2017,GP107-850,1329-1557,1003,2048,128-bit GDDR5,64.2,No,384,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,40,4x mini-DP 1.4,GeForce GT 1030,Pascal-based
-P400,2/6/2017,GP107-825,1228-1252,1003,2048,64-bit GDDR5,32.1,No,256,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,30,3x mini-DP 1.4,GeForce GT 1030,Pascal-based
-M6000-24GB,3/5/2016,GM200-880,988-1114,1653,24576,384-bit GDDR5 ECC,317.4,Yes,3072,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,250,4x DP 1.2,GeForce GTx TITAN x,Maxwell-based
-M6000,3/15/2015,GM200GL,988-1114,1653,12288,384-bit GDDR5 ECC,317.4,Yes,3072,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,250,4x DP 1.2,GeForce GTx TITAN x,Maxwell-based
-M5000,6/29/2015,GM204-875,861-1038,1653,8192,256-bit GDDR5 ECC,211.6,Yes,2048,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,150,4x DP 1.2,GeForce GTx 980,Maxwell-based
-M4000,6/29/2015,GM204-850,773,1502,8192,256-bit GDDR5,192.3,Yes,1664,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,120,4x DP 1.2,GeForce GTx 970,Maxwell-based
-M2000,4/8/2016,GM206-875,796-1163,1653,4096,128-bit GDDR5,105.8,No,768,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3.0,1.2,75,4x DP 1.4,GeForce GTx 950,Maxwell-based
-K6000,7/23/2013,GK110GL,700,1500,12288,384-bit GDDR5 ECC,288,Yes,2880,3.5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,225,2x DP 1.2,GeForce GTX TITAN Black,"Kepler-based, HD-SDI optional"
-K5200,7/22/2014,GK110GL,650,1500,8192,256-bit GDDR5 ECC,192,Yes,2304,3.5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,150,"1x DL-DVI-I, 1x DL-DVI-D, 2x DP 1.2",GeForce GTx 780,"Kepler-based, HD-SDI optional"
-K5000,8/17/2012,GK104GL,706,1350,4096,256-bit GDDR5 ECC,173,Yes,1536,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,122,2x DP 1.2,GeForce GTx 770/680,"Kepler-based, HD-SDI optional"
-K4200,7/22/2014,GK104GL,780,1350,4096,256-bit GDDR5,173,Yes,1344,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,108,"1x DL-DVI-I, 2x DP 1.2",GeForce GTx 670,"Kepler-based, HD-SDI optional"
-K4000,3/1/2013,GK106GL,800,1400,3072,192-bit GDDR5,134,Yes,768,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,80,"1x DL-DVI-I, 2x DP1.2",GeForce GTx 650 Ti Boost,"Kepler-based, HD-SDI optional with extra Card"
-K2200,7/22/2014,GM107GL,1046,1250,4096,128-bit GDDR5,80,No,640,5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,68,"1x DL-DVI-I, 2x DP 1.2",GeForce GTx 750 Ti,Maxwell-based
-K2000D,3/1/2013,GK107GL,950,1000,2048,128-bit GDDR5,64,No,384,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,51,"2x DL-DVI-I, 1x DP 1.2",GeForce GTx 650,Kepler-based
-K2000,3/1/2013,GK107GL,954,1000,2048,128-bit GDDR5,64,No,384,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,51,"1x DL-DVI-I, 2x DP 1.2",GeForce GTx 650,Kepler-based
-K1200,1/28/2015,GM107GL,1000,1250,4096,128-bit GDDR5,80,No,512,5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,45,4x Mini-DP 1.2,GeForce GTx 750,Maxwell-based
-K620,7/14/2014,GM107GL,1000,900,2048,128-bit GDDR3,29,No,384,5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,45,"1x DL-DVI, 1x DP 1.2,",GeForce GTx 745 (OEM),Maxwell-based
-K600,3/1/2013,GK107GL,875,900,1024,128-bit GDDR3,29,No,192,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,41,"1x DL-DVI-I, 1x DP 1.2",GeForce GT 630 (Kepler),Kepler-based
-K420,7/14/2014,GK107GL,780,900,1024,128-bit GDDR3,29,No,192,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3.0,1.2,41,"1x DL-DVI, 1x DP 1.2",GeForce GT 630 (Kepler),Kepler-based
+GV100,3/27/2018,GV100-875,1132-1627,848,32768,4096-bit HBM2,868.4,Yes,5120,7,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,250,4x DP 1.4,Nvidia TITAN V,Volta-based
+GP100,2/6/2017,GP100GL,1304-1442,715,16384,4096-bit HBM2,732.2,Yes,3584,6,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,235,"Dual-Link DVI, 4x DP 1.4",Nvidia TITAN xp,Pascal-based
+P6000,10/1/2016,GP102-875,1506-1645,1127,24576,384-bit GDDR5x,432.8,Yes,3840,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,250,"DVI, 4x DP 1.4",Nvidia TITAN xp,Pascal-based
+P5000,10/1/2016,GP104-875,1607-1733,1127,16384,256-bit GDDR5x,288.5,Yes,2560,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,180,"DVI, 4x DP 1.4",GeForce GTx 1080,Pascal-based
+P4000,2/6/2017,GP104-850,1202-1480,1901,8192,256-bit GDDR5,243.3,Yes,1792,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,105,"DVI, 4x DP 1.4",GeForce GTx 1070,Pascal-based
+P2200,6/10/2019,GP106-880-K1,1000-1493,1253,5120,160-bit GDDR5x,200.5,No,1280,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,75,4x DP 1.4,GeForce GTx 1060,Pascal-based
+P2000,2/6/2017,GP106-875-K1,1076-1480,1752,5120,160-bit GDDR5,140.2,No,1024,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,75,4x DP 1.4,GeForce GTx 1060,Pascal-based
+P1000,2/6/2017,GP107-860,1266-1481,1253,4096,128-bit GDDR5,80.19,No,640,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,47,4x mini-DP 1.4,GeForce GTx 1050,Pascal-based
+P620,2/1/2018,GP107-855,1266-1354,1252,2048,128-bit GDDR5,80.13,No,512,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,40,4x mini-DP 1.4,GeForce GTx 1050,Pascal-based
+P600,2/6/2017,GP107-850,1329-1557,1003,2048,128-bit GDDR5,64.2,No,384,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,40,4x mini-DP 1.4,GeForce GT 1030,Pascal-based
+P400,2/6/2017,GP107-825,1228-1252,1003,2048,64-bit GDDR5,32.1,No,256,6.1,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,30,3x mini-DP 1.4,GeForce GT 1030,Pascal-based
+M6000-24GB,3/5/2016,GM200-880,988-1114,1653,24576,384-bit GDDR5 ECC,317.4,Yes,3072,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,250,4x DP 1.2,GeForce GTx TITAN x,Maxwell-based
+M6000,3/15/2015,GM200GL,988-1114,1653,12288,384-bit GDDR5 ECC,317.4,Yes,3072,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,250,4x DP 1.2,GeForce GTx TITAN x,Maxwell-based
+M5000,6/29/2015,GM204-875,861-1038,1653,8192,256-bit GDDR5 ECC,211.6,Yes,2048,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,150,4x DP 1.2,GeForce GTx 980,Maxwell-based
+M4000,6/29/2015,GM204-850,773,1502,8192,256-bit GDDR5,192.3,Yes,1664,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,120,4x DP 1.2,GeForce GTx 970,Maxwell-based
+M2000,4/8/2016,GM206-875,796-1163,1653,4096,128-bit GDDR5,105.8,No,768,5.2,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (12_1),4.6,3,1.2,75,4x DP 1.4,GeForce GTx 950,Maxwell-based
+K6000,7/23/2013,GK110GL,700,1500,12288,384-bit GDDR5 ECC,288,Yes,2880,3.5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,225,2x DP 1.2,GeForce GTX TITAN Black,"Kepler-based, HD-SDI optional"
+K5200,7/22/2014,GK110GL,650,1500,8192,256-bit GDDR5 ECC,192,Yes,2304,3.5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,150,"1x DL-DVI-I, 1x DL-DVI-D, 2x DP 1.2",GeForce GTx 780,"Kepler-based, HD-SDI optional"
+K5000,8/17/2012,GK104GL,706,1350,4096,256-bit GDDR5 ECC,173,Yes,1536,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,122,2x DP 1.2,GeForce GTx 770/680,"Kepler-based, HD-SDI optional"
+K4200,7/22/2014,GK104GL,780,1350,4096,256-bit GDDR5,173,Yes,1344,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,108,"1x DL-DVI-I, 2x DP 1.2",GeForce GTx 670,"Kepler-based, HD-SDI optional"
+K4000,3/1/2013,GK106GL,800,1400,3072,192-bit GDDR5,134,Yes,768,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,80,"1x DL-DVI-I, 2x DP1.2",GeForce GTx 650 Ti Boost,"Kepler-based, HD-SDI optional with extra Card"
+K2200,7/22/2014,GM107GL,1046,1250,4096,128-bit GDDR5,80,No,640,5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,68,"1x DL-DVI-I, 2x DP 1.2",GeForce GTx 750 Ti,Maxwell-based
+K2000D,3/1/2013,GK107GL,950,1000,2048,128-bit GDDR5,64,No,384,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,51,"2x DL-DVI-I, 1x DP 1.2",GeForce GTx 650,Kepler-based
+K2000,3/1/2013,GK107GL,954,1000,2048,128-bit GDDR5,64,No,384,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,51,"1x DL-DVI-I, 2x DP 1.2",GeForce GTx 650,Kepler-based
+K1200,1/28/2015,GM107GL,1000,1250,4096,128-bit GDDR5,80,No,512,5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,45,4x Mini-DP 1.2,GeForce GTx 750,Maxwell-based
+K620,7/14/2014,GM107GL,1000,900,2048,128-bit GDDR3,29,No,384,5,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,45,"1x DL-DVI, 1x DP 1.2,",GeForce GTx 745 (OEM),Maxwell-based
+K600,3/1/2013,GK107GL,875,900,1024,128-bit GDDR3,29,No,192,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,41,"1x DL-DVI-I, 1x DP 1.2",GeForce GT 630 (Kepler),Kepler-based
+K420,7/14/2014,GK107GL,780,900,1024,128-bit GDDR3,29,No,192,3,Unknown,Unknown,Unknown,Unknown,Unknown,12.0 (11_0),4.6,3,1.2,41,"1x DL-DVI, 1x DP 1.2",GeForce GT 630 (Kepler),Kepler-based

@@ -1,10 +1,10 @@
-﻿Model,Micro-architecture,Launch-Date,Chips,Cuda-cores,Clock,Boost-Clock,Memory,Mem-Bus-width,Mem-Bus-Size,Mem-Clock,Bandwidth,Single-precision-(MAD,FMA-),Double-precision-(FMA),CUDA-compute-ability,TDP,Form-Factor
-Units,,,,cores,MHz,MHz,,Bits,GB,MT/s,GB/s,GFlops,,,Watts,
-M4,Maxwell,11/10/2015,1xGM206,1024,872,1072,GDDR5,128,4,5500,88,1786-2195,55.81-68.61,5.2,50-75,Internal PCIe GPU (half-height, single-slot)
+﻿Model,Micro-architecture,Launch-Date,Chips,Cuda-cores,Clock,Boost-Clock,Memory,Mem-Bus-width,Mem-Bus-Size,Mem-Clock,Bandwidth,Single-precision-(MAD/FMA),Double-precision-(FMA),CUDA-compute-ability,TDP,Form-Factor
+Units,,,,cores,MHz,MHz,,Bits,GB,MT/s,GB/s,GFlops,GFlops,,Watts,
+M4,Maxwell,11/10/2015,1xGM206,1024,872,1072,GDDR5,128,4,5500,88,1786-2195,55.81-68.61,5.2,50-75,Internal PCIe GPU (half-height single-slot)
 M6,Maxwell,8/30/2015,1xGM204-995-A1,1536,722,1051,GDDR5,256,8,4600,147.2,2218-3229,69.3-100.9,5.2,75-100,Internal MXM GPU
-M10,Maxwell,Unknown,4xGM107,2560,1033,Unknown,GDDR5,4x128,4x8,5188,4x83,5289,165.3,5.2,225,Internal PCIe GPU (full-height, dual-slot)
-M40,Maxwell,11/10/2015,1xGM200,3072,948,1114,GDDR5,384,12,6000,288,5825-6844,182.0-213.9,5.2,250,Internal PCIe GPU (full-height, dual-slot)
-M60,Maxwell,8/30/2015,2xGM204-895-A1,4096,899,1178,GDDR5,2x256,2x8,5000,2x160,7365-9650,230.1-301.6,5.2,225-300,Internal PCIe GPU (full-height, dual-slot)
+M10,Maxwell,Unknown,4xGM107,2560,1033,Unknown,GDDR5,4x128,4x8,5188,4x83,5289,165.3,5.2,225,Internal PCIe GPU (full-height dual-slot)
+M40,Maxwell,11/10/2015,1xGM200,3072,948,1114,GDDR5,384,12,6000,288,5825-6844,182.0-213.9,5.2,250,Internal PCIe GPU (full-height dual-slot)
+M60,Maxwell,8/30/2015,2xGM204-895-A1,4096,899,1178,GDDR5,2x256,2x8,5000,2x160,7365-9650,230.1-301.6,5.2,225-300,Internal PCIe GPU (full-height dual-slot)
 P4,Pascal,9/13/2016,1xGP104,2560,810,1063,GDDR5,256,8,6000,192,4147-5443,129.6-170.1,6.1,50-75,PCIe card
 P6,Pascal,3/24/2017,1xGP104-995-A1,2048,1012,1506,GDDR5,256,16,3003,192.2,6169,192.8,6.1,90,MXM card
 P40,Pascal,9/13/2016,1xGP102,3840,1303,1531,GDDR5,384,24,7200,345.6,10007-11758,312.7-367.4,6.1,250,PCIe card
@@ -14,8 +14,8 @@ P100-12GB,Pascal,6/20/2016,1xGP100,3584,1126,1303,HBM2,3072,12,1430,549,8071-934
 V100,Volta,,1xGV100-895-A1,5120,Unknown,1455,HBM2,4096,16or32,1750,900,14899,7450,7,300,NVlink card
 V100,Volta,6/21/2017,1xGV100,5120,Unknown,1370,HBM2,4096,16or32,1750,900,14028,7014,7,250,PCIe card
 T4,Turing,9/12/2018,1xTU104-895-A1,2560,585,1590,GDDR6,256,16,Unknown,320,8100,Unknown,7.5,70,PCIe card
-A10,Ampere,April 12th, 2021,1xGA102-890-A1,9216,885,1695,GDDR6,384,24,Unknown,600,31240,976,8.6,150,PCIe card (single-slot)
-A16,Ampere,April 12th, 2021,4xGA107,10240,885,1695,GDDR6,4x128,4x16,Unknown,4x231.9,34712,1084.8,8.6,250,PCIe card (dual-slot)
-A30,Ampere,April 12th, 2021,1xGA100,3584,930,1440,HBM2,3072,24,Unknown,933.1,10320,5161,8,165,PCIe card (dual-slot)
-A40,Ampere,October 5th, 2020,1xGA102,10752,1305,1740,GDDR6,384,48,Unknown,695.8,37420,1168,8.6,300,PCIe card (dual-slot)
-A100,Ampere,May 14th, 2020,1xGA100-883AA-A1,6912,765,1410,HBM2,5120,40,Unknown,1555,19500,9700,8,250,PCIe card
+A10,Ampere,April 12th 2021,1xGA102-890-A1,9216,885,1695,GDDR6,384,24,Unknown,600,31240,976,8.6,150,PCIe card (single-slot)
+A16,Ampere,April 12th 2021,4xGA107,10240,885,1695,GDDR6,4x128,4x16,Unknown,4x231.9,34712,1084.8,8.6,250,PCIe card (dual-slot)
+A30,Ampere,April 12th 2021,1xGA100,3584,930,1440,HBM2,3072,24,Unknown,933.1,10320,5161,8,165,PCIe card (dual-slot)
+A40,Ampere,October 5th 2020,1xGA102,10752,1305,1740,GDDR6,384,48,Unknown,695.8,37420,1168,8.6,300,PCIe card (dual-slot)
+A100,Ampere,May 14th 2020,1xGA100-883AA-A1,6912,765,1410,HBM2,5120,40,Unknown,1555,19500,9700,8,250,PCIe card
