@@ -37,7 +37,7 @@ class Help:
         headerContents.append(TextComponent(text=heroTitle, weight='bold', size='md'))
         contents.append(TextComponent(text=heroTitle, size='xs', wrap=True))
         contents.append(TextComponent(text=heroText, size='sm', wrap=True))
-        contents.append(ButtonComponent(color='#ff3f3f',style='primary',height='sm',action=MessageAction(label="DISCLAIMER",text='disclaimer')))
+        contents.append(ButtonComponent(color='#ff3f3f',style='primary',height='md',action=MessageAction(label="DISCLAIMER",text='disclaimer')))
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
@@ -236,7 +236,7 @@ class Help:
         #Add Bubble's Content
         headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
         body = BoxComponent(layout='vertical', contents=headerContents)
-        hero = ImageComponent(url=ImageConst.disclaimerImage,aspect_ratio='1.51:1',aspect_mode='fit',size='full')
+        hero = ImageComponent(url=ImageConst.disclaimerImage,aspect_ratio='1.51:1',background_color="#ff3f3f", aspect_mode='fit',size='full')
         bubble = BubbleContainer(direction='ltr',body=body,hero=hero)
 
         message = FlexSendMessage(alt_text="Disclaimer", contents=bubble)
