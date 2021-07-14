@@ -35,7 +35,7 @@ class Help:
         headerContents = []
         #Add Header
         headerContents.append(TextComponent(text=heroTitle, weight='bold', size='md'))
-        contents.append(TextComponent(text=heroTitle, size='xs', wrap=True))
+        contents.append(TextComponent(text="Welcome !!", size='xs', wrap=True))
         contents.append(TextComponent(text=heroText, size='sm', wrap=True))
         contents.append(ButtonComponent(color='#ff3f3f',style='primary',height='md',action=MessageAction(label="DISCLAIMER",text='disclaimer')))
         #Add Bubble's Content
@@ -227,7 +227,7 @@ class Help:
         contents = []
         headerContents = []
         #Add Header
-        tooltip1 = "Whilst PenGo's creator endeavour to keep information up to date and corrent. Every information was researched from public information hence the information is not own by the creator. The creator makes no representation or warranties of completeness, accuracy, availability of the infomation."
+        tooltip1 = "Whilst PenGo's creator endeavour to keep information up to date and corrent. Every information was researched from public information hence the information is not own by the creator. The creator makes no representation or warranties of completeness, accuracy, availability of the information."
         tooltip2 = "Any reliance you place on PenGo's information is therefore strictly at your own risk."
         headerContents.append(TextComponent(text="Disclaimer", weight='bold', size='md'))
         contents.append(TextComponent(text=tooltip1, size='xs', wrap=True))
