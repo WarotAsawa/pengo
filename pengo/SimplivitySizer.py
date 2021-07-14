@@ -77,7 +77,8 @@ class SimplivitySizer:
             totalUsableTB = round(requiredNode * TBPerNode,2)
             usableString = str(totalUsableTB) + "TB / " + str(totalUsableTiB) + "TiB"
             contents.append(SimplivitySizer.AddModelRow(model,str(requiredNode)))      
-            contents.append(Help.AddFlexRow("Total Usable",usableString,3,6, weight='bold'))       
+            contents.append(Help.AddFlexRow("Total Usable",usableString,3,6, weight='bold'))    
+            contents.append(Help.AddUsageBar(usage=(required * 100 * multiplier/totalUsableTB)))   
         #Check is OK
         if config == 0: contents = [TextComponent(text='Your Sizing is loo large for 32-Node SimpliVity', weight='bold', size='xl', color='#ff0000')]
         #Add Contents
