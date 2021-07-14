@@ -187,12 +187,12 @@ class Help:
         return box
 
     @staticmethod   
-    def AddUsageBar(usage = 90.0, color = '#00b088', title='Total Usage'):
+    def AddUsageBar(usage = 90.0, color = '#00b088', title='Total Usage', warning = 90.0):
         usageText = str(round(usage,1)) + "%"
         usageColor = '#00b088'
-        if usage > 95: 
+        if usage > (100.0+warning)/2: 
             usageColor = ImageConst.specColor
-        elif usage > 90:
+        elif usage > warning:
             usageColor = ImageConst.sizeColor
 
         usageBox = BoxComponent(layout='vertical',spacing='sm',height='6px', background_color=usageColor, corner_radius='3px', width=usageText)
