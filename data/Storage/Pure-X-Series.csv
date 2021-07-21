@@ -1,0 +1,8 @@
+﻿model,Raw-Capacity,Effective-Capacity,Management-Ports,Onboard-Ethernet,Host-port,Supported-Port-Types
+units,,,per Ctrlr,per Ctrl,per Ctrl,
+X10,22TB / 19.2TiB,73TB / 66.2TiB,2 x 1Gb,4 x 10/25Gb,6,10GbE-T  10/25GbE  40GbE  25/50GbRoCE  16/32FC
+X20,94TB / 88TiB,314TB / 285.4TiB,2 x 1Gb,4 x 10/25Gb,6,10GbE-T  10/25GbE  40GbE  25/50GbRoCE  16/32FC
+X50,185TB / 171TiB,663TB / 602.9TiB,2 x 1Gb,4 x 10/25Gb,6,10GbE-T  10/25GbE  40GbE  25/50GbRoCE  16/32FC
+X70,622TB / 544.2TiB,2286TiB / 2078.9TiB,2 x 1Gb,4 x 10/25Gb,6,10GbE-T  10/25GbE  40GbE  25/50GbRoCE  16/32FC
+X90,878TB / 768.3TiB,3.3PB / 3003.1TiB,2 x 1Gb,4 x 10/25Gb,6,10GbE-T  10/25GbE  40GbE  25/50GbRoCE  16/32FC
+DirectFlash-Shelf,512TB / 448.2TiB,1.9PB,2 x 1Gb,4 x 10/25Gb,6,10GbE-T  10/25GbE  40GbE  25/50GbRoCE  16/32FC
