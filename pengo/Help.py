@@ -143,13 +143,13 @@ class Help:
         elif type == "lookup product": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup "
-            title = "Choose Your Field for Lookup"
+            title = "Choose Your Product for Lookup"
             tooltip = Help.lookupToolTip
             bgColor = ImageConst.lookupColor
         elif type == "lookup field": 
             imageUrl = ImageConst.lookupImage
             textPreFix = "lookup " + selectedProduct + " "
-            title = "Choose Your Model"
+            title = "Choose Your Field for Lookup"
             tooltip = Help.lookupToolTip
             bgColor = ImageConst.lookupColor
         elif type == "lookup value": 

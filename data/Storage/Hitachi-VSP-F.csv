@@ -1,4 +1,4 @@
-﻿model,Performance(IOPS),Throughput,Max-Internal-Raw,Max-External-Raw,Effective-Ratio,Max-Host-Port,Host-Port-Types,Max-no-of-Flash,Max-Expansion-Trays,Internal-Drive-Slots,Fibre-BW-to-Host,Back-End-Interface,Max-Cache,RAID-Supported,DARE,Max-LUN-Size,No-of-LUNs,Max-Snaps/LUN,Max-Snap/System,Host-per-FC-Ports
+﻿model,Performance,Throughput,Max-Internal-Raw,Max-External-Raw,Effective-Ratio,Max-Host-Port,Host-Port-Types,Max-no-of-Flash,Max-Expansion-Trays,Internal-Drive-Slots,Fibre-BW-to-Host,Back-End-Interface,Max-Cache,RAID-Supported,DARE,Max-LUN-Size,No-of-LUNs,Max-Snaps/LUN,Max-Snap/System,Host-per-FC-Ports
 unit,IOPs,GBps,PB,PB,,,,,,SFF,MB/s,Gb/s SAS,GiB,,,TB,,,,
 F350,600K,9,5.7,72,Up to 7:1,16xFC  8xiSCSI,16/32-FC 10Gb-iSCSI,192xSSD,7 (2U: 24 SSD),24,51200,8 x 12,128,R1  R5  R6,Yes,256,16384,1024,262144,255
 F370,1.2M,12,8.6,144,Up to 7:1,16xFC  8xiSCSI,16/32-FC 10Gb-iSCSI,288xSSD,11 (2U: 24 SSD),24,51200,8 x 12,256,R1  R5  R6,Yes,256,32768,1024,524288,255
