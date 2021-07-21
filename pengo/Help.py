@@ -182,6 +182,8 @@ class Help:
             for j in range(i*maxActionPerColumn,(i*maxActionPerColumn)+maxActionPerColumn):
                 if j >= len(loopList): break
                 else:
+                    label = loopList[j][0:40]
+                    label = label.replace("-", " ")
                     contents.append(Help.DefaultButton(label=loopList[j][0:40], text=textPreFix + loopList[j]))
              #Add Bubble's Content
             headerContents.append(BoxComponent(layout='vertical',margin='lg',spacing='sm', contents=contents))
