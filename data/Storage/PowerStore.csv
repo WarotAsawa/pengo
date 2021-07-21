@@ -1,0 +1,8 @@
+﻿model,Max-Drive,NVRAM/Appliance,Base-Enclosure,Expansion-shelf,Data-Resillency,Max-Raw,Max-IO-Module,Max-Host-Ports,Max-16/32FC-Ports,Max-LUN,Max-Initiator,Max-File-System-Size,Max-Block-Snap,Max-User-File-System,Max-NAS-Server,Max-vVol,Appliance-per-Cluster
+unit,,,(NVME SCM),(SAS Only),,TB,,Ports per Appliance,Ports per Appliance,,per appliance,TB,,,,,
+500,25,N/A,2U 25xSFF,NA,DRE,384,4,28,16,1000,1000,256,50000,500,50,14200,4
+1000,96,2,2U 25xSFF,3 x 2U 25xSFF,DRE,898.56,4,24,16,2000,2000,256,100000,500,50,19000,4
+3000,96,2,2U 25xSFF,3 x 2U 25xSFF,DRE,898.56,4,24,16,2000,2000,256,100000,500,50,19000,4
+5000,96,4,2U 25xSFF,3 x 2U 25xSFF,DRE,898.56,4,24,16,2000,2000,256,100000,500,50,19000,4
+7000,96,4,2U 25xSFF,3 x 2U 25xSFF,DRE,898.56,4,24,16,2000,2000,256,100000,500,50,19000,4
+9000,96,4,2U 25xSFF,3 x 2U 25xSFF,DRE,898.56,4,24,16,2000,2000,256,100000,500,50,19000,4
