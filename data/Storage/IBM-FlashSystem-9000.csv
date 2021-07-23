@@ -1,4 +1,0 @@
-﻿model,Controller,System-Cluster,On-board-Port,Add-on-Ports,Max-Port/Enclosure,Cache/System,Max-IOPs,Throughput,Max-Drive,Drive-Type,RAID,Dedupe,Compress,Snap/Vol,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Units,,,,,,GB,IOPs,GBps,,,Distributed,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-9200,Dual (Active/Active),4-Ways,N/A,16/32Gb-FC-NVMe  10/25Gb-iSCSI(iWARP-ROCE),24,6144,4.5M,45,3040,SAS-SSD NVMe-SSD SCM FCM,1 5 6 TRAID-10,Post-Process,Inline(FCM Only)+Post-Process,256,,,,,,,,,,,,,,,,,,,,,,,,,3040,,1 5 6,Post-Process,"Inline(FCM Only), Post Process",256
-9200R,2-4 Pairs of 9200 arrays,4-Ways,N/A,16/32Gb-FC-NVMe  10/25Gb-iSCSI(iWARP-ROCE),24,6144,18M,180,96 NVMe and 2944 SAS,SAS-SSD NVMe-SSD SCM FCM,1 5 6 TRAID-10,Post-Process,Inline(FCM Only)+Post-Process,256,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
