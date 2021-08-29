@@ -17,8 +17,8 @@ from LineConst import LineConst
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(LineConst.pengoAccessToken)
-handler = WebhookHandler(LineConst.pengoSecret)
+line_bot_api = LineBotApi(LineConst.decode(LineConst.pengoAccessToken,20))
+handler = WebhookHandler(LineConst.decode(LineConst.pengoSecret,5))
 
 @app.route("/callback", methods=['POST'])
 def callback():
